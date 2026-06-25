@@ -102,7 +102,20 @@ test_that("insper_barplot text labels work with filled bars", {
   expect_true(inherits(text_layer$position, "PositionFill"))
 })
 
-test_that("insper_barplot uses white text for stacked bars by default", {
+# Text color on stacked/filled bars is contrast-aware: each label is colored
+# from the luminance of the bar segment behind it. For the default
+# "categorical" palette every color is dark, so the effective text is white.
+text_layer_colours <- function(p) {
+  b <- ggplot2::ggplot_build(p)
+  text_idx <- which(vapply(
+    p$layers,
+    function(l) inherits(l$geom, "GeomText"),
+    logical(1)
+  ))[1]
+  b$data[[text_idx]]$colour
+}
+
+test_that("insper_barplot uses contrast (white) text for stacked bars on dark default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -111,13 +124,11 @@ test_that("insper_barplot uses white text for stacked bars by default", {
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack", text = TRUE)
 
-  # Extract text layer and check color
-  text_layer <- p$layers[[which(sapply(p$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
-  expect_equal(text_layer$aes_params$colour, "white",
-               info = "Stacked bars should use white text for readability on colored bars")
+  expect_true(all(text_layer_colours(p) == "white"),
+              info = "Dark default-palette bars should get white text for readability")
 })
 
-test_that("insper_barplot uses white text for filled bars by default", {
+test_that("insper_barplot uses contrast (white) text for filled bars on dark default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -126,10 +137,23 @@ test_that("insper_barplot uses white text for filled bars by default", {
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
 
-  # Extract text layer and check color
-  text_layer <- p$layers[[which(sapply(p$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
-  expect_equal(text_layer$aes_params$colour, "white",
-               info = "Filled bars should use white text for readability on colored bars")
+  expect_true(all(text_layer_colours(p) == "white"),
+              info = "Dark default-palette bars should get white text for readability")
+})
+
+test_that("insper_barplot uses dark text on light stacked fills", {
+  skip_if_not_installed("ggplot2")
+  df <- data.frame(
+    x = rep(c("A", "B"), each = 2),
+    y = c(10, 15, 20, 25),
+    grp = rep(c("X", "Y"), 2)
+  )
+  # "grays" is a light sequential palette -> some segments need dark text
+  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
+                      text = TRUE, palette = "grays")
+
+  expect_true(any(text_layer_colours(p) == "#2C2C2C"),
+              info = "Light bars should get dark text for readability")
 })
 
 test_that("insper_barplot respects custom text_color parameter", {
