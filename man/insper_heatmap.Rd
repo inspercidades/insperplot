@@ -17,7 +17,7 @@ insper_heatmap(
 \item{data}{Data frame (melted with Var1, Var2, value columns) or
 correlation matrix}
 
-\item{show_values}{Logical. If TRUE, displays values on tiles. Default is TRUE}
+\item{show_values}{Logical. If TRUE, displays values on tiles. Default is FALSE}
 
 \item{value_color}{Character. Color for value text. Default is "white"}
 

@@ -5,7 +5,7 @@
 #'
 #' @param data Data frame (melted with Var1, Var2, value columns) or
 #'   correlation matrix
-#' @param show_values Logical. If TRUE, displays values on tiles. Default is TRUE
+#' @param show_values Logical. If TRUE, displays values on tiles. Default is FALSE
 #' @param value_color Character. Color for value text. Default is "white"
 #' @param value_size Numeric. Size of value text. Default is 3
 #' @param palette Character. Palette name for fill scale. Default is "diverging"

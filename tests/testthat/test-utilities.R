@@ -233,3 +233,69 @@ test_that("has_insper_fonts returns logical", {
   expect_type(has_insper_fonts(), "logical")
   expect_length(has_insper_fonts(), 1)
 })
+
+
+# Tests for contrast-aware text color helpers ----
+
+test_that("calculate_luminance returns expected bounds", {
+  expect_equal(calculate_luminance("#FFFFFF"), 1, tolerance = 1e-6)
+  expect_equal(calculate_luminance("#000000"), 0, tolerance = 1e-6)
+  # A mid-tone falls strictly between black and white
+  mid <- calculate_luminance("#808080")
+  expect_gt(mid, 0)
+  expect_lt(mid, 1)
+})
+
+test_that("get_contrast_text_color picks readable text per background", {
+  # Light background -> dark text
+  expect_equal(get_contrast_text_color("#FFFFFF"), "#2C2C2C")
+  # Dark background -> light text
+  expect_equal(get_contrast_text_color("#000000"), "white")
+})
+
+test_that("insper_barplot uses contrast text on light stacked fills", {
+  skip_if_not_installed("ggplot2")
+  df <- data.frame(
+    category = rep(c("A", "B"), each = 2),
+    group = rep(c("X", "Y"), 2),
+    value = c(10, 20, 15, 25)
+  )
+
+  # A light sequential palette would be unreadable with hardcoded white text;
+  # the plot should build and carry a manual colour scale for the labels.
+  p <- insper_barplot(
+    df,
+    x = category,
+    y = value,
+    fill = group,
+    position = "stack",
+    text = TRUE,
+    palette = "grays"
+  )
+  expect_no_error(ggplot2::ggplot_build(p))
+  has_manual_colour <- any(vapply(
+    p$scales$scales,
+    function(s) "colour" %in% s$aesthetics && inherits(s, "ScaleDiscrete"),
+    logical(1)
+  ))
+  expect_true(has_manual_colour)
+})
+
+test_that("insper_barplot honors explicit text_color on stacked bars", {
+  skip_if_not_installed("ggplot2")
+  df <- data.frame(
+    category = rep(c("A", "B"), each = 2),
+    group = rep(c("X", "Y"), 2),
+    value = c(10, 20, 15, 25)
+  )
+  p <- insper_barplot(
+    df,
+    x = category,
+    y = value,
+    fill = group,
+    position = "stack",
+    text = TRUE,
+    text_color = "navy"
+  )
+  expect_no_error(ggplot2::ggplot_build(p))
+})

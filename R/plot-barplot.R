@@ -194,15 +194,6 @@ insper_barplot <- function(
         "identity" # fallback
       )
 
-      # For stacked/filled bars, determine text color automatically if not specified
-      final_text_color <- text_color
-      if (position %in% c("stack", "fill") && text_color == "black") {
-        # User hasn't specified a custom color, use automatic contrast
-        # This will be handled via geom_text with color aesthetic mapping
-        # For now, we'll use a simple heuristic: white text works for most fills
-        final_text_color <- "white"
-      }
-
       # Determine label formatter for fill position
       fill_formatter <- label_formatter
       use_percent <- FALSE
@@ -218,22 +209,57 @@ insper_barplot <- function(
 
       # Build geom_text layer based on whether we're using percentage formatting
       if (position %in% c("stack", "fill")) {
-        # For stacked/filled bars, don't pass vjust/hjust (position handles it)
-        if (use_percent) {
-          p <- p +
-            ggplot2::geom_text(
-              ggplot2::aes(label = fill_formatter({{ y }})),
-              position = text_position,
-              size = text_size,
-              color = final_text_color
+        # For stacked/filled bars, labels sit on top of colored segments.
+        # When the user keeps the default text color, pick per-segment text
+        # colors automatically so labels stay legible on both light and dark
+        # fills. Otherwise honor the user's explicit `text_color`.
+        auto_contrast <- identical(text_color, "black")
+
+        if (auto_contrast) {
+          # Map the fill variable to a contrast text color per level. Levels are
+          # ordered the same way the discrete fill scale orders them, so each
+          # label's color is computed from the actual bar color behind it.
+          fill_vals <- rlang::eval_tidy(fill_quo, rlang::as_data_mask(data))
+          fill_levels <- if (is.factor(fill_vals)) {
+            levels(fill_vals)
+          } else {
+            sort(unique(as.character(fill_vals)))
+          }
+          segment_colors <- insper_pal(palette, n = length(fill_levels))
+          contrast_map <- stats::setNames(
+            vapply(segment_colors, get_contrast_text_color, character(1)),
+            fill_levels
+          )
+
+          label_mapping <- if (use_percent) {
+            ggplot2::aes(label = fill_formatter({{ y }}), colour = {{ fill }})
+          } else {
+            ggplot2::aes(
+              label = label_formatter({{ y }}, accuracy = 0.1),
+              colour = {{ fill }}
             )
-        } else {
+          }
+
           p <- p +
             ggplot2::geom_text(
-              ggplot2::aes(label = label_formatter({{ y }}, accuracy = 0.1)),
+              label_mapping,
+              position = text_position,
+              size = text_size
+            ) +
+            ggplot2::scale_colour_manual(values = contrast_map, guide = "none")
+        } else {
+          label_mapping <- if (use_percent) {
+            ggplot2::aes(label = fill_formatter({{ y }}))
+          } else {
+            ggplot2::aes(label = label_formatter({{ y }}, accuracy = 0.1))
+          }
+
+          p <- p +
+            ggplot2::geom_text(
+              label_mapping,
               position = text_position,
               size = text_size,
-              color = final_text_color
+              color = text_color
             )
         }
       } else {
@@ -245,7 +271,7 @@ insper_barplot <- function(
             vjust = text_vjust,
             hjust = text_hjust,
             size = text_size,
-            color = final_text_color
+            color = text_color
           )
       }
     }

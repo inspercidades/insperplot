@@ -351,7 +351,7 @@ calculate_luminance <- function(hex_color) {
     0.7152 * rgb_linear[2] +
     0.0722 * rgb_linear[3]
 
-  return(luminance)
+  return(unname(luminance))
 }
 
 #' Choose Contrasting Text Color for Background
