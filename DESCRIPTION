@@ -2,12 +2,13 @@ Package: insperplot
 Type: Package
 Title: Insper Themed 'ggplot2' Extensions
 Version: 0.1.0
-Date: 2026-06-02
+Date: 2026-06-24
 Authors@R: c(
     person(
       "Vinicius", "Oike",
       email = "viniciusor@insper.edu.br",
-      role = c("aut", "cre", "cph")
+      role = c("aut", "cre", "cph"),
+      comment = c(ORCID = "0009-0005-8015-9189")
     )
   )
 Description: Extends 'ggplot2' with the visual identity of Insper Instituto de
