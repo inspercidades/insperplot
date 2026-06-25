@@ -77,7 +77,7 @@ library(ggplot2)
 
 # Create a basic plot with Insper theme
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point(color = get_insper_colors("reds1"), size = 3) +
+  geom_point(color = insper_palette("reds", n = 1), size = 3) +
   theme_insper() +
   labs(title = "Fuel Efficiency vs Weight")
 
@@ -135,7 +135,7 @@ Useful links:
 }
 }
 \author{
-\strong{Maintainer}: Vinicius Oike \email{viniciusor@insper.edu.br} [copyright holder]
+\strong{Maintainer}: Vinicius Oike \email{viniciusor@insper.edu.br} (\href{https://orcid.org/0009-0005-8015-9189}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

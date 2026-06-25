@@ -62,7 +62,7 @@ get_insper_colors <- function(...) {
   if (length(missing) > 0) {
     cli::cli_abort(c(
       "x" = "Colors not found: {.val {missing}}",
-      "i" = "Individual colors: reds1-5, oranges1-5, teals1-5, grays, white, black, off_white"
+      "i" = "Available colors: {.val {names(insper_individual_colors)}}"
     ))
   }
   insper_individual_colors[requested]

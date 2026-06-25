@@ -213,7 +213,7 @@ theme_insper <- function(
 #' @keywords internal
 #' @noRd
 detect_font <- function(font_name, fallback_chain = "sans") {
-  tryCatch(
+  rlang::try_fetch(
     {
       # Check both registered (bundled) and system-installed fonts
       available_fonts <- unique(c(
@@ -223,7 +223,11 @@ detect_font <- function(font_name, fallback_chain = "sans") {
 
       resolve_font <- function(name) {
         if (name %in% available_fonts) return(name)
-        matches <- available_fonts[grepl(name, available_fonts, ignore.case = TRUE)]
+        # Case-insensitive literal substring match: lowercase both sides and
+        # use `fixed = TRUE` so font names with regex metacharacters (e.g. a
+        # stray "+" or "(") are matched literally rather than as patterns.
+        hits <- grepl(tolower(name), tolower(available_fonts), fixed = TRUE)
+        matches <- available_fonts[hits]
         if (length(matches) > 0) return(matches[1])
         NULL
       }
@@ -238,11 +242,11 @@ detect_font <- function(font_name, fallback_chain = "sans") {
         resolved <- resolve_font(fallback_font)
         if (!is.null(resolved)) return(resolved)
       }
+
+      fallback_chain[length(fallback_chain)]
     },
-    error = function(e) {
-      return(fallback_chain[length(fallback_chain)])
+    error = function(cnd) {
+      fallback_chain[length(fallback_chain)]
     }
   )
-
-  return(fallback_chain[length(fallback_chain)])
 }

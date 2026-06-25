@@ -66,7 +66,7 @@
 #'
 #' # Create a basic plot with Insper theme
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
-#'   geom_point(color = get_insper_colors("reds1"), size = 3) +
+#'   geom_point(color = insper_palette("reds", n = 1), size = 3) +
 #'   theme_insper() +
 #'   labs(title = "Fuel Efficiency vs Weight")
 #'
