@@ -34,7 +34,7 @@ remotes::install_github("portalcidados/insperplot")
 
 ## Quick Start
 
-`insperplot` is built upon Insper’s brand colors. To improve
+`insperplot` is built upon Insper's brand colors. To improve
 functionality, additional palettes were created based on these basic
 colors.
 
@@ -69,11 +69,11 @@ ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
 <img src="man/figures/readme-mtcars-example.png" width="80%"/>
 </p>
 
-The package is based on Insper’s brand colors.
+The package is based on Insper's brand colors.
 
 ``` r
-# View available colors
-show_insper_colors()
+# View the core Insper brand colors (prints a color swatch)
+insper_palette("main")
 ```
 
 <p align="center">
@@ -89,14 +89,17 @@ insperplot includes several pre-defined palettes:
 - **diverging**, **red_teal**, **red_teal_ext**: Diverging palettes for
   data with a meaningful center
 - **bright**, **contrast**: Qualitative palettes for categorical data
-- **categorical**, **accent**: Additional color options
+- **categorical**, **categorical_ito**, **categorical_tab**,
+  **categorical_set**: Extended categorical palettes (including
+  colorblind-safe options)
+- **accent_red**, **accent_teal**: Accent palettes for emphasis
 
-Use `list_palettes()` to see all available palettes with detailed
-information. To visualize the colors in each palette, use
-`show_insper_palette()`:
+Use `show_insper_palettes()` to see all available palettes and visualize
+the colors in each one (it also invisibly returns a data frame of
+palette metadata):
 
 ``` r
-show_insper_palette()
+show_insper_palettes()
 ```
 
 <p align="center">
@@ -106,30 +109,32 @@ show_insper_palette()
 
 ## Main Functions
 
-- `theme_insper()`: Apply Insper’s visual identity to ggplot2 plots.
+- `theme_insper()`: Apply Insper's visual identity to ggplot2 plots.
 - `scale_color_insper_d()` / `scale_fill_insper_d()`: Discrete color
   scales.
 - `scale_color_insper_c()` / `scale_fill_insper_c()`: Continuous color
   scales.
-- `show_insper_palette()`: Visualize available color palettes.
+- `insper_palette()`: Get a palette as a character vector (prints a
+  swatch).
+- `show_insper_palettes()`: Visualize available color palettes.
 - `insper_*()`: Specialized plotting functions.
 
 ## Fonts and Rendering
 
 `insperplot` bundles the **Inter**, **EB Garamond**, and **Playfair
 Display** font families (all licensed under the SIL Open Font License).
-These fonts are registered automatically when the package is loaded —
-no manual download or setup required.
+These fonts are registered automatically when the package is loaded — no
+manual download or setup required.
 
-The default title font is **Georgia**, a system serif font
-pre-installed on most operating systems. If Georgia is unavailable, the
-theme falls back to the bundled serif fonts.
+The default title font is **Georgia**, a system serif font pre-installed
+on most operating systems. If Georgia is unavailable, the theme falls
+back to the bundled serif fonts.
 
 For the best rendering quality, install the
 [ragg](https://ragg.r-lib.org/) graphics device:
 
 ``` r
-install.packages(“ragg”)
+install.packages("ragg")
 ```
 
 If you use **RStudio**, set the graphics backend to AGG: **Tools \>
@@ -143,4 +148,12 @@ website](https://portalcidados.github.io/insperplot/).
 
 ## License
 
-MIT ©
+MIT © Vinicius Oike
+
+## Disclaimer
+
+**This is not an official Insper product.** This package is developed
+independently and is not endorsed, supported, or maintained by Insper
+Instituto de Ensino e Pesquisa. For official Insper communications and
+materials, please refer to [Insper's
+GitHub](https://github.com/Insper/).

@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  github_document:
+    md_extensions: -smart
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -72,8 +74,8 @@ ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
 The package is based on Insper's brand colors.
 
 ```{r, eval = FALSE}
-# View available colors
-show_insper_colors()
+# View the core Insper brand colors (prints a color swatch)
+insper_palette("main")
 ```
 
 <p align="center">
@@ -86,12 +88,13 @@ insperplot includes several pre-defined palettes:
 - **reds**, **oranges**, **teals**, **grays**: Sequential single-color gradients
 - **diverging**, **red_teal**, **red_teal_ext**: Diverging palettes for data with a meaningful center
 - **bright**, **contrast**: Qualitative palettes for categorical data
-- **categorical**, **accent**: Additional color options
+- **categorical**, **categorical_ito**, **categorical_tab**, **categorical_set**: Extended categorical palettes (including colorblind-safe options)
+- **accent_red**, **accent_teal**: Accent palettes for emphasis
 
-Use `list_palettes()` to see all available palettes with detailed information. To visualize the colors in each palette, use `show_insper_palette()`:
+Use `show_insper_palettes()` to see all available palettes and visualize the colors in each one (it also invisibly returns a data frame of palette metadata):
 
 ```{r view-palettes, eval = FALSE}
-show_insper_palette()
+show_insper_palettes()
 ```
 
 <p align="center">
@@ -103,7 +106,8 @@ show_insper_palette()
 - `theme_insper()`: Apply Insper's visual identity to ggplot2 plots.
 - `scale_color_insper_d()` / `scale_fill_insper_d()`: Discrete color scales.
 - `scale_color_insper_c()` / `scale_fill_insper_c()`: Continuous color scales.
-- `show_insper_palette()`: Visualize available color palettes.
+- `insper_palette()`: Get a palette as a character vector (prints a swatch).
+- `show_insper_palettes()`: Visualize available color palettes.
 - `insper_*()`: Specialized plotting functions.
 
 ## Fonts and Rendering
