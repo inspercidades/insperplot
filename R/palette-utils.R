@@ -4,13 +4,25 @@ palette_metadata <- function() {
   data.frame(
     name = c(
       # qualitative
-      "main", "muted",
-      "categorical_ito", "categorical_tab", "categorical_set",
+      "main",
+      "muted",
+      "categorical_ito",
+      "categorical_tab",
+      "categorical_set",
       # sequential
-      "vermelho", "turquesa", "verde", "amarelo",
-      "laranja", "rosa", "roxo", "grays",
+      "vermelho",
+      "turquesa",
+      "verde",
+      "amarelo",
+      "laranja",
+      "rosa",
+      "roxo",
+      "grays",
       # diverging
-      "diverging", "roxo_verde", "laranja_roxo", "rosa_verde"
+      "diverging",
+      "roxo_verde",
+      "laranja_roxo",
+      "rosa_verde"
     ),
     type = c(
       rep("qualitative", 5),
@@ -18,9 +30,23 @@ palette_metadata <- function() {
       rep("diverging", 4)
     ),
     n_colors = c(
-      7, 7, 8, 10, 9,
-      5, 5, 5, 5, 5, 5, 5, 5,
-      5, 5, 5, 5
+      7,
+      7,
+      8,
+      10,
+      9,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
     ),
     recommended_use = c(
       "Primary brand hues for categorical data",
@@ -57,7 +83,10 @@ get_insper_colors <- function(...) {
   requested <- c(...)
   user_env <- rlang::caller_env()
   resolved <- vapply(
-    requested, deprecate_color_name, character(1), user_env = user_env
+    requested,
+    deprecate_color_name,
+    character(1),
+    user_env = user_env
   )
   missing <- setdiff(resolved, names(insper_individual_colors))
   if (length(missing) > 0) {
@@ -136,7 +165,9 @@ insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
 
   colors <- insper_palettes[[palette]]
 
-  if (reverse) colors <- rev(colors)
+  if (reverse) {
+    colors <- rev(colors)
+  }
 
   if (!is.null(n)) {
     if (n > length(colors)) {
@@ -154,25 +185,32 @@ insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
 
 #' @export
 print.insper_palette <- function(x, ...) {
-  position <- hex <- NULL  # R CMD check
+  position <- hex <- text_color <- NULL # R CMD check
 
   n <- length(x)
+  text_colors <- vapply(as.character(x), get_contrast_text_color, character(1))
   df <- data.frame(
     position = seq_len(n),
     hex = as.character(x),
+    text_color = unname(text_colors),
     stringsAsFactors = FALSE
   )
 
   p <- ggplot2::ggplot(df, ggplot2::aes(x = position, y = 1, fill = hex)) +
     ggplot2::geom_tile(
-      width = 0.9, height = 1,
-      color = "white", linewidth = 1
+      width = 0.9,
+      height = 1,
+      color = "white",
+      linewidth = 1
     ) +
     ggplot2::scale_fill_identity() +
     ggplot2::geom_text(
-      ggplot2::aes(label = hex),
-      size = 3, fontface = "bold", angle = 90, color = "white"
+      ggplot2::aes(label = hex, color = text_color),
+      size = 4,
+      fontface = "bold",
+      angle = 90
     ) +
+    ggplot2::scale_color_identity() +
     ggplot2::theme_void() +
     ggplot2::labs(title = paste0("Insper palette: ", attr(x, "palette"))) +
     ggplot2::theme(
@@ -221,7 +259,7 @@ as.character.insper_palette <- function(x, ...) {
 show_insper_palettes <- function(
   type = c("all", "sequential", "diverging", "qualitative")
 ) {
-  hex <- position <- palette <- NULL  # R CMD check
+  hex <- position <- palette <- NULL # R CMD check
 
   type <- match.arg(type)
 
@@ -243,8 +281,16 @@ show_insper_palettes <- function(
   df <- do.call(rbind, rows)
   df$palette <- factor(df$palette, levels = rev(meta$name))
 
-  p <- ggplot2::ggplot(df, ggplot2::aes(x = position, y = palette, fill = hex)) +
-    ggplot2::geom_tile(width = 0.9, height = 0.8, color = "white", linewidth = 0.5) +
+  p <- ggplot2::ggplot(
+    df,
+    ggplot2::aes(x = position, y = palette, fill = hex)
+  ) +
+    ggplot2::geom_tile(
+      width = 0.9,
+      height = 0.8,
+      color = "white",
+      linewidth = 0.5
+    ) +
     ggplot2::scale_fill_identity() +
     ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = 0.5)) +
     ggplot2::theme_minimal(base_size = 10) +

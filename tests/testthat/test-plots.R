@@ -115,7 +115,7 @@ text_layer_colours <- function(p) {
   b$data[[text_idx]]$colour
 }
 
-test_that("insper_barplot uses contrast (white) text for stacked bars on dark default palette", {
+test_that("insper_barplot uses WCAG-contrast text for stacked bars on default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -124,11 +124,12 @@ test_that("insper_barplot uses contrast (white) text for stacked bars on dark de
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack", text = TRUE)
 
-  expect_true(all(text_layer_colours(p) == "white"),
-              info = "Dark default-palette bars should get white text for readability")
+  colours <- text_layer_colours(p)
+  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
+              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
 })
 
-test_that("insper_barplot uses contrast (white) text for filled bars on dark default palette", {
+test_that("insper_barplot uses WCAG-contrast text for filled bars on default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -137,8 +138,9 @@ test_that("insper_barplot uses contrast (white) text for filled bars on dark def
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
 
-  expect_true(all(text_layer_colours(p) == "white"),
-              info = "Dark default-palette bars should get white text for readability")
+  colours <- text_layer_colours(p)
+  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
+              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
 })
 
 test_that("insper_barplot uses dark text on light stacked fills", {
