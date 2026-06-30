@@ -83,16 +83,14 @@ insper_palette("main")
 
 insperplot includes several pre-defined palettes:
 
-- **main**: Primary Insper colors
-- **reds**, **oranges**, **teals**, **grays**: Sequential single-color
-  gradients
-- **diverging**, **red_teal**, **red_teal_ext**: Diverging palettes for
-  data with a meaningful center
-- **bright**, **contrast**: Qualitative palettes for categorical data
-- **categorical**, **categorical_ito**, **categorical_tab**,
-  **categorical_set**: Extended categorical palettes (including
-  colorblind-safe options)
-- **accent_red**, **accent_teal**: Accent palettes for emphasis
+- **main**: Primary Insper brand hues for categorical data
+- **muted**: Softer (desaturated) categorical palette
+- **vermelho**, **turquesa**, **verde**, **amarelo**, **laranja**,
+  **rosa**, **roxo**, **grays**: Sequential single-hue gradients
+- **diverging** (red/turquesa), **roxo_verde**, **laranja_roxo**,
+  **rosa_verde**: Diverging palettes for data with a meaningful center
+- **categorical_ito**, **categorical_tab**, **categorical_set**:
+  Colorblind-safe reference palettes
 
 Use `show_insper_palettes()` to see all available palettes and visualize
 the colors in each one (it also invisibly returns a data frame of
