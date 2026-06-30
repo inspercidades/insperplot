@@ -55,14 +55,18 @@ get_insper_colors <- function(...) {
     return(insper_individual_colors)
   }
   requested <- c(...)
-  missing <- setdiff(requested, names(insper_individual_colors))
+  user_env <- rlang::caller_env()
+  resolved <- vapply(
+    requested, deprecate_color_name, character(1), user_env = user_env
+  )
+  missing <- setdiff(resolved, names(insper_individual_colors))
   if (length(missing) > 0) {
     cli::cli_abort(c(
       "x" = "Colors not found: {.val {missing}}",
       "i" = "Available colors: {.val {names(insper_individual_colors)}}"
     ))
   }
-  insper_individual_colors[requested]
+  insper_individual_colors[resolved]
 }
 
 
@@ -121,6 +125,8 @@ get_insper_colors <- function(...) {
 #'   geom_point() +
 #'   scale_color_manual(values = insper_palette("main", n = 3))
 insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
+  palette <- deprecate_palette_name(palette, user_env = rlang::caller_env())
+
   if (!palette %in% names(insper_palettes)) {
     cli::cli_abort(c(
       "Palette {.val {palette}} not found.",
