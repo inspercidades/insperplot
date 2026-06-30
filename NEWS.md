@@ -39,6 +39,12 @@ cinza/azul neutrals.
 * Continuous scales now interpolate colors in CIELAB space for perceptually
   smoother gradients.
 * The package hex logo was recolored to the 2026 brand red.
+* **Reduced bundled fonts to Inter only.** EB Garamond and Playfair Display are
+  no longer shipped — they were old-brand serif fallbacks not part of the 2026
+  kit, in which Inter is the sole free font. Titles default to Georgia (a
+  system font; the documented substitute for the primary GT Ultra) and now fall
+  back directly to the system "serif" family where Georgia is unavailable. This
+  trims the installed package by ~1.4 MB.
 
 # insperplot 0.1.0
 

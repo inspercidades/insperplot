@@ -119,14 +119,15 @@ show_insper_palettes()
 
 ## Fonts and Rendering
 
-`insperplot` bundles the **Inter**, **EB Garamond**, and **Playfair
-Display** font families (all licensed under the SIL Open Font License).
-These fonts are registered automatically when the package is loaded — no
-manual download or setup required.
+`insperplot` bundles the **Inter** font family (licensed under the SIL
+Open Font License), the only free font in Insper’s 2026 brand kit. It is
+registered automatically when the package is loaded — no manual download
+or setup required.
 
 The default title font is **Georgia**, a system serif font pre-installed
-on most operating systems. If Georgia is unavailable, the theme falls
-back to the bundled serif fonts.
+on most operating systems and the documented substitute for Insper’s
+primary GT Ultra. If Georgia is unavailable, the theme falls back to the
+system serif family.
 
 For the best rendering quality, install the
 [ragg](https://ragg.r-lib.org/) graphics device:

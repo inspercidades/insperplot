@@ -40,9 +40,9 @@ library(dplyr)
 
 ### Fonts
 
-insperplot bundles the **Inter**, **EB Garamond**, and **Playfair Display** font families and registers them automatically when the package is loaded — no manual setup required.
+insperplot bundles the **Inter** font family and registers it automatically when the package is loaded — no manual setup required. Inter is the only free font in Insper's 2026 brand kit.
 
-The default title font is **Georgia** (a system font pre-installed on most operating systems). If Georgia is unavailable, the theme falls back to the bundled serif fonts.
+The default title font is **Georgia** (a system font pre-installed on most operating systems and the documented substitute for Insper's primary GT Ultra). If Georgia is unavailable, the theme falls back to the system serif family.
 
 For the best rendering quality, install the [ragg](https://ragg.r-lib.org/) package (`install.packages("ragg")`) and, if using RStudio, set the graphics backend to AGG under **Tools > Global Options > General > Graphics**.
 

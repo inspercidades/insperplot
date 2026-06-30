@@ -7,9 +7,9 @@
 #' @param base_size Numeric. Base font size for all text elements in points.
 #'   Default is 12. All other text sizes are calculated relative to this value.
 #' @param font_title Character. Font family to use for plot titles and subtitles.
-#'   Default is "Georgia" (serif, from Insper's official template). The theme
-#'   automatically detects font availability and falls back to "EB Garamond",
-#'   then "Playfair Display", then "serif" if unavailable.
+#'   Default is "Georgia" (serif, the documented substitute for Insper's primary
+#'   GT Ultra). The theme automatically detects font availability and falls back
+#'   to the system "serif" family if Georgia is unavailable.
 #' @param font_text Character. Font family to use for all other text elements
 #'   (axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
 #'   Insper's official template). Falls back to "Arial" then "sans" if unavailable.
@@ -46,15 +46,16 @@
 #'
 #' The theme uses fonts based on Insper's official template:
 #' \itemize{
-#'   \item Georgia (serif, system font) for titles - falls back to EB Garamond,
-#'         then Playfair Display
+#'   \item Georgia (serif, system font) for titles - falls back to the system
+#'         "serif" family
 #'   \item Inter (sans-serif) for body text - falls back to Arial
 #' }
 #'
-#' Inter, EB Garamond, and Playfair Display are bundled with the package and
-#' registered automatically when the package is loaded. Georgia is a system
-#' font available on most operating systems. If any font is unavailable, the
-#' theme falls back through the chain to system defaults ("serif" / "sans").
+#' Inter is bundled with the package and registered automatically when the
+#' package is loaded. Georgia is a system font available on most operating
+#' systems (the documented substitute for Insper's primary GT Ultra). If any
+#' font is unavailable, the theme falls back to system defaults ("serif" /
+#' "sans").
 #'
 #' The function validates input parameters and will throw an error if invalid
 #' values are provided for \code{grid} or \code{border} arguments.
@@ -118,7 +119,7 @@ theme_insper <- function(
   # Font detection and fallback ----
   font_title <- detect_font(
     font_title,
-    fallback_chain = c("EB Garamond", "Playfair Display", "serif")
+    fallback_chain = "serif"
   )
   font_text <- detect_font(
     font_text,
@@ -222,18 +223,24 @@ detect_font <- function(font_name, fallback_chain = "sans") {
       ))
 
       resolve_font <- function(name) {
-        if (name %in% available_fonts) return(name)
+        if (name %in% available_fonts) {
+          return(name)
+        }
         # Case-insensitive literal substring match: lowercase both sides and
         # use `fixed = TRUE` so font names with regex metacharacters (e.g. a
         # stray "+" or "(") are matched literally rather than as patterns.
         hits <- grepl(tolower(name), tolower(available_fonts), fixed = TRUE)
         matches <- available_fonts[hits]
-        if (length(matches) > 0) return(matches[1])
+        if (length(matches) > 0) {
+          return(matches[1])
+        }
         NULL
       }
 
       resolved <- resolve_font(font_name)
-      if (!is.null(resolved)) return(resolved)
+      if (!is.null(resolved)) {
+        return(resolved)
+      }
 
       for (fallback_font in fallback_chain) {
         if (fallback_font %in% c("serif", "sans", "mono")) {
