@@ -79,3 +79,7 @@ data-raw/global-fossil-fuel-consumption/
 
 # Generated pkgdown assets
 pkgdown/favicon/
+
+# Large brand reference binaries (kept locally, not in git)
+Rplots.pdf
+data-raw/refs/*.pdf
