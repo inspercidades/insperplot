@@ -8,9 +8,7 @@ font_add("Georgia", regular = "Georgia.ttf")
 # showtext_opts(dpi = 300)
 # showtext_auto()
 
-insper_red <- "#E4002B"
-insper_teal <- "#009491"
-insper_orange <- "#F15A22"
+insper_red <- "#E50505"
 
 theme_subplot <- function() {
   theme_minimal() +
@@ -79,9 +77,9 @@ sticker(
   # Package name
   package = "insperplot",
   p_size = 22,
-  p_color = "black",
+  p_color = "#ffffff",
   p_x = 1,
-  p_y = 1.35,
+  p_y = 1.425,
   p_family = "Georgia",
   # Subplot positioning
   s_x = 0.95,
