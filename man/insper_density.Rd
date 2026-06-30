@@ -9,8 +9,8 @@ insper_density(
   x,
   fill = NULL,
   palette = NULL,
-  fill_color = get_insper_colors("teals1"),
-  line_color = get_insper_colors("teals3"),
+  fill_color = get_insper_colors("turquesa_3"),
+  line_color = get_insper_colors("turquesa_2"),
   alpha = 0.6,
   bw = NULL,
   adjust = 1,
@@ -26,7 +26,7 @@ insper_density(
 \item{fill}{Fill aesthetic.
 Can be:
 \itemize{
-  \item A quoted color name/hex (e.g., `"purple"`, `"#9B59B6"`) for static color
+  \item A quoted color name/hex (e.g., `"purple"`, `"#9148B0"`) for static color
   \item A bare column name (e.g., `factor(cyl)`) for discrete grouping
   \item A continuous variable (e.g., `gear`) for gradient coloring (rare for density)
 }
@@ -34,8 +34,8 @@ If `NULL` (default), uses Insper teal. When a variable is mapped, it applies to
 both density fill and line color.}
 
 \item{palette}{Character. Color palette name for variable mappings.
-Options: "categorical", "main", "bright", "reds", "teals", etc.
-If NULL (default), uses "categorical". Only applies to variable mappings.}
+Options: "main", "muted", "turquesa", "vermelho", etc.
+If NULL (default), uses "main". Only applies to variable mappings.}
 
 \item{fill_color}{Character. Hex color for density area when not using fill aesthetic.
 Default is Insper teal. (Deprecated: use `fill = "color"` instead)}

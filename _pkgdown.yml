@@ -4,8 +4,8 @@ template:
   bootswatch: flatly
   theme: arrow-light
   bslib:
-    primary: "#E4002B"
-    secondary: "#009491"
+    primary: "#E50505"
+    secondary: "#3ACC9F"
     base_font: {google: "Inter"}
     heading_font: "Georgia"
 

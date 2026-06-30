@@ -26,7 +26,7 @@ mappings (discrete or continuous scales), not static colors.
 # This will warn
 warn_palette_ignored(
   list(type = "static_color", value = "blue"),
-  palette = "bright",
+  palette = "main",
   param_name = "fill"
 )
 # Warning: `palette` argument ignored when `fill` is a static color
@@ -34,7 +34,7 @@ warn_palette_ignored(
 # This will NOT warn (palette is used)
 warn_palette_ignored(
   list(type = "variable_mapping"),
-  palette = "bright",
+  palette = "main",
   param_name = "fill"
 )
 }

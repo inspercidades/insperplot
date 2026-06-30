@@ -106,15 +106,15 @@ get_insper_colors <- function(...) {
 #' insper_palette("main")
 #'
 #' # Subset to n colors
-#' insper_palette("reds", n = 3)
+#' insper_palette("vermelho", n = 3)
 #'
 #' # Reverse order
-#' insper_palette("red_teal", reverse = TRUE)
+#' insper_palette("diverging", reverse = TRUE)
 #'
 #' # Use directly in a plot
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) +
-#'   geom_point(color = insper_palette("reds", n = 1))
+#'   geom_point(color = insper_palette("vermelho", n = 1))
 #'
 #' # Use in manual scales
 #' ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +

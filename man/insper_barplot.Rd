@@ -10,7 +10,7 @@ insper_barplot(
   y,
   fill = NULL,
   position = "dodge",
-  palette = "categorical",
+  palette = "main",
   zero = TRUE,
   text = FALSE,
   text_size = 4,
@@ -38,7 +38,7 @@ When mapping a variable, creates grouped or stacked bars based on \code{position
 \item{position}{Position adjustment for bars. Options: "dodge", "stack",
 "fill", "identity". Default is "dodge"}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "categorical".}
+\item{palette}{Character. Color palette for variable mappings. Default is "main".}
 
 \item{zero}{Logical. If TRUE, adds a horizontal line at y = 0. Default is TRUE}
 

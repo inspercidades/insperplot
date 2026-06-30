@@ -286,7 +286,7 @@ detect_aesthetic_type <- function(quo, param_name = "parameter", data = NULL) {
 #' # This will warn
 #' warn_palette_ignored(
 #'   list(type = "static_color", value = "blue"),
-#'   palette = "bright",
+#'   palette = "main",
 #'   param_name = "fill"
 #' )
 #' # Warning: `palette` argument ignored when `fill` is a static color
@@ -294,7 +294,7 @@ detect_aesthetic_type <- function(quo, param_name = "parameter", data = NULL) {
 #' # This will NOT warn (palette is used)
 #' warn_palette_ignored(
 #'   list(type = "variable_mapping"),
-#'   palette = "bright",
+#'   palette = "main",
 #'   param_name = "fill"
 #' )
 #' }
@@ -330,7 +330,7 @@ has_insper_fonts <- function() {
 
 #' Calculate Relative Luminance of a Color
 #'
-#' @param hex_color Character. Hex color code (e.g., "#E4002B")
+#' @param hex_color Character. Hex color code (e.g., "#E50505")
 #' @return Numeric. Relative luminance value between 0 (black) and 1 (white)
 #' @noRd
 #' @keywords internal

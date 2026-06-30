@@ -10,7 +10,7 @@ insper_scatterplot(
   y,
   color = NULL,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   add_smooth = FALSE,
   smooth_method = "lm",
   point_size = 2,
@@ -40,7 +40,7 @@ When mapping a variable, the appropriate scale is automatically applied.}
   \item \code{NULL} (default) - no fill mapping
 }}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "categorical".}
+\item{palette}{Character. Color palette for variable mappings. Default is "main".}
 
 \item{add_smooth}{Logical. If TRUE, adds a regression line. Default is FALSE}
 

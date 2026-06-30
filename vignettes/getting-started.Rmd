@@ -118,7 +118,7 @@ ggplot(macro_series, aes(date, ibcbr_dessaz)) +
 The colors used in insperplot are based on Insper's [brandkit](https://github.com/Insper/Cores-Marca-Insper). Use `insper_palette()` to preview a specific palette and `show_insper_palettes()` to see all available palettes at a glance:
 
 ```{r palettes-overview, fig.height=4}
-insper_palette("reds")
+insper_palette("vermelho")
 
 show_insper_palettes()
 ```
@@ -140,7 +140,7 @@ recent_fuel <- subset(fossil_fuel, year >= 1960)
 
 ggplot(recent_fuel, aes(year, consumption, fill = fuel)) +
   geom_area() +
-  scale_fill_insper_d(palette = "bright") +
+  scale_fill_insper_d(palette = "main") +
   scale_x_continuous(expand = expansion(mult = c(0))) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   theme_insper(border = "half")
@@ -151,7 +151,7 @@ The same data shown as a line chart with `scale_color_insper_d()`:
 ```{r scale-discrete-color}
 ggplot(fossil_fuel, aes(year, consumption, color = fuel)) +
   geom_line() +
-  scale_color_insper_d(palette = "bright") +
+  scale_color_insper_d(palette = "main") +
   theme_insper() +
   labs(
     title = "Global Fossil Fuel Consumption",
@@ -166,7 +166,7 @@ ggplot(fossil_fuel, aes(year, consumption, color = fuel)) +
 
 For numeric variables, use `scale_color_insper_c()` or `scale_fill_insper_c()`. These create smooth color gradients from any Insper palette.
 
-The heatmap below shows 12-month rolling inflation (IPCA) across years and months using the `"reds"` palette. We compute the rolling product from the `macro_series` dataset using `lubridate` (for date parts) and `RcppRoll` (for the rolling window):
+The heatmap below shows 12-month rolling inflation (IPCA) across years and months using the `"vermelho"` palette. We compute the rolling product from the `macro_series` dataset using `lubridate` (for date parts) and `RcppRoll` (for the rolling window):
 
 ```{r scale-continuous-fill}
 #| fig-width: 8
@@ -191,7 +191,7 @@ ggplot(macro_calendar, aes(month, year, fill = ipca12m)) +
   scale_y_continuous(breaks = 2004:2024, expand = expansion(c(0))) +
   scale_fill_insper_c(
     name = "IPCA (YoY, %)",
-    palette = "reds"
+    palette = "vermelho"
   ) +
   labs(x = NULL, y = NULL) +
   theme_insper() +

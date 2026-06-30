@@ -14,7 +14,7 @@
 #'     \item \code{NULL} (default) to use default Insper teal
 #'   }
 #'   When mapping a variable, the appropriate scale is automatically applied.
-#' @param palette Character. Color palette for variable mappings. Default is "categorical".
+#' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param line_width Numeric. Width of lines. Default is 0.8
 #' @param add_points Logical. If TRUE, adds points to lines. Default is FALSE
 #' @param ... Additional arguments passed to \code{ggplot2::geom_line()},
@@ -28,7 +28,7 @@
 #' insper_timeseries(macro_series, x = date, y = ipca)
 #'
 #' # The color argument automatically detects the type of variable
-#' insper_timeseries(macro_series, x = date, y = ipca, color = "#3CBFAE")
+#' insper_timeseries(macro_series, x = date, y = ipca, color = "#3ACC9F")
 #'
 #' # Grouped time series (discrete variable)
 #' recent_data <- subset(fossil_fuel, year >= 1920)
@@ -42,7 +42,7 @@ insper_timeseries <- function(
   x,
   y,
   color = NULL,
-  palette = "categorical",
+  palette = "main",
   line_width = 0.8,
   add_points = FALSE,
   ...
@@ -67,14 +67,14 @@ insper_timeseries <- function(
     # Default: Insper teal
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_line(
-        color = get_insper_colors("teals1"),
+        color = get_insper_colors("turquesa_3"),
         linewidth = line_width,
         ...
       )
 
     if (add_points) {
       p <- p +
-        ggplot2::geom_point(color = get_insper_colors("teals1"), size = 1)
+        ggplot2::geom_point(color = get_insper_colors("turquesa_3"), size = 1)
     }
   } else if (color_type$type == "static_color") {
     # User-specified static color

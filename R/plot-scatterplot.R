@@ -20,7 +20,7 @@
 #'     \item A quoted color string for static fill (e.g., \code{fill = "lightblue"})
 #'     \item \code{NULL} (default) - no fill mapping
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "categorical".
+#' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param add_smooth Logical. If TRUE, adds a regression line. Default is FALSE
 #' @param smooth_method Character. Smoothing method ("lm", "loess", "gam", "glm"). Default is "lm"
 #' @param point_size Numeric. Size of points. Default is 2
@@ -67,7 +67,7 @@ insper_scatterplot <- function(
   y,
   color = NULL,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   add_smooth = FALSE,
   smooth_method = "lm",
   point_size = 2,
@@ -168,7 +168,7 @@ insper_scatterplot <- function(
     if (color_type$type == "static_color") {
       geom_params$color <- color_type$value
     } else {
-      geom_params$color <- get_insper_colors("teals3") # Default outline for filled shapes
+      geom_params$color <- get_insper_colors("turquesa_2") # Default outline for filled shapes
     }
 
     p <- p +
@@ -192,7 +192,7 @@ insper_scatterplot <- function(
       color = if (color_type$type == "static_color") {
         color_type$value
       } else {
-        get_insper_colors("teals1") # Default
+        get_insper_colors("turquesa_3") # Default
       },
       size = point_size,
       alpha = point_alpha
@@ -227,8 +227,8 @@ insper_scatterplot <- function(
     p <- p +
       ggplot2::geom_smooth(
         method = smooth_method,
-        color = get_insper_colors("oranges1"),
-        fill = get_insper_colors("oranges1"),
+        color = get_insper_colors("laranja_0"),
+        fill = get_insper_colors("laranja_0"),
         alpha = 0.2
       )
   }

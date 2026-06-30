@@ -126,7 +126,7 @@ theme_insper <- function(
   )
 
   # Colors ----
-  off_white <- get_insper_colors("off_white")
+  off_white <- get_insper_colors("white")
   black <- get_insper_colors("black")
 
   # Conditional grid theme ----
@@ -134,7 +134,7 @@ theme_insper <- function(
     theme_sub_panel(
       grid.major = element_line(
         linewidth = 0.35,
-        color = get_insper_colors("gray_light")
+        color = get_insper_colors("cinza_0")
       )
     )
   } else {
@@ -145,13 +145,13 @@ theme_insper <- function(
   border_theme <- if (border == "half") {
     theme_sub_axis(
       line = element_line(),
-      ticks = element_line(color = get_insper_colors("gray_dark")),
+      ticks = element_line(color = get_insper_colors("cinza_4")),
       ticks.length = unit(7, "pt")
     )
   } else if (border == "closed") {
     theme_sub_panel(border = element_rect(color = black, fill = NA)) +
       theme_sub_axis(
-        ticks = element_line(color = get_insper_colors("gray_dark")),
+        ticks = element_line(color = get_insper_colors("cinza_4")),
         ticks.length = unit(7, "pt")
       )
   } else {
@@ -176,7 +176,7 @@ theme_insper <- function(
       subtitle = element_text(
         size = rel(0.8),
         family = font_text,
-        color = get_insper_colors("gray_meddark"),
+        color = get_insper_colors("cinza_4"),
         hjust = 0,
         margin = margin(t = 3, b = 5)
       ),

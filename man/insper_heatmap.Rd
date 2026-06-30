@@ -44,7 +44,7 @@ insper_heatmap(cor_mat)
 insper_heatmap(cor_mat, show_values = FALSE)
 
 # Custom palette
-insper_heatmap(cor_mat, palette = "red_teal")
+insper_heatmap(cor_mat, palette = "diverging")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -9,7 +9,7 @@ insper_boxplot(
   x,
   y,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   add_jitter = NULL,
   add_notch = FALSE,
   box_alpha = 0.8,
@@ -30,7 +30,7 @@ insper_boxplot(
   \item \code{NULL} (default) to use default Insper teal
 }}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "categorical".}
+\item{palette}{Character. Color palette for variable mappings. Default is "main".}
 
 \item{add_jitter}{Logical. If TRUE, adds jittered points. If NULL (default),
 automatically enables jitter when the largest group has <100 observations.}
@@ -54,7 +54,7 @@ using Insper's visual identity.
 insper_boxplot(iris, x = Species, y = Sepal.Length)
 
 # Static fill color
-insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F15A22")
+insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F89D49")
 
 # Variable fill mapping
 insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species)

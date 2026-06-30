@@ -15,7 +15,7 @@
 #'   When mapping a variable, creates grouped or stacked bars based on \code{position}.
 #' @param position Position adjustment for bars. Options: "dodge", "stack",
 #'   "fill", "identity". Default is "dodge"
-#' @param palette Character. Color palette for variable mappings. Default is "categorical".
+#' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param zero Logical. If TRUE, adds a horizontal line at y = 0. Default is TRUE
 #' @param text Logical. If TRUE, adds value labels on bars. Default is FALSE
 #' @param text_size Numeric. Size of text labels. Default is 4
@@ -70,7 +70,7 @@ insper_barplot <- function(
   y,
   fill = NULL,
   position = "dodge",
-  palette = "categorical",
+  palette = "main",
   zero = TRUE,
   text = FALSE,
   text_size = 4,
@@ -107,7 +107,7 @@ insper_barplot <- function(
     # Default: Insper red
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_col(
-        fill = get_insper_colors("reds1"),
+        fill = get_insper_colors("vermelho"),
         position = position,
         ...
       )
