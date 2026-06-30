@@ -3,46 +3,43 @@
 palette_metadata <- function() {
   data.frame(
     name = c(
-      "main",
-      "reds", "oranges", "teals", "grays",
-      "red_teal", "red_teal_ext", "diverging",
-      "bright", "contrast", "categorical",
-      "accent_red", "accent_teal",
-      "categorical_ito", "categorical_tab", "categorical_set"
+      # qualitative
+      "main", "muted",
+      "categorical_ito", "categorical_tab", "categorical_set",
+      # sequential
+      "vermelho", "turquesa", "verde", "amarelo",
+      "laranja", "rosa", "roxo", "grays",
+      # diverging
+      "diverging", "roxo_verde", "laranja_roxo", "rosa_verde"
     ),
     type = c(
-      "qualitative",
-      rep("sequential", 4),
-      rep("diverging", 3),
-      rep("qualitative", 3),
-      rep("accent", 2),
-      rep("qualitative", 3)
+      rep("qualitative", 5),
+      rep("sequential", 8),
+      rep("diverging", 4)
     ),
     n_colors = c(
-      6,
-      5, 5, 5, 5,
-      5, 11, 5,
-      6, 6, 8,
-      6, 6,
-      8, 10, 9
+      7, 7, 8, 10, 9,
+      5, 5, 5, 5, 5, 5, 5, 5,
+      5, 5, 5, 5
     ),
     recommended_use = c(
-      "Primary brand colors for categorical data",
-      "Intensity scales (light to dark red)",
-      "Intensity scales (light to dark orange)",
-      "Intensity scales (light to dark teal)",
-      "Intensity scales (light to dark gray)",
-      "Diverging data (negative/positive, red/teal)",
-      "Extended diverging palette (11 colors)",
-      "Classic diverging palette (teal/gray/red)",
-      "Bright categorical colors (high contrast)",
-      "High contrast categorical colors",
-      "8-color categorical palette",
-      "Accent palette with red emphasis",
-      "Accent palette with teal emphasis",
+      "Primary brand hues for categorical data",
+      "Softer (desaturated) categorical data",
       "Okabe-Ito colorblind-safe palette",
       "Tableau 10 categorical palette",
-      "ColorBrewer Set1 palette"
+      "ColorBrewer Set1 palette",
+      "Intensity scales (light to dark red)",
+      "Intensity scales (light to dark turquesa)",
+      "Intensity scales (light to dark verde)",
+      "Intensity scales (light to dark amarelo)",
+      "Intensity scales (light to dark laranja)",
+      "Intensity scales (light to dark rosa)",
+      "Intensity scales (light to dark roxo)",
+      "Intensity scales (light to dark gray)",
+      "Diverging data (red/turquesa, default)",
+      "Diverging data (roxo/verde)",
+      "Diverging data (laranja/roxo)",
+      "Diverging data (rosa/verde)"
     ),
     stringsAsFactors = FALSE
   )
@@ -92,11 +89,12 @@ get_insper_colors <- function(...) {
 #' @details
 #' Available palettes by type:
 #' \itemize{
-#'   \item \strong{Qualitative}: main, bright, contrast, categorical,
-#'     categorical_ito, categorical_tab, categorical_set
-#'   \item \strong{Sequential}: reds, oranges, teals, grays
-#'   \item \strong{Diverging}: red_teal, red_teal_ext, diverging
-#'   \item \strong{Accent}: accent_red, accent_teal
+#'   \item \strong{Qualitative}: main, muted, categorical_ito,
+#'     categorical_tab, categorical_set
+#'   \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
+#'     rosa, roxo, grays
+#'   \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
+#'     laranja_roxo, rosa_verde
 #' }
 #'
 #' @family colors
@@ -196,8 +194,8 @@ as.character.insper_palette <- function(x, ...) {
 #' by type. Invisibly returns a data frame of palette metadata.
 #'
 #' @param type Character. Filter by palette type. One of \code{"all"},
-#'   \code{"sequential"}, \code{"diverging"}, \code{"qualitative"}, or
-#'   \code{"accent"}. Default \code{"all"}.
+#'   \code{"sequential"}, \code{"diverging"}, or \code{"qualitative"}.
+#'   Default \code{"all"}.
 #'
 #' @return Invisibly returns a data frame with columns \code{name},
 #'   \code{type}, \code{n_colors}, and \code{recommended_use}.
@@ -215,7 +213,7 @@ as.character.insper_palette <- function(x, ...) {
 #' # Capture metadata
 #' meta <- show_insper_palettes()
 show_insper_palettes <- function(
-  type = c("all", "sequential", "diverging", "qualitative", "accent")
+  type = c("all", "sequential", "diverging", "qualitative")
 ) {
   hex <- position <- palette <- NULL  # R CMD check
 

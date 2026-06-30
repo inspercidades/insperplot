@@ -4,14 +4,12 @@
 \alias{show_insper_palettes}
 \title{Show All Insper Color Palettes}
 \usage{
-show_insper_palettes(
-  type = c("all", "sequential", "diverging", "qualitative", "accent")
-)
+show_insper_palettes(type = c("all", "sequential", "diverging", "qualitative"))
 }
 \arguments{
 \item{type}{Character. Filter by palette type. One of \code{"all"},
-\code{"sequential"}, \code{"diverging"}, \code{"qualitative"}, or
-\code{"accent"}. Default \code{"all"}.}
+\code{"sequential"}, \code{"diverging"}, or \code{"qualitative"}.
+Default \code{"all"}.}
 }
 \value{
 Invisibly returns a data frame with columns \code{name},

@@ -30,11 +30,12 @@ colors are accepted.
 \details{
 Available palettes by type:
 \itemize{
-  \item \strong{Qualitative}: main, bright, contrast, categorical,
-    categorical_ito, categorical_tab, categorical_set
-  \item \strong{Sequential}: reds, oranges, teals, grays
-  \item \strong{Diverging}: red_teal, red_teal_ext, diverging
-  \item \strong{Accent}: accent_red, accent_teal
+  \item \strong{Qualitative}: main, muted, categorical_ito,
+    categorical_tab, categorical_set
+  \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
+    rosa, roxo, grays
+  \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
+    laranja_roxo, rosa_verde
 }
 }
 \examples{

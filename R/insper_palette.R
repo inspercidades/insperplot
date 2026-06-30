@@ -30,7 +30,7 @@ insper_pal <- function(
       pal <- pal[1:n]
     }
   } else {
-    pal <- grDevices::colorRampPalette(pal)(n)
+    pal <- grDevices::colorRampPalette(pal, space = "Lab")(n)
   }
 
   return(pal)
