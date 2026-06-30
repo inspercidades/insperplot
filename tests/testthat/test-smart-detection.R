@@ -187,12 +187,12 @@ test_that("warn_palette_ignored() warns when palette specified with static color
   aesthetic_type <- list(type = "static_color", value = "blue")
 
   expect_warning(
-    warn_palette_ignored(aesthetic_type, palette = "bright", param_name = "fill"),
+    warn_palette_ignored(aesthetic_type, palette = "main", param_name = "fill"),
     "palette.*ignored"
   )
 
   expect_warning(
-    warn_palette_ignored(aesthetic_type, palette = "categorical", param_name = "color"),
+    warn_palette_ignored(aesthetic_type, palette = "muted", param_name = "color"),
     "palette.*ignored"
   )
 })
@@ -209,11 +209,11 @@ test_that("warn_palette_ignored() does NOT warn with variable mapping", {
   aesthetic_type <- list(type = "variable_mapping", is_continuous = FALSE)
 
   expect_no_warning(
-    warn_palette_ignored(aesthetic_type, palette = "bright", param_name = "fill")
+    warn_palette_ignored(aesthetic_type, palette = "main", param_name = "fill")
   )
 
   expect_no_warning(
-    warn_palette_ignored(aesthetic_type, palette = "categorical", param_name = "color")
+    warn_palette_ignored(aesthetic_type, palette = "muted", param_name = "color")
   )
 })
 
@@ -221,7 +221,7 @@ test_that("warn_palette_ignored() does NOT warn when palette is missing", {
   aesthetic_type <- list(type = "missing")
 
   expect_no_warning(
-    warn_palette_ignored(aesthetic_type, palette = "bright", param_name = "fill")
+    warn_palette_ignored(aesthetic_type, palette = "main", param_name = "fill")
   )
 })
 
@@ -230,7 +230,7 @@ test_that("warn_palette_ignored() does NOT warn when palette is missing", {
 
 test_that("Smart detection workflow works end-to-end", {
   # Simulate a simplified plot function using smart detection
-  smart_plot <- function(data, x, y, color = NULL, palette = "categorical") {
+  smart_plot <- function(data, x, y, color = NULL, palette = "muted") {
     color_quo <- rlang::enquo(color)
     color_type <- detect_aesthetic_type(color_quo, "color", data)
     warn_palette_ignored(color_type, palette, "color")
@@ -263,7 +263,7 @@ test_that("Smart detection workflow works end-to-end", {
 
   # Test 5: Palette warning with static color
   expect_warning(
-    smart_plot(mtcars, wt, mpg, color = "blue", palette = "bright"),
+    smart_plot(mtcars, wt, mpg, color = "blue", palette = "main"),
     "palette.*ignored"
   )
 })

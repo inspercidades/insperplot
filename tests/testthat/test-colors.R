@@ -7,13 +7,13 @@ test_that("get_insper_colors returns all colors when no args", {
 })
 
 test_that("get_insper_colors extracts specific colors by name", {
-  red <- insperplot:::get_insper_colors("reds1")
+  red <- insperplot:::get_insper_colors("vermelho")
   expect_length(red, 1)
-  expect_equal(unname(red), "#E4002B")
+  expect_equal(unname(red), "#E50505")
 
-  both <- insperplot:::get_insper_colors("reds1", "teals1")
+  both <- insperplot:::get_insper_colors("vermelho", "turquesa_3")
   expect_length(both, 2)
-  expect_named(both, c("reds1", "teals1"))
+  expect_named(both, c("vermelho", "turquesa_3"))
 })
 
 test_that("get_insper_colors errors on unknown names", {
@@ -35,19 +35,19 @@ test_that("insper_pal validates palette names", {
 })
 
 test_that("insper_pal reverse parameter works", {
-  pal_normal  <- insperplot:::insper_pal("reds")
-  pal_reverse <- insperplot:::insper_pal("reds", reverse = TRUE)
+  pal_normal  <- insperplot:::insper_pal("vermelho")
+  pal_reverse <- insperplot:::insper_pal("vermelho", reverse = TRUE)
   expect_equal(pal_normal, rev(pal_reverse))
 })
 
 test_that("insper_pal continuous type interpolates colors", {
-  pal <- insperplot:::insper_pal("reds", n = 10, type = "continuous")
+  pal <- insperplot:::insper_pal("vermelho", n = 10, type = "continuous")
   expect_length(pal, 10)
   expect_true(all(grepl("^#", pal)))
 })
 
 test_that("insper_pal warns when n exceeds palette size", {
-  expect_warning(insperplot:::insper_pal("reds", n = 20, type = "discrete"), "Not enough colors")
+  expect_warning(insperplot:::insper_pal("vermelho", n = 20, type = "discrete"), "Not enough colors")
 })
 
 test_that("insper_pal n=NULL returns full palette", {
@@ -66,26 +66,26 @@ test_that("insper_palette returns insper_palette class", {
 })
 
 test_that("insper_palette is a character vector", {
-  pal <- insper_palette("reds")
+  pal <- insper_palette("vermelho")
   expect_true(is.character(pal))
   expect_true(all(grepl("^#", pal)))
 })
 
 test_that("insper_palette n parameter subsets colors", {
-  pal <- insper_palette("reds", n = 3)
+  pal <- insper_palette("vermelho", n = 3)
   expect_length(pal, 3)
 })
 
 test_that("insper_palette reverse parameter works", {
-  normal  <- insper_palette("reds")
-  reversed <- insper_palette("reds", reverse = TRUE)
+  normal  <- insper_palette("vermelho")
+  reversed <- insper_palette("vermelho", reverse = TRUE)
   expect_equal(as.character(normal), rev(as.character(reversed)))
 })
 
 test_that("insper_palette warns and recycles when n exceeds palette size", {
-  expect_warning(insper_palette("reds", n = 20), "recycling")
+  expect_warning(insper_palette("vermelho", n = 20), "recycling")
   suppressWarnings({
-    pal <- insper_palette("reds", n = 20)
+    pal <- insper_palette("vermelho", n = 20)
     expect_length(pal, 20)
   })
 })
