@@ -186,3 +186,46 @@ test_that("detect_font handles systemfonts not available gracefully", {
   expect_length(result, 1)
 })
 
+test_that("match_font_family prefers exact matches", {
+  match_font_family <- insperplot:::match_font_family
+
+  expect_equal(match_font_family("Inter", c("Inter", "Inter 18pt")), "Inter")
+  # Case-insensitive exact match returns the canonical registered casing
+  expect_equal(match_font_family("inter", c("Inter 18pt", "Inter")), "Inter")
+})
+
+test_that("match_font_family resolves optical-size variants of Inter", {
+  match_font_family <- insperplot:::match_font_family
+
+  # Modern Inter is commonly registered as "Inter 18pt" / "Inter_18pt".
+  expect_equal(
+    match_font_family("Inter", c("Inter 24pt", "Inter 18pt", "Inter 28pt")),
+    "Inter 18pt"
+  )
+  expect_equal(
+    match_font_family("Inter", c("Inter_24pt", "Inter_18pt")),
+    "Inter_18pt"
+  )
+  # Word-boundary match also handles a prefixed family for the title fallback.
+  expect_equal(
+    match_font_family("Garamond", c("EB Garamond", "Georgia")),
+    "EB Garamond"
+  )
+})
+
+test_that("match_font_family rejects substring false positives", {
+  match_font_family <- insperplot:::match_font_family
+
+  # "Inter" must not resolve to these even though it is a substring of each.
+  expect_null(
+    match_font_family("Inter", c("Interstate", "International", "SignPainter"))
+  )
+})
+
+test_that("match_font_family returns NULL when nothing matches", {
+  match_font_family <- insperplot:::match_font_family
+
+  expect_null(match_font_family("Inter", c("Arial", "Georgia")))
+  expect_null(match_font_family("Inter", character(0)))
+})
+

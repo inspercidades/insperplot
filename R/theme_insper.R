@@ -211,6 +211,60 @@ theme_insper <- function(
 
 # Helper Functions --------------------------------------------------------
 
+#' Resolve a requested font family against the available families
+#'
+#' Matches `name` against `available_fonts`, returning the resolved family
+#' name or `NULL` if there is no acceptable match. Tries an exact match
+#' (case-sensitive, then case-insensitive), then a word-boundary match.
+#'
+#' The word-boundary step is what makes resolution robust to modern variable
+#' fonts, which are frequently registered with an optical-size or variant
+#' suffix (e.g. "Inter 18pt", "Inter_18pt", "Helvetica Neue"). It accepts a
+#' family where `name` appears as a whole token (at the start or after a
+#' separator, and at the end or before a separator), so "Inter" matches
+#' "Inter 18pt" but deliberately not "Interstate", "International", or
+#' "SignPainter" — false positives the old naive substring match accepted.
+#'
+#' @param name Character. Requested font family.
+#' @param available_fonts Character vector of available family names.
+#' @return Character scalar (resolved family) or `NULL`.
+#' @keywords internal
+#' @noRd
+match_font_family <- function(name, available_fonts) {
+  if (name %in% available_fonts) {
+    return(name)
+  }
+  lname <- tolower(name)
+  lfonts <- tolower(available_fonts)
+  exact_ci <- which(lfonts == lname)
+  if (length(exact_ci) > 0) {
+    return(available_fonts[exact_ci[1]])
+  }
+
+  seps <- c(" ", "_", "-")
+  boundary_hit <- function(family) {
+    starts <- gregexpr(lname, family, fixed = TRUE)[[1]]
+    if (starts[1] == -1L) {
+      return(FALSE)
+    }
+    ends <- starts + nchar(lname) - 1L
+    before_ok <- starts == 1L |
+      substr(family, starts - 1L, starts - 1L) %in% seps
+    after_ok <- ends == nchar(family) |
+      substr(family, ends + 1L, ends + 1L) %in% seps
+    any(before_ok & after_ok)
+  }
+  hits <- vapply(lfonts, boundary_hit, logical(1))
+  matches <- available_fonts[hits]
+  if (length(matches) == 0) {
+    return(NULL)
+  }
+  # Deterministic pick: prefer the "18pt" optical size (the default for body
+  # text), then the shortest family name, then alphabetical order.
+  is_18pt <- grepl("18pt", matches, ignore.case = TRUE)
+  matches[order(!is_18pt, nchar(matches), matches)][1]
+}
+
 #' @keywords internal
 #' @noRd
 detect_font <- function(font_name, fallback_chain = "sans") {
@@ -222,22 +276,7 @@ detect_font <- function(font_name, fallback_chain = "sans") {
         systemfonts::system_fonts()$family
       ))
 
-      resolve_font <- function(name) {
-        if (name %in% available_fonts) {
-          return(name)
-        }
-        # Case-insensitive literal substring match: lowercase both sides and
-        # use `fixed = TRUE` so font names with regex metacharacters (e.g. a
-        # stray "+" or "(") are matched literally rather than as patterns.
-        hits <- grepl(tolower(name), tolower(available_fonts), fixed = TRUE)
-        matches <- available_fonts[hits]
-        if (length(matches) > 0) {
-          return(matches[1])
-        }
-        NULL
-      }
-
-      resolved <- resolve_font(font_name)
+      resolved <- match_font_family(font_name, available_fonts)
       if (!is.null(resolved)) {
         return(resolved)
       }
@@ -246,7 +285,7 @@ detect_font <- function(font_name, fallback_chain = "sans") {
         if (fallback_font %in% c("serif", "sans", "mono")) {
           return(fallback_font)
         }
-        resolved <- resolve_font(fallback_font)
+        resolved <- match_font_family(fallback_font, available_fonts)
         if (!is.null(resolved)) return(resolved)
       }
 
