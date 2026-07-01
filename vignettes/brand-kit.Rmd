@@ -1,0 +1,153 @@
+---
+title: "How to follow Insper's design guide"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to follow Insper's design guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  device = "ragg_png",
+  fig.width = 7,
+  fig.asp = 0.618,
+  fig.align = "center",
+  warning = FALSE,
+  message = FALSE,
+  eval = FALSE
+)
+```
+
+# Introduction
+
+**insperplot** extends ggplot2 with [Insper](https://www.insper.edu.br/en/)'s visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use. That said, while Insper has very specific brand guidelines, it lacks a data visualization module.
+
+This vignette is a small step towards filling this gap.
+
+## Basics
+
+```{r setup}
+library(insperplot)
+library(ggplot2)
+```
+
+### Accessibility
+
+```{r}
+insper_palette("main")
+```
+
+## Typography
+
+### Brand guidelines
+
+According to Insper's brand guidelines, the typography scheme should be something like the code below.
+
+- GT Ultra Fine Bold should be used in titles, subtitles and most highlights.
+- Acumin Pro ExtraCondensed Bold should be used in other highlights always in uppercase.
+- Inter should be used in body text with Verdana as a fallback.
+
+```{r}
+theme_minimal(base_family = "Inter 18pt") +
+  theme_sub_plot(
+    title = element_text(family = "GT Ultra Fine Bold", size = 22),
+    subtitle = element_text(family = "GT Ultra Fine Bold", size = 10),
+    caption = element_text(family = "Inter 18pt")
+  )
+
+some_plot +
+  annotate(
+    "text",
+    label = "SOME HIGHLIGHT ALWAYS IN CAPS",
+    family = "Acumin Pro ExtraCondensed",
+  )
+```
+
+There are several problems with this typography scheme. GT Ultra is a proprietary (and expensive) font, Acumin Pro and Verdana are available on some operating systems but not on others. Inter is not available on most operating systems, but is freely available for download from Google Fonts.
+
+### `insperplot` implementation
+
+The approach used by `insperplot` tries to be safe: it bundles Inter, meaning the font is installed together with the package, and uses safe fallbacks for titles. Essentially, the package uses Inter for everything except for the title, which uses `'serif'`.
+
+```{r}
+tinsper <- theme_insper()
+
+tinsper$plot.title@family
+#> "PT Serif"
+
+tinsper$plot.subtitle@family
+#> "Inter"
+
+tinsper$text@family
+#> "Inter"
+```
+
+Users that have GT Ultra, Acumin, or Verdana installed can use them by setting `font_title` and `font_text` in `theme_insper()`.
+
+```{r}
+base_plot <- ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  labs(
+    title = "Basic Theme",
+    subtitle = "USING THE PACKAGE TO MAKE PLOTS",
+    x = "Miles per Gallon",
+    y = "Weight (lbs)",
+    caption = "Source: mtcars | Insper"
+  )
+```
+
+A nice working alternative, that is usually available in most operating systems, is to use Georgia for titles (and some highlights) and Inter for everything else. There are no official fallbacks from Georgia, but EB Garamond and Playfair Display work as free serif alternatives (though neither is an official fallback).
+
+Note that, as of the 2026 brand kit, EB Garamond and Playfair Display are **no longer bundled with the package** — only Inter is. To use them in the examples below, you must have them installed on your system (both are freely available from [Google Fonts](https://fonts.google.com/)). When a requested title font is unavailable, `theme_insper()` falls back to the system `'serif'` family.
+
+```{r}
+# Recommended typography scheme
+base_plot +
+  theme_insper(
+    font_title = "Georgia",
+    font_text = "Inter"
+  )
+
+# Google font alternatives
+base_plot +
+  theme_insper(
+    font_title = "EB Garamond",
+    font_text = "Inter"
+  )
+
+base_plot +
+  theme_insper(
+    font_title = "Playfair Display",
+    font_text = "Inter"
+  )
+```
+
+On some operating systems, Acumin is available which can be used for subtitles and highlights.
+
+```{r}
+# Neat typography scheme
+base_plot +
+  theme_insper(
+    font_title = "Georgia",
+    font_text = "Inter"
+  ) +
+  theme_sub_plot(
+    subtitle = element_text(family = "Acumin Pro ExtraCondensed", size = 10)
+  )
+```
+
+Verdana is also available on most operating systems, but it's mostly unnecessary, since Inter is bundled with the package.
+
+```{r}
+base_plot +
+  theme_insper(
+    font_title = "Georgia",
+    font_text = "Verdana"
+  ) +
+  theme_sub_plot(
+    subtitle = element_text(family = "Acumin Pro ExtraCondensed", size = 10)
+  )
+```
