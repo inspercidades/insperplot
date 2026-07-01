@@ -3,20 +3,14 @@ SIL Open Font License, Version 1.1.
 
 Fonts included:
   - Inter (https://fonts.google.com/specimen/Inter)
-  - EB Garamond (https://fonts.google.com/specimen/EB+Garamond)
-  - Playfair Display (https://fonts.google.com/specimen/Playfair+Display)
 
-All three fonts were downloaded from Google Fonts and are copyright
-their respective authors. See below for the full license text.
+The font was downloaded from Google Fonts and is copyright its
+respective authors. See below for the full license text.
 
 -----------------------------------------------------------------------
 
 Copyright 2020 The Inter Project Authors
   (https://github.com/rsms/inter)
-Copyright 2017 The EB Garamond Project Authors
-  (https://github.com/georgd/EB-Garamond)
-Copyright 2017 The Playfair Display Project Authors
-  (https://github.com/clauseggers/Playfair-Display)
 
 This Font Software is licensed under the SIL Open Font License,
 Version 1.1.

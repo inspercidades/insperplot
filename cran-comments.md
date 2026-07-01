@@ -22,6 +22,12 @@ There are currently no downstream dependencies for this package.
 
 ## Additional notes
 
-* This is a new release.
+* This is an update from the current CRAN release (0.1.0).
+* This release rebuilds the color system for the 2026 Insper brand kit. Palette
+  and individual-color names were reorganized; the retired names are
+  soft-deprecated (they still resolve, with a `lifecycle` deprecation warning)
+  and slated for removal in a future release, so no reverse dependencies break.
+* Bundled fonts were reduced to Inter only (EB Garamond and Playfair Display
+  were removed), trimming the installed package size.
 * This package provides ggplot2 themes and color palettes based on Insper Instituto de Ensino e Pesquisa's visual identity.
 * The package includes a disclaimer that it is an unofficial package created by an Insper employee, not an official Insper product.
