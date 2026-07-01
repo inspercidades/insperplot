@@ -5,7 +5,7 @@ library(dplyr)
 
 inds <- c(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144)
 
-insper_cols <- get_palette_colors("main")
+insper_cols <- insper_palette("main")
 
 dat <- tibble(
   colors = factor(insper_cols, levels = insper_cols),
@@ -34,11 +34,11 @@ p2 <- ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
     y = "Miles per Gallon"
   )
 
-p3 <- show_insper_colors()
-p4 <- show_insper_palette()
+# p3 <- show_insper_colors()
+p4 <- show_insper_palettes()
 
 
 ggsave("man/figures/readme-treemap.png", p1, width = 5, height = 5)
 ggsave("man/figures/readme-mtcars-example.png", p2, width = 6, height = 4)
-ggsave("man/figures/readme-colors.png", p3, width = 6, height = 4)
-ggsave("man/figures/readme-palette.png", p4, width = 6, height = 4)
+# ggsave("man/figures/readme-colors.png", p3, width = 6, height = 4)
+# ggsave("man/figures/readme-palette.png", p4, width = 6, height = 4)

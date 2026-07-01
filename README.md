@@ -76,10 +76,7 @@ The package is based on Insper's brand colors.
 insper_palette("main")
 ```
 
-<p align="center">
-
-<img src="man/figures/readme-colors.png" width="80%"/>
-</p>
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="" width="100%" />
 
 insperplot includes several pre-defined palettes:
 
@@ -100,11 +97,6 @@ palette metadata):
 show_insper_palettes()
 ```
 
-<p align="center">
-
-<img src="man/figures/readme-palette.png" width="80%"/>
-</p>
-
 ## Main Functions
 
 - `theme_insper()`: Apply Insper's visual identity to ggplot2 plots.
@@ -120,12 +112,12 @@ show_insper_palettes()
 ## Fonts and Rendering
 
 `insperplot` bundles the **Inter** font family (licensed under the SIL
-Open Font License), the only free font in Insper’s 2026 brand kit. It is
+Open Font License), the only free font in Insper's 2026 brand kit. It is
 registered automatically when the package is loaded — no manual download
 or setup required.
 
 The default title font is **Georgia**, a system serif font pre-installed
-on most operating systems and the documented substitute for Insper’s
+on most operating systems and the documented substitute for Insper's
 primary GT Ultra. If Georgia is unavailable, the theme falls back to the
 system serif family.
 

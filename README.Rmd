@@ -49,6 +49,10 @@ remotes::install_github("portalcidados/insperplot")
 
 To use `insperplot` we recommend using `ggplot2`. The basic functions of the package are `theme_insper()` and the `scale_*_insper_*()` functions.
 
+```{r, include=FALSE}
+library(insperplot)
+```
+
 ```{r example, eval = FALSE}
 library(insperplot)
 library(ggplot2)
@@ -73,14 +77,10 @@ ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
 
 The package is based on Insper's brand colors.
 
-```{r, eval = FALSE}
+```{r}
 # View the core Insper brand colors (prints a color swatch)
 insper_palette("main")
 ```
-
-<p align="center">
-  <img src="man/figures/readme-colors.png" width="80%"/>
-</p>
 
 insperplot includes several pre-defined palettes:
 
@@ -95,10 +95,6 @@ Use `show_insper_palettes()` to see all available palettes and visualize the col
 ```{r view-palettes, eval = FALSE}
 show_insper_palettes()
 ```
-
-<p align="center">
-  <img src="man/figures/readme-palette.png" width="80%"/>
-</p>
 
 ## Main Functions
 
