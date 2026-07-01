@@ -47,13 +47,14 @@
 #' }
 #'
 #' @section Color Palettes:
-#' The package includes 15 pre-defined palettes:
+#' The package includes 17 pre-defined palettes from the 2026 Insper brand kit:
 #' \itemize{
-#'   \item **main** - Primary Insper brand colors
-#'   \item **reds, oranges, teals, grays** - Sequential single-color gradients
-#'   \item **diverging, red_teal, red_teal_ext** - Diverging palettes for data with a meaningful center
-#'   \item **bright, contrast, categorical** - Qualitative palettes for categorical data
-#'   \item **accent_red, accent_teal** - Accent palettes for emphasis
+#'   \item **main, muted** - Qualitative palettes for categorical data (`muted`
+#'     is a softer, desaturated variant of `main`)
+#'   \item **vermelho, turquesa, verde, amarelo, laranja, rosa, roxo, grays** -
+#'     Sequential single-hue gradients
+#'   \item **diverging, roxo_verde, laranja_roxo, rosa_verde** - Diverging
+#'     palettes for data with a meaningful center (`diverging` is red/turquesa)
 #'   \item **categorical_ito, categorical_tab, categorical_set** - Colorblind-safe categorical options
 #' }
 #'
