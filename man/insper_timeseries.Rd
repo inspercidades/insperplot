@@ -9,7 +9,7 @@ insper_timeseries(
   x,
   y,
   color = NULL,
-  palette = "categorical",
+  palette = "main",
   line_width = 0.8,
   add_points = FALSE,
   ...
@@ -30,7 +30,7 @@ insper_timeseries(
 }
 When mapping a variable, the appropriate scale is automatically applied.}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "categorical".}
+\item{palette}{Character. Color palette for variable mappings. Default is "main".}
 
 \item{line_width}{Numeric. Width of lines. Default is 0.8}
 
@@ -55,7 +55,7 @@ library(ggplot2)
 insper_timeseries(macro_series, x = date, y = ipca)
 
 # The color argument automatically detects the type of variable
-insper_timeseries(macro_series, x = date, y = ipca, color = "#3CBFAE")
+insper_timeseries(macro_series, x = date, y = ipca, color = "#3ACC9F")
 
 # Grouped time series (discrete variable)
 recent_data <- subset(fossil_fuel, year >= 1920)

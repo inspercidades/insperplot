@@ -12,7 +12,7 @@
 #'     \item A quoted color string for static fill (e.g., \code{fill = "purple"})
 #'     \item \code{NULL} (default) to use default Insper teal
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "categorical".
+#' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param show_boxplot Logical. If TRUE, overlays a boxplot. Default is FALSE
 #' @param show_points Logical. If TRUE, adds jittered points. Default is FALSE
 #' @param violin_alpha Numeric. Transparency of violins (0-1). Default is 0.7
@@ -24,13 +24,13 @@
 #' insper_violin(iris, x = Species, y = Sepal.Length)
 #'
 #' # Static fill color
-#' insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E4002B")
+#' insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E50505")
 #'
 #' # Variable fill mapping
 #' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species)
 #'
 #' # Custom palette
-#' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "bright")
+#' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
 #'
 #' # With boxplot overlay and points
 #' insper_violin(iris, x = Species, y = Sepal.Length,
@@ -44,7 +44,7 @@ insper_violin <- function(
   x,
   y,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   show_boxplot = FALSE,
   show_points = FALSE,
   violin_alpha = 0.7,
@@ -70,7 +70,7 @@ insper_violin <- function(
     # Default: Insper teal
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_violin(
-        fill = get_insper_colors("teals2"),
+        fill = get_insper_colors("turquesa_0"),
         alpha = violin_alpha,
         ...
       )
@@ -103,7 +103,7 @@ insper_violin <- function(
       ggplot2::geom_jitter(
         width = 0.1,
         alpha = 0.5,
-        color = get_insper_colors("gray_med")
+        color = get_insper_colors("cinza_1")
       )
   }
 

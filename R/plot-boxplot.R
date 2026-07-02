@@ -12,7 +12,7 @@
 #'     \item A quoted color string for static fill (e.g., \code{fill = "lightblue"})
 #'     \item \code{NULL} (default) to use default Insper teal
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "categorical".
+#' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param add_jitter Logical. If TRUE, adds jittered points. If NULL (default),
 #'   automatically enables jitter when the largest group has <100 observations.
 #' @param add_notch Logical. If TRUE, creates notched boxplot. Default is FALSE
@@ -25,7 +25,7 @@
 #' insper_boxplot(iris, x = Species, y = Sepal.Length)
 #'
 #' # Static fill color
-#' insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F15A22")
+#' insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F89D49")
 #'
 #' # Variable fill mapping
 #' insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species)
@@ -40,7 +40,7 @@ insper_boxplot <- function(
   x,
   y,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   add_jitter = NULL,
   add_notch = FALSE,
   box_alpha = 0.8,
@@ -79,7 +79,7 @@ insper_boxplot <- function(
     # Default: Insper teal
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_boxplot(
-        fill = get_insper_colors("teals2"),
+        fill = get_insper_colors("turquesa_0"),
         alpha = box_alpha,
         notch = add_notch,
         ...
@@ -109,7 +109,7 @@ insper_boxplot <- function(
       ggplot2::geom_jitter(
         width = 0.2,
         alpha = 0.5,
-        color = get_insper_colors("gray_med")
+        color = get_insper_colors("cinza_1")
       )
   }
 

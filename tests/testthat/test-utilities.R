@@ -225,8 +225,6 @@ test_that("bundled fonts are registered on package load", {
   all_fonts <- unique(c(registered, system))
 
   expect_true("Inter" %in% all_fonts)
-  expect_true("EB Garamond" %in% all_fonts)
-  expect_true("Playfair Display" %in% all_fonts)
 })
 
 test_that("has_insper_fonts returns logical", {

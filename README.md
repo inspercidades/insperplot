@@ -76,23 +76,18 @@ The package is based on Insper's brand colors.
 insper_palette("main")
 ```
 
-<p align="center">
-
-<img src="man/figures/readme-colors.png" width="80%"/>
-</p>
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="" width="100%" />
 
 insperplot includes several pre-defined palettes:
 
-- **main**: Primary Insper colors
-- **reds**, **oranges**, **teals**, **grays**: Sequential single-color
-  gradients
-- **diverging**, **red_teal**, **red_teal_ext**: Diverging palettes for
-  data with a meaningful center
-- **bright**, **contrast**: Qualitative palettes for categorical data
-- **categorical**, **categorical_ito**, **categorical_tab**,
-  **categorical_set**: Extended categorical palettes (including
-  colorblind-safe options)
-- **accent_red**, **accent_teal**: Accent palettes for emphasis
+- **main**: Primary Insper brand hues for categorical data
+- **muted**: Softer (desaturated) categorical palette
+- **vermelho**, **turquesa**, **verde**, **amarelo**, **laranja**,
+  **rosa**, **roxo**, **grays**: Sequential single-hue gradients
+- **diverging** (red/turquesa), **roxo_verde**, **laranja_roxo**,
+  **rosa_verde**: Diverging palettes for data with a meaningful center
+- **categorical_ito**, **categorical_tab**, **categorical_set**:
+  Colorblind-safe reference palettes
 
 Use `show_insper_palettes()` to see all available palettes and visualize
 the colors in each one (it also invisibly returns a data frame of
@@ -101,11 +96,6 @@ palette metadata):
 ``` r
 show_insper_palettes()
 ```
-
-<p align="center">
-
-<img src="man/figures/readme-palette.png" width="80%"/>
-</p>
 
 ## Main Functions
 
@@ -121,14 +111,15 @@ show_insper_palettes()
 
 ## Fonts and Rendering
 
-`insperplot` bundles the **Inter**, **EB Garamond**, and **Playfair
-Display** font families (all licensed under the SIL Open Font License).
-These fonts are registered automatically when the package is loaded — no
-manual download or setup required.
+`insperplot` bundles the **Inter** font family (licensed under the SIL
+Open Font License), the only free font in Insper's 2026 brand kit. It is
+registered automatically when the package is loaded — no manual download
+or setup required.
 
 The default title font is **Georgia**, a system serif font pre-installed
-on most operating systems. If Georgia is unavailable, the theme falls
-back to the bundled serif fonts.
+on most operating systems and the documented substitute for Insper's
+primary GT Ultra. If Georgia is unavailable, the theme falls back to the
+system serif family.
 
 For the best rendering quality, install the
 [ragg](https://ragg.r-lib.org/) graphics device:

@@ -10,7 +10,7 @@ skip_if_no_fonts <- function() {
     systemfonts::system_fonts()$family
   ))
 
-  if (!all(c("Inter", "EB Garamond", "Playfair Display") %in% all_fonts)) {
+  if (!"Inter" %in% all_fonts) {
     testthat::skip("Bundled Insper fonts not registered")
   }
 }

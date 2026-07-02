@@ -14,8 +14,8 @@
 #'   }
 #'   If `NULL` (default), uses Insper red.
 #' @param palette Character. Color palette name for variable mappings.
-#'   Options: "categorical", "main", "bright", "reds", "teals", etc.
-#'   If NULL (default), uses "categorical". Only applies to variable mappings.
+#'   Options: "main", "muted", "turquesa", "vermelho", etc.
+#'   If NULL (default), uses "main". Only applies to variable mappings.
 #' @param bins Numeric. Number of bins. Only used when bin_method = "manual"
 #' @param bin_method Character. Bin selection method: "sturges", "fd" (Freedman-Diaconis),
 #'   "scott", or "manual". Default is "sturges"
@@ -81,7 +81,7 @@ insper_histogram <- function(
 
   # Use default palette if not specified
   if (is.null(palette)) {
-    palette <- "categorical"
+    palette <- "main"
   }
 
   # Extract x values for bin calculation
@@ -105,7 +105,7 @@ insper_histogram <- function(
     # No fill specified - use default Insper red
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }})) +
       ggplot2::geom_histogram(
-        fill = get_insper_colors("reds1"),
+        fill = get_insper_colors("vermelho"),
         color = border_color,
         bins = n_bins,
         ...

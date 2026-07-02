@@ -12,9 +12,9 @@ insper_area(
   palette = NULL,
   stacked = NULL,
   area_alpha = 0.9,
-  fill_color = get_insper_colors("teals1"),
+  fill_color = get_insper_colors("turquesa_3"),
   add_line = TRUE,
-  line_color = get_insper_colors("teals3"),
+  line_color = get_insper_colors("turquesa_2"),
   line_width = 0.8,
   line_alpha = 1,
   zero = FALSE,
@@ -39,8 +39,8 @@ If `NULL` (default), uses Insper teal. When a variable is mapped, it applies to
 both area fill and line color (if `add_line = TRUE`).}
 
 \item{palette}{Character. Color palette name for variable mappings.
-Options: "categorical", "main", "bright", "reds", "teals", etc.
-If NULL (default), uses "categorical". Only applies to variable mappings.}
+Options: "main", "muted", "turquesa", "vermelho", etc.
+If NULL (default), uses "main". Only applies to variable mappings.}
 
 \item{stacked}{Logical. If TRUE and fill is provided, creates stacked areas.
 If NULL (default), automatically detects: stacks when `fill` is a variable

@@ -21,7 +21,7 @@
 #' insper_heatmap(cor_mat, show_values = FALSE)
 #'
 #' # Custom palette
-#' insper_heatmap(cor_mat, palette = "red_teal")
+#' insper_heatmap(cor_mat, palette = "diverging")
 #' @family plots
 #' @seealso \code{\link{theme_insper}}, \code{\link{scale_fill_insper_d}}
 #' @export

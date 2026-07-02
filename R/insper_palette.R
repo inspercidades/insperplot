@@ -6,6 +6,8 @@ insper_pal <- function(
   type = "discrete",
   reverse = FALSE
 ) {
+  palette <- deprecate_palette_name(palette, user_env = rlang::caller_env())
+
   if (!palette %in% names(insper_palettes)) {
     cli::cli_abort(
       "Palette {.val {palette}} not found. Available palettes: {.val {names(insper_palettes)}}"
@@ -30,7 +32,7 @@ insper_pal <- function(
       pal <- pal[1:n]
     }
   } else {
-    pal <- grDevices::colorRampPalette(pal)(n)
+    pal <- grDevices::colorRampPalette(pal, space = "Lab")(n)
   }
 
   return(pal)

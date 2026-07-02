@@ -29,16 +29,16 @@ test_that("scale_colour_insper_c is alias for scale_color_insper_c", {
 })
 
 test_that("discrete scales accept different palettes", {
-  expect_no_error(scale_color_insper_d(palette = "reds"))
+  expect_no_error(scale_color_insper_d(palette = "vermelho"))
   expect_no_error(scale_color_insper_d(palette = "main"))
-  expect_no_error(scale_fill_insper_d(palette = "bright"))
-  expect_no_error(scale_fill_insper_d(palette = "categorical"))
+  expect_no_error(scale_fill_insper_d(palette = "main"))
+  expect_no_error(scale_fill_insper_d(palette = "muted"))
 })
 
 test_that("continuous scales accept different palettes", {
-  expect_no_error(scale_color_insper_c(palette = "reds"))
-  expect_no_error(scale_color_insper_c(palette = "teals"))
-  expect_no_error(scale_fill_insper_c(palette = "red_teal"))
+  expect_no_error(scale_color_insper_c(palette = "vermelho"))
+  expect_no_error(scale_color_insper_c(palette = "turquesa"))
+  expect_no_error(scale_fill_insper_c(palette = "diverging"))
 })
 
 test_that("scales accept reverse parameter", {
@@ -68,12 +68,12 @@ test_that("continuous scales can be added to ggplot", {
   # Continuous color scale
   p1 <- ggplot2::ggplot(mtcars, ggplot2::aes(x = wt, y = mpg, color = mpg)) +
     ggplot2::geom_point() +
-    scale_color_insper_c(palette = "reds")
+    scale_color_insper_c(palette = "vermelho")
   expect_s3_class(p1, "ggplot")
 
   # Continuous fill scale
   p2 <- ggplot2::ggplot(mtcars, ggplot2::aes(x = wt, y = mpg, fill = mpg)) +
     ggplot2::geom_tile() +
-    scale_fill_insper_c(palette = "teals")
+    scale_fill_insper_c(palette = "turquesa")
   expect_s3_class(p2, "ggplot")
 })

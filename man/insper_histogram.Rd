@@ -31,8 +31,8 @@ Can be:
 If `NULL` (default), uses Insper red.}
 
 \item{palette}{Character. Color palette name for variable mappings.
-Options: "categorical", "main", "bright", "reds", "teals", etc.
-If NULL (default), uses "categorical". Only applies to variable mappings.}
+Options: "main", "muted", "turquesa", "vermelho", etc.
+If NULL (default), uses "main". Only applies to variable mappings.}
 
 \item{bins}{Numeric. Number of bins. Only used when bin_method = "manual"}
 

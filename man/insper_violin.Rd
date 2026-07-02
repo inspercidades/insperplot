@@ -9,7 +9,7 @@ insper_violin(
   x,
   y,
   fill = NULL,
-  palette = "categorical",
+  palette = "main",
   show_boxplot = FALSE,
   show_points = FALSE,
   violin_alpha = 0.7,
@@ -30,7 +30,7 @@ insper_violin(
   \item \code{NULL} (default) to use default Insper teal
 }}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "categorical".}
+\item{palette}{Character. Color palette for variable mappings. Default is "main".}
 
 \item{show_boxplot}{Logical. If TRUE, overlays a boxplot. Default is FALSE}
 
@@ -53,13 +53,13 @@ Optionally overlay boxplots and/or jittered points.
 insper_violin(iris, x = Species, y = Sepal.Length)
 
 # Static fill color
-insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E4002B")
+insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E50505")
 
 # Variable fill mapping
 insper_violin(iris, x = Species, y = Sepal.Length, fill = Species)
 
 # Custom palette
-insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "bright")
+insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
 
 # With boxplot overlay and points
 insper_violin(iris, x = Species, y = Sepal.Length,

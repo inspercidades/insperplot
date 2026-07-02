@@ -286,7 +286,7 @@ detect_aesthetic_type <- function(quo, param_name = "parameter", data = NULL) {
 #' # This will warn
 #' warn_palette_ignored(
 #'   list(type = "static_color", value = "blue"),
-#'   palette = "bright",
+#'   palette = "main",
 #'   param_name = "fill"
 #' )
 #' # Warning: `palette` argument ignored when `fill` is a static color
@@ -294,7 +294,7 @@ detect_aesthetic_type <- function(quo, param_name = "parameter", data = NULL) {
 #' # This will NOT warn (palette is used)
 #' warn_palette_ignored(
 #'   list(type = "variable_mapping"),
-#'   palette = "bright",
+#'   palette = "main",
 #'   param_name = "fill"
 #' )
 #' }
@@ -330,7 +330,7 @@ has_insper_fonts <- function() {
 
 #' Calculate Relative Luminance of a Color
 #'
-#' @param hex_color Character. Hex color code (e.g., "#E4002B")
+#' @param hex_color Character. Hex color code (e.g., "#E50505")
 #' @return Numeric. Relative luminance value between 0 (black) and 1 (white)
 #' @noRd
 #' @keywords internal
@@ -356,26 +356,32 @@ calculate_luminance <- function(hex_color) {
 
 #' Choose Contrasting Text Color for Background
 #'
+#' Picks the text color (dark or light) that provides the higher WCAG contrast
+#' ratio against the given background color.
+#'
 #' @param bg_color Character. Background hex color code
 #' @param dark_color Character. Text color for light backgrounds. Default "#2C2C2C"
 #' @param light_color Character. Text color for dark backgrounds. Default "white"
-#' @param threshold Numeric. Luminance threshold (0-1). Default 0.5
-#' @return Character. Either dark_color or light_color based on background luminance
+#' @return Character. Either dark_color or light_color, whichever provides
+#'   higher WCAG contrast ratio against \code{bg_color}
 #' @noRd
 #' @keywords internal
 get_contrast_text_color <- function(
   bg_color,
   dark_color = "#2C2C2C",
-  light_color = "white",
-  threshold = 0.5
+  light_color = "white"
 ) {
-  luminance <- calculate_luminance(bg_color)
+  bg_lum <- calculate_luminance(bg_color)
+  dark_lum <- calculate_luminance(dark_color)
+  light_lum <- 1
 
-  # If background is light (high luminance), use dark text
-  # If background is dark (low luminance), use light text
-  if (luminance > threshold) {
-    return(dark_color)
+  contrast_dark <- (max(bg_lum, dark_lum) + 0.05) /
+    (min(bg_lum, dark_lum) + 0.05)
+  contrast_light <- (light_lum + 0.05) / (bg_lum + 0.05)
+
+  if (contrast_dark >= contrast_light) {
+    dark_color
   } else {
-    return(light_color)
+    light_color
   }
 }

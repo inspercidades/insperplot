@@ -7,9 +7,9 @@
 #' @param base_size Numeric. Base font size for all text elements in points.
 #'   Default is 12. All other text sizes are calculated relative to this value.
 #' @param font_title Character. Font family to use for plot titles and subtitles.
-#'   Default is "Georgia" (serif, from Insper's official template). The theme
-#'   automatically detects font availability and falls back to "EB Garamond",
-#'   then "Playfair Display", then "serif" if unavailable.
+#'   Default is "Georgia" (serif, the documented substitute for Insper's primary
+#'   GT Ultra). The theme automatically detects font availability and falls back
+#'   to the system "serif" family if Georgia is unavailable.
 #' @param font_text Character. Font family to use for all other text elements
 #'   (axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
 #'   Insper's official template). Falls back to "Arial" then "sans" if unavailable.
@@ -46,15 +46,16 @@
 #'
 #' The theme uses fonts based on Insper's official template:
 #' \itemize{
-#'   \item Georgia (serif, system font) for titles - falls back to EB Garamond,
-#'         then Playfair Display
+#'   \item Georgia (serif, system font) for titles - falls back to the system
+#'         "serif" family
 #'   \item Inter (sans-serif) for body text - falls back to Arial
 #' }
 #'
-#' Inter, EB Garamond, and Playfair Display are bundled with the package and
-#' registered automatically when the package is loaded. Georgia is a system
-#' font available on most operating systems. If any font is unavailable, the
-#' theme falls back through the chain to system defaults ("serif" / "sans").
+#' Inter is bundled with the package and registered automatically when the
+#' package is loaded. Georgia is a system font available on most operating
+#' systems (the documented substitute for Insper's primary GT Ultra). If any
+#' font is unavailable, the theme falls back to system defaults ("serif" /
+#' "sans").
 #'
 #' The function validates input parameters and will throw an error if invalid
 #' values are provided for \code{grid} or \code{border} arguments.
@@ -118,7 +119,7 @@ theme_insper <- function(
   # Font detection and fallback ----
   font_title <- detect_font(
     font_title,
-    fallback_chain = c("EB Garamond", "Playfair Display", "serif")
+    fallback_chain = "serif"
   )
   font_text <- detect_font(
     font_text,
@@ -126,7 +127,7 @@ theme_insper <- function(
   )
 
   # Colors ----
-  off_white <- get_insper_colors("off_white")
+  off_white <- get_insper_colors("white")
   black <- get_insper_colors("black")
 
   # Conditional grid theme ----
@@ -134,7 +135,7 @@ theme_insper <- function(
     theme_sub_panel(
       grid.major = element_line(
         linewidth = 0.35,
-        color = get_insper_colors("gray_light")
+        color = get_insper_colors("cinza_0")
       )
     )
   } else {
@@ -145,13 +146,13 @@ theme_insper <- function(
   border_theme <- if (border == "half") {
     theme_sub_axis(
       line = element_line(),
-      ticks = element_line(color = get_insper_colors("gray_dark")),
+      ticks = element_line(color = get_insper_colors("cinza_4")),
       ticks.length = unit(7, "pt")
     )
   } else if (border == "closed") {
     theme_sub_panel(border = element_rect(color = black, fill = NA)) +
       theme_sub_axis(
-        ticks = element_line(color = get_insper_colors("gray_dark")),
+        ticks = element_line(color = get_insper_colors("cinza_4")),
         ticks.length = unit(7, "pt")
       )
   } else {
@@ -176,7 +177,7 @@ theme_insper <- function(
       subtitle = element_text(
         size = rel(0.8),
         family = font_text,
-        color = get_insper_colors("gray_meddark"),
+        color = get_insper_colors("cinza_4"),
         hjust = 0,
         margin = margin(t = 3, b = 5)
       ),
@@ -210,6 +211,60 @@ theme_insper <- function(
 
 # Helper Functions --------------------------------------------------------
 
+#' Resolve a requested font family against the available families
+#'
+#' Matches `name` against `available_fonts`, returning the resolved family
+#' name or `NULL` if there is no acceptable match. Tries an exact match
+#' (case-sensitive, then case-insensitive), then a word-boundary match.
+#'
+#' The word-boundary step is what makes resolution robust to modern variable
+#' fonts, which are frequently registered with an optical-size or variant
+#' suffix (e.g. "Inter 18pt", "Inter_18pt", "Helvetica Neue"). It accepts a
+#' family where `name` appears as a whole token (at the start or after a
+#' separator, and at the end or before a separator), so "Inter" matches
+#' "Inter 18pt" but deliberately not "Interstate", "International", or
+#' "SignPainter" — false positives the old naive substring match accepted.
+#'
+#' @param name Character. Requested font family.
+#' @param available_fonts Character vector of available family names.
+#' @return Character scalar (resolved family) or `NULL`.
+#' @keywords internal
+#' @noRd
+match_font_family <- function(name, available_fonts) {
+  if (name %in% available_fonts) {
+    return(name)
+  }
+  lname <- tolower(name)
+  lfonts <- tolower(available_fonts)
+  exact_ci <- which(lfonts == lname)
+  if (length(exact_ci) > 0) {
+    return(available_fonts[exact_ci[1]])
+  }
+
+  seps <- c(" ", "_", "-")
+  boundary_hit <- function(family) {
+    starts <- gregexpr(lname, family, fixed = TRUE)[[1]]
+    if (starts[1] == -1L) {
+      return(FALSE)
+    }
+    ends <- starts + nchar(lname) - 1L
+    before_ok <- starts == 1L |
+      substr(family, starts - 1L, starts - 1L) %in% seps
+    after_ok <- ends == nchar(family) |
+      substr(family, ends + 1L, ends + 1L) %in% seps
+    any(before_ok & after_ok)
+  }
+  hits <- vapply(lfonts, boundary_hit, logical(1))
+  matches <- available_fonts[hits]
+  if (length(matches) == 0) {
+    return(NULL)
+  }
+  # Deterministic pick: prefer the "18pt" optical size (the default for body
+  # text), then the shortest family name, then alphabetical order.
+  is_18pt <- grepl("18pt", matches, ignore.case = TRUE)
+  matches[order(!is_18pt, nchar(matches), matches)][1]
+}
+
 #' @keywords internal
 #' @noRd
 detect_font <- function(font_name, fallback_chain = "sans") {
@@ -221,25 +276,16 @@ detect_font <- function(font_name, fallback_chain = "sans") {
         systemfonts::system_fonts()$family
       ))
 
-      resolve_font <- function(name) {
-        if (name %in% available_fonts) return(name)
-        # Case-insensitive literal substring match: lowercase both sides and
-        # use `fixed = TRUE` so font names with regex metacharacters (e.g. a
-        # stray "+" or "(") are matched literally rather than as patterns.
-        hits <- grepl(tolower(name), tolower(available_fonts), fixed = TRUE)
-        matches <- available_fonts[hits]
-        if (length(matches) > 0) return(matches[1])
-        NULL
+      resolved <- match_font_family(font_name, available_fonts)
+      if (!is.null(resolved)) {
+        return(resolved)
       }
-
-      resolved <- resolve_font(font_name)
-      if (!is.null(resolved)) return(resolved)
 
       for (fallback_font in fallback_chain) {
         if (fallback_font %in% c("serif", "sans", "mono")) {
           return(fallback_font)
         }
-        resolved <- resolve_font(fallback_font)
+        resolved <- match_font_family(fallback_font, available_fonts)
         if (!is.null(resolved)) return(resolved)
       }
 

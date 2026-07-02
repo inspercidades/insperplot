@@ -3,46 +3,69 @@
 palette_metadata <- function() {
   data.frame(
     name = c(
+      # qualitative
       "main",
-      "reds", "oranges", "teals", "grays",
-      "red_teal", "red_teal_ext", "diverging",
-      "bright", "contrast", "categorical",
-      "accent_red", "accent_teal",
-      "categorical_ito", "categorical_tab", "categorical_set"
+      "muted",
+      "categorical_ito",
+      "categorical_tab",
+      "categorical_set",
+      # sequential
+      "vermelho",
+      "turquesa",
+      "verde",
+      "amarelo",
+      "laranja",
+      "rosa",
+      "roxo",
+      "grays",
+      # diverging
+      "diverging",
+      "roxo_verde",
+      "laranja_roxo",
+      "rosa_verde"
     ),
     type = c(
-      "qualitative",
-      rep("sequential", 4),
-      rep("diverging", 3),
-      rep("qualitative", 3),
-      rep("accent", 2),
-      rep("qualitative", 3)
+      rep("qualitative", 5),
+      rep("sequential", 8),
+      rep("diverging", 4)
     ),
     n_colors = c(
-      6,
-      5, 5, 5, 5,
-      5, 11, 5,
-      6, 6, 8,
-      6, 6,
-      8, 10, 9
+      7,
+      7,
+      8,
+      10,
+      9,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
     ),
     recommended_use = c(
-      "Primary brand colors for categorical data",
-      "Intensity scales (light to dark red)",
-      "Intensity scales (light to dark orange)",
-      "Intensity scales (light to dark teal)",
-      "Intensity scales (light to dark gray)",
-      "Diverging data (negative/positive, red/teal)",
-      "Extended diverging palette (11 colors)",
-      "Classic diverging palette (teal/gray/red)",
-      "Bright categorical colors (high contrast)",
-      "High contrast categorical colors",
-      "8-color categorical palette",
-      "Accent palette with red emphasis",
-      "Accent palette with teal emphasis",
+      "Primary brand hues for categorical data",
+      "Softer (desaturated) categorical data",
       "Okabe-Ito colorblind-safe palette",
       "Tableau 10 categorical palette",
-      "ColorBrewer Set1 palette"
+      "ColorBrewer Set1 palette",
+      "Intensity scales (light to dark red)",
+      "Intensity scales (light to dark turquesa)",
+      "Intensity scales (light to dark verde)",
+      "Intensity scales (light to dark amarelo)",
+      "Intensity scales (light to dark laranja)",
+      "Intensity scales (light to dark rosa)",
+      "Intensity scales (light to dark roxo)",
+      "Intensity scales (light to dark gray)",
+      "Diverging data (red/turquesa, default)",
+      "Diverging data (roxo/verde)",
+      "Diverging data (laranja/roxo)",
+      "Diverging data (rosa/verde)"
     ),
     stringsAsFactors = FALSE
   )
@@ -58,14 +81,21 @@ get_insper_colors <- function(...) {
     return(insper_individual_colors)
   }
   requested <- c(...)
-  missing <- setdiff(requested, names(insper_individual_colors))
+  user_env <- rlang::caller_env()
+  resolved <- vapply(
+    requested,
+    deprecate_color_name,
+    character(1),
+    user_env = user_env
+  )
+  missing <- setdiff(resolved, names(insper_individual_colors))
   if (length(missing) > 0) {
     cli::cli_abort(c(
       "x" = "Colors not found: {.val {missing}}",
       "i" = "Available colors: {.val {names(insper_individual_colors)}}"
     ))
   }
-  insper_individual_colors[requested]
+  insper_individual_colors[resolved]
 }
 
 
@@ -92,11 +122,12 @@ get_insper_colors <- function(...) {
 #' @details
 #' Available palettes by type:
 #' \itemize{
-#'   \item \strong{Qualitative}: main, bright, contrast, categorical,
-#'     categorical_ito, categorical_tab, categorical_set
-#'   \item \strong{Sequential}: reds, oranges, teals, grays
-#'   \item \strong{Diverging}: red_teal, red_teal_ext, diverging
-#'   \item \strong{Accent}: accent_red, accent_teal
+#'   \item \strong{Qualitative}: main, muted, categorical_ito,
+#'     categorical_tab, categorical_set
+#'   \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
+#'     rosa, roxo, grays
+#'   \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
+#'     laranja_roxo, rosa_verde
 #' }
 #'
 #' @family colors
@@ -108,21 +139,23 @@ get_insper_colors <- function(...) {
 #' insper_palette("main")
 #'
 #' # Subset to n colors
-#' insper_palette("reds", n = 3)
+#' insper_palette("vermelho", n = 3)
 #'
 #' # Reverse order
-#' insper_palette("red_teal", reverse = TRUE)
+#' insper_palette("diverging", reverse = TRUE)
 #'
 #' # Use directly in a plot
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) +
-#'   geom_point(color = insper_palette("reds", n = 1))
+#'   geom_point(color = insper_palette("vermelho", n = 1))
 #'
 #' # Use in manual scales
 #' ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
 #'   geom_point() +
 #'   scale_color_manual(values = insper_palette("main", n = 3))
 insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
+  palette <- deprecate_palette_name(palette, user_env = rlang::caller_env())
+
   if (!palette %in% names(insper_palettes)) {
     cli::cli_abort(c(
       "Palette {.val {palette}} not found.",
@@ -132,7 +165,9 @@ insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
 
   colors <- insper_palettes[[palette]]
 
-  if (reverse) colors <- rev(colors)
+  if (reverse) {
+    colors <- rev(colors)
+  }
 
   if (!is.null(n)) {
     if (n > length(colors)) {
@@ -150,25 +185,32 @@ insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
 
 #' @export
 print.insper_palette <- function(x, ...) {
-  position <- hex <- NULL  # R CMD check
+  position <- hex <- text_color <- NULL # R CMD check
 
   n <- length(x)
+  text_colors <- vapply(as.character(x), get_contrast_text_color, character(1))
   df <- data.frame(
     position = seq_len(n),
     hex = as.character(x),
+    text_color = unname(text_colors),
     stringsAsFactors = FALSE
   )
 
   p <- ggplot2::ggplot(df, ggplot2::aes(x = position, y = 1, fill = hex)) +
     ggplot2::geom_tile(
-      width = 0.9, height = 1,
-      color = "white", linewidth = 1
+      width = 0.9,
+      height = 1,
+      color = "white",
+      linewidth = 1
     ) +
     ggplot2::scale_fill_identity() +
     ggplot2::geom_text(
-      ggplot2::aes(label = hex),
-      size = 3, fontface = "bold", angle = 90, color = "white"
+      ggplot2::aes(label = hex, color = text_color),
+      size = 4,
+      fontface = "bold",
+      angle = 90
     ) +
+    ggplot2::scale_color_identity() +
     ggplot2::theme_void() +
     ggplot2::labs(title = paste0("Insper palette: ", attr(x, "palette"))) +
     ggplot2::theme(
@@ -196,8 +238,8 @@ as.character.insper_palette <- function(x, ...) {
 #' by type. Invisibly returns a data frame of palette metadata.
 #'
 #' @param type Character. Filter by palette type. One of \code{"all"},
-#'   \code{"sequential"}, \code{"diverging"}, \code{"qualitative"}, or
-#'   \code{"accent"}. Default \code{"all"}.
+#'   \code{"sequential"}, \code{"diverging"}, or \code{"qualitative"}.
+#'   Default \code{"all"}.
 #'
 #' @return Invisibly returns a data frame with columns \code{name},
 #'   \code{type}, \code{n_colors}, and \code{recommended_use}.
@@ -215,9 +257,9 @@ as.character.insper_palette <- function(x, ...) {
 #' # Capture metadata
 #' meta <- show_insper_palettes()
 show_insper_palettes <- function(
-  type = c("all", "sequential", "diverging", "qualitative", "accent")
+  type = c("all", "sequential", "diverging", "qualitative")
 ) {
-  hex <- position <- palette <- NULL  # R CMD check
+  hex <- position <- palette <- NULL # R CMD check
 
   type <- match.arg(type)
 
@@ -239,8 +281,16 @@ show_insper_palettes <- function(
   df <- do.call(rbind, rows)
   df$palette <- factor(df$palette, levels = rev(meta$name))
 
-  p <- ggplot2::ggplot(df, ggplot2::aes(x = position, y = palette, fill = hex)) +
-    ggplot2::geom_tile(width = 0.9, height = 0.8, color = "white", linewidth = 0.5) +
+  p <- ggplot2::ggplot(
+    df,
+    ggplot2::aes(x = position, y = palette, fill = hex)
+  ) +
+    ggplot2::geom_tile(
+      width = 0.9,
+      height = 0.8,
+      color = "white",
+      linewidth = 0.5
+    ) +
     ggplot2::scale_fill_identity() +
     ggplot2::scale_x_continuous(expand = ggplot2::expansion(add = 0.5)) +
     ggplot2::theme_minimal(base_size = 10) +

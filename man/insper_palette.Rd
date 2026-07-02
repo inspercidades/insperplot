@@ -30,11 +30,12 @@ colors are accepted.
 \details{
 Available palettes by type:
 \itemize{
-  \item \strong{Qualitative}: main, bright, contrast, categorical,
-    categorical_ito, categorical_tab, categorical_set
-  \item \strong{Sequential}: reds, oranges, teals, grays
-  \item \strong{Diverging}: red_teal, red_teal_ext, diverging
-  \item \strong{Accent}: accent_red, accent_teal
+  \item \strong{Qualitative}: main, muted, categorical_ito,
+    categorical_tab, categorical_set
+  \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
+    rosa, roxo, grays
+  \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
+    laranja_roxo, rosa_verde
 }
 }
 \examples{
@@ -42,15 +43,15 @@ Available palettes by type:
 insper_palette("main")
 
 # Subset to n colors
-insper_palette("reds", n = 3)
+insper_palette("vermelho", n = 3)
 
 # Reverse order
-insper_palette("red_teal", reverse = TRUE)
+insper_palette("diverging", reverse = TRUE)
 
 # Use directly in a plot
 library(ggplot2)
 ggplot(mtcars, aes(wt, mpg)) +
-  geom_point(color = insper_palette("reds", n = 1))
+  geom_point(color = insper_palette("vermelho", n = 1))
 
 # Use in manual scales
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +

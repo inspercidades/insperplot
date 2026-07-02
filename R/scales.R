@@ -51,8 +51,8 @@ scale_fill_insper_d <- function(palette = "main", reverse = FALSE, ...) {
 #' library(ggplot2)
 #' ggplot(mtcars, aes(x = wt, y = mpg, color = hp)) +
 #'   geom_point() +
-#'   scale_color_insper_c(palette = "teals")
-scale_color_insper_c <- function(palette = "teals", reverse = FALSE, ...) {
+#'   scale_color_insper_c(palette = "turquesa")
+scale_color_insper_c <- function(palette = "turquesa", reverse = FALSE, ...) {
   ggplot2::scale_color_gradientn(
     colours = insper_pal(palette, type = "continuous", reverse = reverse),
     ...
@@ -66,7 +66,7 @@ scale_colour_insper_c <- scale_color_insper_c
 #' @rdname scale_color_insper_c
 #' @importFrom ggplot2 scale_fill_gradientn
 #' @export
-scale_fill_insper_c <- function(palette = "teals", reverse = FALSE, ...) {
+scale_fill_insper_c <- function(palette = "turquesa", reverse = FALSE, ...) {
   ggplot2::scale_fill_gradientn(
     colours = insper_pal(palette, type = "continuous", reverse = reverse),
     ...

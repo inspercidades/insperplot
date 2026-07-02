@@ -56,13 +56,14 @@ Pesquisa.
 
 \section{Color Palettes}{
 
-The package includes 15 pre-defined palettes:
+The package includes 17 pre-defined palettes from the 2026 Insper brand kit:
 \itemize{
-  \item **main** - Primary Insper brand colors
-  \item **reds, oranges, teals, grays** - Sequential single-color gradients
-  \item **diverging, red_teal, red_teal_ext** - Diverging palettes for data with a meaningful center
-  \item **bright, contrast, categorical** - Qualitative palettes for categorical data
-  \item **accent_red, accent_teal** - Accent palettes for emphasis
+  \item **main, muted** - Qualitative palettes for categorical data (`muted`
+    is a softer, desaturated variant of `main`)
+  \item **vermelho, turquesa, verde, amarelo, laranja, rosa, roxo, grays** -
+    Sequential single-hue gradients
+  \item **diverging, roxo_verde, laranja_roxo, rosa_verde** - Diverging
+    palettes for data with a meaningful center (`diverging` is red/turquesa)
   \item **categorical_ito, categorical_tab, categorical_set** - Colorblind-safe categorical options
 }
 
@@ -77,14 +78,14 @@ library(ggplot2)
 
 # Create a basic plot with Insper theme
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point(color = insper_palette("reds", n = 1), size = 3) +
+  geom_point(color = insper_palette("vermelho", n = 1), size = 3) +
   theme_insper() +
   labs(title = "Fuel Efficiency vs Weight")
 
 # Use Insper color palettes
 ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
   geom_bar() +
-  scale_fill_insper_d(palette = "reds") +
+  scale_fill_insper_d(palette = "vermelho") +
   theme_insper()
 }
 }
@@ -105,13 +106,13 @@ This package follows modern R development best practices:
 show_insper_palettes()
 
 # Get colors from a palette
-insper_palette("reds", n = 3)
+insper_palette("vermelho", n = 3)
 
 \dontrun{
 # Create a simple plot (requires fonts to be set up)
 library(ggplot2)
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point(color = insper_palette("reds", n = 1)) +
+  geom_point(color = insper_palette("vermelho", n = 1)) +
   theme_insper()
 }
 }

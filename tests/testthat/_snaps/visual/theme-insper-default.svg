@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.16; stroke: none; fill: #FEFEFE;' />
+<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.16; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpNDIuOTZ8NzA1LjA2fDQ0LjU5fDUzOS45Mw=='>
@@ -26,16 +26,16 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpNDIuOTZ8NzA1LjA2fDQ0LjU5fDUzOS45Mw==)'>
-<polyline points='42.96,525.08 705.06,525.08 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='42.96,429.27 705.06,429.27 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='42.96,333.46 705.06,333.46 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='42.96,237.65 705.06,237.65 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='42.96,141.84 705.06,141.84 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='42.96,46.03 705.06,46.03 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='148.00,539.93 148.00,44.59 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='301.90,539.93 301.90,44.59 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='455.80,539.93 455.80,44.59 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
-<polyline points='609.71,539.93 609.71,44.59 ' style='stroke-width: 0.75; stroke: #E6E7E8; stroke-linecap: butt;' />
+<polyline points='42.96,525.08 705.06,525.08 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='42.96,429.27 705.06,429.27 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='42.96,333.46 705.06,333.46 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='42.96,237.65 705.06,237.65 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='42.96,141.84 705.06,141.84 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='42.96,46.03 705.06,46.03 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='148.00,539.93 148.00,44.59 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='301.90,539.93 301.90,44.59 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='455.80,539.93 455.80,44.59 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
+<polyline points='609.71,539.93 609.71,44.59 ' style='stroke-width: 0.75; stroke: #DCDCDC; stroke-linecap: butt;' />
 <circle cx='243.42' cy='314.30' r='2.13' style='stroke-width: 0.77; fill: #000000;' />
 <circle cx='282.67' cy='314.30' r='2.13' style='stroke-width: 0.77; fill: #000000;' />
 <circle cx='197.25' cy='279.81' r='2.13' style='stroke-width: 0.77; fill: #000000;' />
@@ -82,7 +82,7 @@
 <text x='609.71' y='551.37' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>5</text>
 <text x='374.01' y='563.75' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='11.00px' lengthAdjust='spacingAndGlyphs'>wt</text>
 <text transform='translate(22.51,292.26) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='21.40px' lengthAdjust='spacingAndGlyphs'>mpg</text>
-<text x='42.96' y='38.70' style='font-size: 8.80px; fill: #414042; font-family: sans;' textLength='45.98px' lengthAdjust='spacingAndGlyphs'>Subtitle text</text>
+<text x='42.96' y='38.70' style='font-size: 8.80px; fill: #3F3F3F; font-family: sans;' textLength='45.98px' lengthAdjust='spacingAndGlyphs'>Subtitle text</text>
 <text x='42.96' y='22.16' style='font-size: 15.40px; font-family: sans;' textLength='60.77px' lengthAdjust='spacingAndGlyphs'>Test Plot</text>
 </g>
 </svg>

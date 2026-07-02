@@ -1,8 +1,8 @@
 Package: insperplot
 Type: Package
 Title: Insper Themed 'ggplot2' Extensions
-Version: 0.1.0
-Date: 2026-06-24
+Version: 0.2.0
+Date: 2026-06-30
 Authors@R: c(
     person(
       "Vinicius", "Oike",
@@ -27,6 +27,7 @@ Depends:
 Imports:
     cli,
     ggplot2 (>= 4.0.0),
+    lifecycle,
     rlang (>= 1.0.0),
     scales (>= 1.2.0),
     systemfonts

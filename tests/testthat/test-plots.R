@@ -104,7 +104,7 @@ test_that("insper_barplot text labels work with filled bars", {
 
 # Text color on stacked/filled bars is contrast-aware: each label is colored
 # from the luminance of the bar segment behind it. For the default
-# "categorical" palette every color is dark, so the effective text is white.
+# "muted" palette every color is dark, so the effective text is white.
 text_layer_colours <- function(p) {
   b <- ggplot2::ggplot_build(p)
   text_idx <- which(vapply(
@@ -115,7 +115,7 @@ text_layer_colours <- function(p) {
   b$data[[text_idx]]$colour
 }
 
-test_that("insper_barplot uses contrast (white) text for stacked bars on dark default palette", {
+test_that("insper_barplot uses WCAG-contrast text for stacked bars on default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -124,11 +124,12 @@ test_that("insper_barplot uses contrast (white) text for stacked bars on dark de
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack", text = TRUE)
 
-  expect_true(all(text_layer_colours(p) == "white"),
-              info = "Dark default-palette bars should get white text for readability")
+  colours <- text_layer_colours(p)
+  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
+              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
 })
 
-test_that("insper_barplot uses contrast (white) text for filled bars on dark default palette", {
+test_that("insper_barplot uses WCAG-contrast text for filled bars on default palette", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
@@ -137,8 +138,9 @@ test_that("insper_barplot uses contrast (white) text for filled bars on dark def
   )
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
 
-  expect_true(all(text_layer_colours(p) == "white"),
-              info = "Dark default-palette bars should get white text for readability")
+  colours <- text_layer_colours(p)
+  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
+              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
 })
 
 test_that("insper_barplot uses dark text on light stacked fills", {
@@ -360,7 +362,7 @@ test_that("insper_area custom fill_color works", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
   p <- insper_area(df, x = time, y = value,
-                   fill_color = get_insper_colors("reds1"))
+                   fill_color = get_insper_colors("vermelho"))
   expect_s3_class(p, "ggplot")
 })
 
@@ -368,7 +370,7 @@ test_that("insper_area custom line parameters work", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
   p <- insper_area(df, x = time, y = value,
-                   line_color = get_insper_colors("oranges1"),
+                   line_color = get_insper_colors("laranja_0"),
                    line_width = 2,
                    line_alpha = 0.5)
   expect_s3_class(p, "ggplot")
@@ -728,7 +730,7 @@ test_that("insper_scatterplot fill ignored for default shape", {
 
 test_that("insper_scatterplot static color string works", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg, color = "#3CBFAE")
+  p <- insper_scatterplot(mtcars, x = wt, y = mpg, color = "#3ACC9F")
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -774,7 +776,7 @@ test_that("insper_scatterplot default color when NULL", {
 
 test_that("insper_scatterplot palette parameter works with color", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_scatterplot(mtcars, x = wt, y = mpg, color = factor(cyl), palette = "bright")
+  p1 <- insper_scatterplot(mtcars, x = wt, y = mpg, color = factor(cyl), palette = "main")
   p2 <- insper_scatterplot(mtcars, x = wt, y = mpg, color = factor(cyl), palette = "main")
 
   expect_s3_class(p1, "ggplot")
@@ -783,7 +785,7 @@ test_that("insper_scatterplot palette parameter works with color", {
 
 test_that("insper_scatterplot palette parameter works with fill", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg, fill = factor(cyl), palette = "contrast", shape = 21)
+  p <- insper_scatterplot(mtcars, x = wt, y = mpg, fill = factor(cyl), palette = "muted", shape = 21)
   expect_s3_class(p, "ggplot")
 })
 
@@ -791,7 +793,7 @@ test_that("insper_scatterplot warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when both color and fill are static
   expect_warning(
-    insper_scatterplot(mtcars, x = wt, y = mpg, color = "blue", fill = "red", palette = "bright", shape = 21),
+    insper_scatterplot(mtcars, x = wt, y = mpg, color = "blue", fill = "red", palette = "main", shape = 21),
     "palette.*ignored"
   )
 })
@@ -868,7 +870,7 @@ test_that("insper_timeseries validates data frame input", {
 test_that("insper_timeseries static color string works", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_timeseries(df, x = time, y = value, color = "#E4002B")
+  p <- insper_timeseries(df, x = time, y = value, color = "#E50505")
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -915,7 +917,7 @@ test_that("insper_timeseries continuous color scale applied", {
 test_that("insper_timeseries static color with add_points", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_timeseries(df, x = time, y = value, color = "#009491", add_points = TRUE)
+  p <- insper_timeseries(df, x = time, y = value, color = "#2BA680", add_points = TRUE)
   expect_s3_class(p, "ggplot")
 
   # Check both line and point layers present
@@ -982,8 +984,8 @@ test_that("insper_timeseries palette parameter works", {
     value = c(cumsum(rnorm(20)), cumsum(rnorm(20)), cumsum(rnorm(20))),
     group = rep(c("A", "B", "C"), each = 20)
   )
-  p1 <- insper_timeseries(df, x = time, y = value, color = group, palette = "bright")
-  p2 <- insper_timeseries(df, x = time, y = value, color = group, palette = "contrast")
+  p1 <- insper_timeseries(df, x = time, y = value, color = group, palette = "main")
+  p2 <- insper_timeseries(df, x = time, y = value, color = group, palette = "muted")
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -995,7 +997,7 @@ test_that("insper_timeseries warns when palette ignored", {
 
   # Palette should be ignored when color is static
   expect_warning(
-    insper_timeseries(df, x = time, y = value, color = "blue", palette = "bright"),
+    insper_timeseries(df, x = time, y = value, color = "blue", palette = "main"),
     "palette.*ignored"
   )
 })
@@ -1026,7 +1028,7 @@ test_that("insper_violin validates data frame input", {
 
 test_that("insper_violin static fill color works", {
   skip_if_not_installed("ggplot2")
-  p <- insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E4002B")
+  p <- insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E50505")
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -1100,8 +1102,8 @@ test_that("insper_violin violin_alpha parameter works", {
 
 test_that("insper_violin palette parameter works", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "bright")
-  p2 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "contrast")
+  p1 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
+  p2 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "muted")
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -1111,7 +1113,7 @@ test_that("insper_violin warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when fill is static
   expect_warning(
-    insper_violin(iris, x = Species, y = Sepal.Length, fill = "purple", palette = "bright"),
+    insper_violin(iris, x = Species, y = Sepal.Length, fill = "purple", palette = "main"),
     "palette.*ignored"
   )
 })
@@ -1204,7 +1206,7 @@ test_that("insper_heatmap palette parameter works", {
   skip_if_not_installed("ggplot2")
   mat <- cor(mtcars[, 1:4])
   p1 <- insper_heatmap(mat, palette = "diverging")
-  p2 <- insper_heatmap(mat, palette = "red_teal")
+  p2 <- insper_heatmap(mat, palette = "diverging")
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -1255,7 +1257,7 @@ test_that("insper_area validates data frame input", {
 test_that("insper_area static fill with line overlay", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_area(df, x = time, y = value, fill = "#E4002B", add_line = TRUE)
+  p <- insper_area(df, x = time, y = value, fill = "#E50505", add_line = TRUE)
   expect_s3_class(p, "ggplot")
 
   # Check both area and line layers
@@ -1285,7 +1287,7 @@ test_that("insper_area warns when palette ignored", {
 
   # Palette should be ignored when fill is static
   expect_warning(
-    insper_area(df, x = time, y = value, fill = "#009491", palette = "bright"),
+    insper_area(df, x = time, y = value, fill = "#2BA680", palette = "main"),
     "palette.*ignored"
   )
 })
@@ -1416,8 +1418,8 @@ test_that("insper_boxplot box_alpha parameter works", {
 
 test_that("insper_boxplot palette parameter works", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "bright")
-  p2 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "contrast")
+  p1 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
+  p2 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "muted")
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -1427,14 +1429,14 @@ test_that("insper_boxplot warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when fill is static
   expect_warning(
-    insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "lightblue", palette = "bright"),
+    insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "lightblue", palette = "main"),
     "palette.*ignored"
   )
 })
 
 test_that("insper_boxplot static fill matches expected color", {
   skip_if_not_installed("ggplot2")
-  p <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F15A22")
+  p <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F89D49")
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
