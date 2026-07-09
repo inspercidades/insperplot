@@ -10,13 +10,22 @@ deprecated_palettes <- c(
   reds = "vermelho",
   oranges = "laranja",
   teals = "turquesa",
-  red_teal = "diverging",
-  red_teal_ext = "diverging",
+  red_teal = "vermelho_turquesa",
+  red_teal_ext = "vermelho_turquesa",
   bright = "main",
   contrast = "muted",
   categorical = "main",
   accent_red = "main",
-  accent_teal = "main"
+  accent_teal = "main",
+  # Renamed in 0.3.0 for naming consistency (Portuguese family names).
+  grays = "cinza",
+  diverging = "vermelho_turquesa"
+)
+
+# Version in which each palette name was deprecated (default "0.2.0").
+deprecated_palettes_when <- c(
+  grays = "0.3.0",
+  diverging = "0.3.0"
 )
 
 # Retired individual color names -> 2026 token. Some old red/orange/magenta
@@ -52,8 +61,10 @@ deprecate_palette_name <- function(palette, user_env = rlang::caller_env()) {
     return(palette)
   }
   replacement <- unname(deprecated_palettes[[palette]])
+  when <- deprecated_palettes_when[palette]
+  when <- if (is.na(when)) "0.2.0" else unname(when)
   lifecycle::deprecate_warn(
-    when = "0.2.0",
+    when = when,
     what = I(sprintf("The %s palette", encodeString(palette, quote = "\""))),
     with = I(sprintf(
       "the %s palette",

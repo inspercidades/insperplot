@@ -20,11 +20,15 @@ cinza/azul neutrals.
   | `contrast`                 | `muted`      |
   | `categorical`              | `main`       |
   | `accent_red`, `accent_teal`| `main`       |
+  | `grays`                    | `cinza`      |
+  | `diverging`                | `vermelho_turquesa` |
 
 * **New palettes:** `muted` (softer categorical); per-family sequential ramps
-  `vermelho`, `turquesa`, `verde`, `amarelo`, `laranja`, `rosa`, `roxo`; and
-  four diverging palettes `diverging` (= `vermelho_turquesa`), `roxo_verde`,
-  `laranja_roxo`, and `rosa_verde`.
+  `vermelho`, `turquesa`, `verde`, `amarelo`, `laranja`, `rosa`, `roxo`,
+  `azul`; and four diverging palettes `diverging` (= `vermelho_turquesa`),
+  `roxo_verde`, `laranja_roxo`, and `rosa_verde`. The `azul` sequential palette
+  is anchored on `#0E171D`, the Educação Executiva / Pós-Graduação segment
+  color from the brand guide.
 
 * **Default palettes changed.** Continuous scales now default to `turquesa`
   (was `teals`); plot functions default to the `main` categorical palette
@@ -45,6 +49,27 @@ cinza/azul neutrals.
   system font; the documented substitute for the primary GT Ultra) and now fall
   back directly to the system "serif" family where Georgia is unavailable. This
   trims the installed package by ~1.4 MB.
+* New `theme_insper_doc()`: a variant of `theme_insper()` with a smaller 10 pt
+  base size, sized for figures inserted into Word documents and other print
+  reports.
+* New `insper_color_reference` dataset: a one-row-per-swatch lookup table of
+  every official Insper brand color (Pantone, RGB, and hex), with a companion
+  "Color Reference Table" article on the package website. Includes an
+  `acessibilidade` column recording which text/logo color the brand guide
+  permits on each background ("branco", "preto", or "ambos").
+
+## Bug fixes
+
+* `theme_insper()` now actually applies `base_size`. Previously the internal
+  theme construction replaced the root `text` element with a relative size,
+  so all text rendered at ggplot2's 11 pt default regardless of the
+  `base_size` argument.
+* `insper_palette()` and `insper_pal()` now interpolate colors smoothly via
+  `colorRampPalette()` in CIELAB space when `n` exceeds the palette size,
+  instead of recycling colors with a warning. This produces perceptually
+  meaningful results, especially for diverging palettes like `roxo_verde`.
+* `insper_heatmap()` defaults to `palette = "vermelho_turquesa"` (was
+  `"diverging"`), matching the renamed palette.
 
 # insperplot 0.1.0
 

@@ -150,9 +150,9 @@ test_that("insper_barplot uses dark text on light stacked fills", {
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
-  # "grays" is a light sequential palette -> some segments need dark text
+  # "cinza" is a light sequential palette -> some segments need dark text
   p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                      text = TRUE, palette = "grays")
+                      text = TRUE, palette = "cinza")
 
   expect_true(any(text_layer_colours(p) == "#2C2C2C"),
               info = "Light bars should get dark text for readability")
@@ -1205,8 +1205,8 @@ test_that("insper_heatmap value_size parameter works", {
 test_that("insper_heatmap palette parameter works", {
   skip_if_not_installed("ggplot2")
   mat <- cor(mtcars[, 1:4])
-  p1 <- insper_heatmap(mat, palette = "diverging")
-  p2 <- insper_heatmap(mat, palette = "diverging")
+  p1 <- insper_heatmap(mat, palette = "vermelho_turquesa")
+  p2 <- insper_heatmap(mat, palette = "vermelho_turquesa")
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")

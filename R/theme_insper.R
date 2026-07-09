@@ -160,11 +160,11 @@ theme_insper <- function(
   }
 
   # Build full theme ----
-  full_theme <- theme(
-    text = element_text(family = font_text, size = rel(1)),
-    complete = TRUE
-  ) +
-    theme_sub_panel(grid.minor = element_blank()) +
+  # Note: `%+replace%` swaps whole elements, so the root `text` element must
+  # keep its absolute size. Font family and base_size are passed to
+  # theme_minimal() instead of overriding `text` here (which would drop
+  # base_size and fall back to ggplot2's 11 pt default).
+  full_theme <- theme_sub_panel(grid.minor = element_blank()) +
     theme_sub_plot(
       margin = margin(10, 15, 10, 15),
       title = element_text(
@@ -204,8 +204,52 @@ theme_insper <- function(
     border_theme
 
   # Return final theme ----
-  theme_minimal(base_size = base_size, paper = off_white, ...) %+replace%
+  theme_minimal(
+    base_size = base_size,
+    base_family = font_text,
+    paper = off_white,
+    ...
+  ) %+replace%
     full_theme
+}
+
+#' Insper Theme for Word and Print Documents
+#'
+#' A variant of [theme_insper()] with smaller text, sized for figures inserted
+#' into Word documents and other print reports. A typical document figure is
+#' about 15 cm (6 in) wide — at that size the default 12 pt base of
+#' [theme_insper()] renders noticeably larger than the surrounding body text,
+#' so this variant lowers the base to 10 pt.
+#'
+#' @param base_size Numeric. Base font size in points. Default is 10, sized
+#'   for figures placed in text documents. All other text sizes are calculated
+#'   relative to this value.
+#' @param ... Additional arguments passed to [theme_insper()], such as
+#'   \code{grid}, \code{border}, or \code{align}.
+#'
+#' @return A ggplot2 theme object that can be added to ggplot objects using
+#'   the \code{+} operator.
+#'
+#' @examplesIf has_insper_fonts()
+#' library(ggplot2)
+#'
+#' p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+#'   geom_point() +
+#'   labs(title = "Fuel efficiency", x = "Weight (1000 lbs)", y = "MPG")
+#'
+#' # Smaller text for a figure destined for a Word document
+#' p + theme_insper_doc()
+#'
+#' \dontrun{
+#' # Save at document width and insert into Word without rescaling
+#' save_insper_plot(p + theme_insper_doc(), "figure.png", width = 15)
+#' }
+#'
+#' @family themes
+#' @seealso [theme_insper()]
+#' @export
+theme_insper_doc <- function(base_size = 10, ...) {
+  theme_insper(base_size = base_size, ...)
 }
 
 

@@ -12,7 +12,7 @@ to see all options.}
 
 \item{n}{Integer or NULL. Number of colors to return. If NULL (default),
 returns all colors in the palette. If \code{n} exceeds the palette size,
-colors are recycled with a warning.}
+colors are interpolated smoothly using \code{\link[grDevices]{colorRampPalette}}.}
 
 \item{reverse}{Logical. If TRUE, reverses the color order. Default FALSE.}
 }
@@ -33,9 +33,9 @@ Available palettes by type:
   \item \strong{Qualitative}: main, muted, categorical_ito,
     categorical_tab, categorical_set
   \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
-    rosa, roxo, grays
-  \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
-    laranja_roxo, rosa_verde
+    rosa, roxo, cinza, azul
+  \item \strong{Diverging}: vermelho_turquesa (default for diverging data),
+    roxo_verde, laranja_roxo, rosa_verde
 }
 }
 \examples{
@@ -46,7 +46,7 @@ insper_palette("main")
 insper_palette("vermelho", n = 3)
 
 # Reverse order
-insper_palette("diverging", reverse = TRUE)
+insper_palette("vermelho_turquesa", reverse = TRUE)
 
 # Use directly in a plot
 library(ggplot2)

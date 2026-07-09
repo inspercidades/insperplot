@@ -24,13 +24,8 @@ insper_pal <- function(
     n <- length(pal)
   }
 
-  if (type == "discrete") {
-    if (n > length(pal)) {
-      cli::cli_warn("Not enough colors in palette. Recycling colors.")
-      pal <- rep(pal, length.out = n)
-    } else {
-      pal <- pal[1:n]
-    }
+  if (type == "discrete" && n <= length(pal)) {
+    pal <- pal[1:n]
   } else {
     pal <- grDevices::colorRampPalette(pal, space = "Lab")(n)
   }

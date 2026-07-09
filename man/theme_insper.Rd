@@ -110,5 +110,8 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 }
 \seealso{
 \code{\link[ggplot2]{theme_minimal}}, \code{\link[ggplot2]{theme}}
+
+Other themes: 
+\code{\link{theme_insper_doc}()}
 }
 \concept{themes}

@@ -83,8 +83,9 @@ insperplot includes several pre-defined palettes:
 - **main**: Primary Insper brand hues for categorical data
 - **muted**: Softer (desaturated) categorical palette
 - **vermelho**, **turquesa**, **verde**, **amarelo**, **laranja**,
-  **rosa**, **roxo**, **grays**: Sequential single-hue gradients
-- **diverging** (red/turquesa), **roxo_verde**, **laranja_roxo**,
+  **rosa**, **roxo**, **cinza**, **azul**: Sequential single-hue
+  gradients
+- **vermelho_turquesa**, **roxo_verde**, **laranja_roxo**,
   **rosa_verde**: Diverging palettes for data with a meaningful center
 - **categorical_ito**, **categorical_tab**, **categorical_set**:
   Colorblind-safe reference palettes

@@ -222,3 +222,63 @@
 #'
 #' @seealso \code{\link{insper_area}} for creating area plots with this data
 "fossil_fuel"
+
+
+#' Insper Brand Color Reference Table
+#'
+#' A flat, "one row per swatch" lookup table of every official Insper brand
+#' color: primary, secondary (six hue families, five steps each), and the
+#' neutral gray ramp + dark blue used in segment-specific applications.
+#'
+#' @format A data frame with 39 rows and 8 variables:
+#' \describe{
+#'   \item{hierarquia}{Character, color hierarchy: "Principais" (Vermelho,
+#'     Branco, Preto), "Secundários" (Turquesa, Verde, Amarelo, Laranja, Rosa,
+#'     Roxo), or "Neutros" (Cinza, Azul)}
+#'   \item{familia}{Character, hue family (e.g. "Vermelho", "Verde", "Cinza")}
+#'   \item{nome}{Character, lowercase identifier for the specific swatch
+#'     (e.g. "vermelho", "verde 0"..."verde 4"). Matches the `_N` suffix used
+#'     internally in \code{data-raw/colors_palettes.R}, where `_0` is the
+#'     family base and `_1`/`_2` are tints, `_3`/`_4` are shades}
+#'   \item{amostra}{Character, hex code of the swatch (mirrors `hex`); in the
+#'     companion \code{data-raw/insper_color_reference.xlsx} this column is
+#'     rendered as a color-filled cell instead}
+#'   \item{pantone}{Character, Pantone spot color reference, or "-" when the
+#'     brand guide does not specify one (Branco, Preto)}
+#'   \item{rgb}{Character, "R, G, B" digital color values as printed in the
+#'     brand guide}
+#'   \item{hex}{Character, hexadecimal color code, uppercase with leading "#"}
+#'   \item{acessibilidade}{Character, which text/logo color the brand guide
+#'     permits on this background: "branco" (white only), "preto" (black
+#'     only), or "ambos" (both pass). The guide only rules on the family base
+#'     colors and neutrals; tints/shades are \code{NA}}
+#' }
+#'
+#' @details
+#' Values are transcribed from Insper's 2026 brand guide
+#' (`data-raw/refs/insper-guia-de-marca.pdf`) via
+#' \code{data-raw/colors_palettes.R}, the package's authoritative source for
+#' brand hex codes. The "Neutros" rows (Cinza ramp and Azul) are not part of
+#' the guide's main "2.1 Cores" section — they appear in segment-specific
+#' pages (Pós-Graduação, Educação Executiva) — but are included here for a
+#' complete quick-reference.
+#'
+#' The \code{acessibilidade} column condenses the guide's accessibility and
+#' logo-background pages (white/black text contrast per background). Package
+#' plot functions apply the same idea automatically via an internal
+#' luminance-based helper when overlaying labels on colored bars.
+#'
+#' This dataset is a documentation/reference aid. For programmatic access to
+#' brand colors in plots, use \code{\link{insper_palette}} or the
+#' \code{scale_*_insper_*()} functions instead.
+#'
+#' @source Insper brand guide (2026), \code{data-raw/create_color_reference_table.R}
+#'
+#' @seealso \code{\link{insper_palette}} for programmatic palette access;
+#'   \code{\link{show_insper_palettes}} to preview palettes
+#' @examples
+#' head(insper_color_reference)
+#'
+#' # All swatches in the "Verde" family
+#' subset(insper_color_reference, familia == "Verde")
+"insper_color_reference"

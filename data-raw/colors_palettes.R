@@ -161,8 +161,8 @@ insper_palettes <- list(
   )),
 
   # -- Sequential (light -> dark, 5 steps) ----
-  # Six brand families come straight from the kit; `vermelho` is perceptually
-  # interpolated since the kit ships no red tints/shades.
+  # Six brand families come straight from the kit; `vermelho` and `azul` are
+  # perceptually interpolated since the kit ships no tints/shades for them.
   vermelho = ramp_lab(
     c(
       colorspace::lighten("#E50505", 0.75),
@@ -177,13 +177,19 @@ insper_palettes <- list(
   laranja = order_by_lightness(secondary_laranja),
   rosa = order_by_lightness(secondary_rosa),
   roxo = order_by_lightness(secondary_roxo),
-  grays = unname(c(
+  cinza = unname(c(
     neutral["cinza_0"],
     neutral["cinza_1"],
     neutral["cinza_2"],
     neutral["cinza_3"],
     neutral["cinza_4"]
   )),
+  # Azul (#0E171D) is the segment color for Educação Executiva / Pós; the kit
+  # ships only the single dark token, so the ramp is derived from it. The
+  # light anchor keeps the token's blue hue at higher chroma so the ramp is
+  # distinguishable from `cinza`; the dark end is pinned to the exact brand
+  # token (Lab interpolation rounds endpoints by 1 bit).
+  azul = c(ramp_lab(c("#C5D3E0", "#0E171D"), 5)[1:4], "#0E171D"),
 
   # -- Diverging (5 anchors: darkA, A, neutral, B, darkB) ----
   # Stored as anchors; continuous scales Lab-interpolate to any length.
@@ -205,9 +211,6 @@ insper_palettes <- list(
   categorical_tab = unname(grDevices::palette.colors(palette = "Tableau 10")),
   categorical_set = unname(grDevices::palette.colors(palette = "Set1"))
 )
-
-# `diverging` is the documented default — alias of vermelho_turquesa.
-insper_palettes$diverging <- insper_palettes$vermelho_turquesa
 
 # Save internal data -----------------------------------------------------------
 

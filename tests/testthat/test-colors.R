@@ -46,8 +46,10 @@ test_that("insper_pal continuous type interpolates colors", {
   expect_true(all(grepl("^#", pal)))
 })
 
-test_that("insper_pal warns when n exceeds palette size", {
-  expect_warning(insperplot:::insper_pal("vermelho", n = 20, type = "discrete"), "Not enough colors")
+test_that("insper_pal interpolates when n exceeds palette size", {
+  pal <- insperplot:::insper_pal("vermelho", n = 20, type = "discrete")
+  expect_length(pal, 20)
+  expect_true(all(grepl("^#[0-9A-F]{6}$", pal, ignore.case = TRUE)))
 })
 
 test_that("insper_pal n=NULL returns full palette", {
@@ -82,12 +84,10 @@ test_that("insper_palette reverse parameter works", {
   expect_equal(as.character(normal), rev(as.character(reversed)))
 })
 
-test_that("insper_palette warns and recycles when n exceeds palette size", {
-  expect_warning(insper_palette("vermelho", n = 20), "recycling")
-  suppressWarnings({
-    pal <- insper_palette("vermelho", n = 20)
-    expect_length(pal, 20)
-  })
+test_that("insper_palette interpolates when n exceeds palette size", {
+  pal <- insper_palette("vermelho", n = 20)
+  expect_length(pal, 20)
+  expect_true(all(grepl("^#[0-9A-F]{6}$", pal, ignore.case = TRUE)))
 })
 
 test_that("insper_palette errors on unknown palette", {

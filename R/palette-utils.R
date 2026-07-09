@@ -17,16 +17,17 @@ palette_metadata <- function() {
       "laranja",
       "rosa",
       "roxo",
-      "grays",
+      "cinza",
+      "azul",
       # diverging
-      "diverging",
+      "vermelho_turquesa",
       "roxo_verde",
       "laranja_roxo",
       "rosa_verde"
     ),
     type = c(
       rep("qualitative", 5),
-      rep("sequential", 8),
+      rep("sequential", 9),
       rep("diverging", 4)
     ),
     n_colors = c(
@@ -35,6 +36,7 @@ palette_metadata <- function() {
       8,
       10,
       9,
+      5,
       5,
       5,
       5,
@@ -61,8 +63,9 @@ palette_metadata <- function() {
       "Intensity scales (light to dark laranja)",
       "Intensity scales (light to dark rosa)",
       "Intensity scales (light to dark roxo)",
-      "Intensity scales (light to dark gray)",
-      "Diverging data (red/turquesa, default)",
+      "Intensity scales (light to dark cinza)",
+      "Intensity scales (light to dark azul)",
+      "Diverging data (vermelho/turquesa, default)",
       "Diverging data (roxo/verde)",
       "Diverging data (laranja/roxo)",
       "Diverging data (rosa/verde)"
@@ -112,7 +115,7 @@ get_insper_colors <- function(...) {
 #'   to see all options.
 #' @param n Integer or NULL. Number of colors to return. If NULL (default),
 #'   returns all colors in the palette. If \code{n} exceeds the palette size,
-#'   colors are recycled with a warning.
+#'   colors are interpolated smoothly using \code{\link[grDevices]{colorRampPalette}}.
 #' @param reverse Logical. If TRUE, reverses the color order. Default FALSE.
 #'
 #' @return An object of class \code{insper_palette} (a named character vector of
@@ -125,9 +128,9 @@ get_insper_colors <- function(...) {
 #'   \item \strong{Qualitative}: main, muted, categorical_ito,
 #'     categorical_tab, categorical_set
 #'   \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
-#'     rosa, roxo, grays
-#'   \item \strong{Diverging}: diverging (red/turquesa), roxo_verde,
-#'     laranja_roxo, rosa_verde
+#'     rosa, roxo, cinza, azul
+#'   \item \strong{Diverging}: vermelho_turquesa (default for diverging data),
+#'     roxo_verde, laranja_roxo, rosa_verde
 #' }
 #'
 #' @family colors
@@ -142,7 +145,7 @@ get_insper_colors <- function(...) {
 #' insper_palette("vermelho", n = 3)
 #'
 #' # Reverse order
-#' insper_palette("diverging", reverse = TRUE)
+#' insper_palette("vermelho_turquesa", reverse = TRUE)
 #'
 #' # Use directly in a plot
 #' library(ggplot2)
@@ -171,10 +174,7 @@ insper_palette <- function(palette = "main", n = NULL, reverse = FALSE) {
 
   if (!is.null(n)) {
     if (n > length(colors)) {
-      cli::cli_warn(
-        "Palette {.val {palette}} has {length(colors)} colors but {n} requested \u2014 recycling."
-      )
-      colors <- rep(colors, length.out = n)
+      colors <- grDevices::colorRampPalette(colors, space = "Lab")(n)
     } else {
       colors <- colors[seq_len(n)]
     }

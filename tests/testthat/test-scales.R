@@ -38,7 +38,7 @@ test_that("discrete scales accept different palettes", {
 test_that("continuous scales accept different palettes", {
   expect_no_error(scale_color_insper_c(palette = "vermelho"))
   expect_no_error(scale_color_insper_c(palette = "turquesa"))
-  expect_no_error(scale_fill_insper_c(palette = "diverging"))
+  expect_no_error(scale_fill_insper_c(palette = "vermelho_turquesa"))
 })
 
 test_that("scales accept reverse parameter", {

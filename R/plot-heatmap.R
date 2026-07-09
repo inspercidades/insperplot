@@ -8,7 +8,7 @@
 #' @param show_values Logical. If TRUE, displays values on tiles. Default is FALSE
 #' @param value_color Character. Color for value text. Default is "white"
 #' @param value_size Numeric. Size of value text. Default is 3
-#' @param palette Character. Palette name for fill scale. Default is "diverging"
+#' @param palette Character. Palette name for fill scale. Default is "vermelho_turquesa"
 #' @param ... Additional arguments passed to \code{ggplot2::geom_tile()}
 #' @return A ggplot2 object
 #'
@@ -21,7 +21,7 @@
 #' insper_heatmap(cor_mat, show_values = FALSE)
 #'
 #' # Custom palette
-#' insper_heatmap(cor_mat, palette = "diverging")
+#' insper_heatmap(cor_mat, palette = "vermelho_turquesa")
 #' @family plots
 #' @seealso \code{\link{theme_insper}}, \code{\link{scale_fill_insper_d}}
 #' @export
@@ -30,7 +30,7 @@ insper_heatmap <- function(
   show_values = FALSE,
   value_color = "white",
   value_size = 3,
-  palette = "diverging",
+  palette = "vermelho_turquesa",
   ...
 ) {
   # Input validation with cli

@@ -268,7 +268,7 @@ test_that("insper_barplot uses contrast text on light stacked fills", {
     fill = group,
     position = "stack",
     text = TRUE,
-    palette = "grays"
+    palette = "cinza"
   )
   expect_no_error(ggplot2::ggplot_build(p))
   has_manual_colour <- any(vapply(

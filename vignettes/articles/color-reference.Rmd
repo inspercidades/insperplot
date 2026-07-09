@@ -1,0 +1,153 @@
+---
+title: "Color Reference Table"
+output: html_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+## Overview
+
+This page is a searchable quick-reference for every official Insper brand color: Pantone spot color, RGB, and hex values, organized by hierarchy (Principais, Secundários, Neutros) and hue family. It is generated directly from the `insper_color_reference` dataset shipped with the package.
+
+For programmatic access in plots, use `insper_palette()` or the `scale_*_insper_*()` functions instead — this table is documentation, not an API.
+
+```{r setup}
+library(insperplot)
+library(reactable)
+library(htmltools)
+```
+
+## Table
+
+```{r color-table, echo = FALSE}
+swatch_cell <- function(hex) {
+  div(
+    style = paste0(
+      "background-color:",
+      hex,
+      ";",
+      "border-radius:4px;",
+      "border:1px solid rgba(0,0,0,0.1);",
+      "height:1.4rem;width:100%;"
+    ),
+    title = hex
+  )
+}
+
+tab <- dplyr::select(insper_color_reference, -familia)
+
+reactable(
+  tab,
+  # groupBy = "hierarquia",
+  defaultPageSize = 50,
+  filterable = TRUE,
+  searchable = TRUE,
+  highlight = TRUE,
+  striped = TRUE,
+  columns = list(
+    hierarquia = colDef(name = "Hierarquia"),
+    familia = colDef(name = "Família"),
+    nome = colDef(name = "Nome"),
+    amostra = colDef(
+      name = "Amostra",
+      cell = function(value) swatch_cell(value),
+      filterable = FALSE,
+      width = 90
+    ),
+    pantone = colDef(name = "Pantone"),
+    rgb = colDef(name = "RGB"),
+    hex = colDef(name = "Hex"),
+    acessibilidade = colDef(
+      name = "Texto",
+      cell = function(value, index) {
+        if (is.na(value)) {
+          return("")
+        }
+        bg <- tab$hex[index]
+        label <- if (value == "ambos") "Ambos" else "Insper"
+        font <- if (value == "branco") "#FFFFFF" else "#000000"
+        div(
+          style = paste0(
+            "background-color:", bg, ";",
+            "color:", font, ";",
+            "border-radius:4px;",
+            "text-align:center;",
+            "font-weight:600;",
+            "padding:0.1rem 0.4rem;"
+          ),
+          label
+        )
+      },
+      filterable = FALSE,
+      width = 100
+    )
+  ),
+  defaultColDef = colDef(headerStyle = list(fontWeight = 600))
+)
+```
+
+## Acessibilidade: text on colored backgrounds
+
+The brand guide rules on which text (or logo) color may sit on each base background: white only, black only, or both. The `acessibilidade` column above condenses those rules — the swatch in the "Texto" column shows the permitted color in use. Tints and shades (`_1`–`_4`) are not covered by the guide, so they are blank.
+
+```{r accessibility-guide, echo = FALSE, fig.width = 8, fig.height = 3.5, fig.alt = "Grid of Insper base colors, each swatch labeled with sample text in the permitted color: white, black, or both."}
+library(ggplot2)
+
+acc <- subset(insper_color_reference, !is.na(acessibilidade))
+acc$col <- (seq_len(nrow(acc)) - 1) %% 5
+acc$row <- ((seq_len(nrow(acc)) - 1) %/% 5) * 1.4
+
+labels <- do.call(
+  rbind,
+  lapply(seq_len(nrow(acc)), function(i) {
+    r <- acc[i, ]
+    text_cols <- switch(
+      r$acessibilidade,
+      branco = "#FFFFFF",
+      preto = "#000000",
+      ambos = c("#FFFFFF", "#000000")
+    )
+    offsets <- if (length(text_cols) == 2) c(-0.16, 0.16) else 0
+    data.frame(
+      col = r$col,
+      row = r$row,
+      y = r$row + offsets,
+      text_color = text_cols,
+      hex = r$hex,
+      nome = r$nome
+    )
+  })
+)
+
+ggplot(acc, aes(x = col, y = row)) +
+  geom_tile(aes(fill = hex), width = 0.92, height = 0.85, color = "grey85", linewidth = 0.3) +
+  geom_text(
+    data = labels,
+    aes(y = y, label = "Insper", color = text_color),
+    fontface = "bold",
+    size = 3.6
+  ) +
+  geom_text(
+    aes(y = row - 0.55, label = nome),
+    size = 3,
+    color = "grey30"
+  ) +
+  scale_fill_identity() +
+  scale_color_identity() +
+  scale_y_reverse() +
+  coord_equal(ratio = 0.8) +
+  theme_void()
+```
+
+The same logic is applied automatically inside the package: plot functions that draw labels on colored areas (e.g. `insper_barplot()` with `text = TRUE`) pick white or dark text per segment based on the fill's luminance.
+
+## Source
+
+Values are transcribed from Insper's 2026 brand guide via `data-raw/colors_palettes.R` and assembled into this flat table by `data-raw/create_color_reference_table.R`. See `?insper_color_reference` for column definitions. A companion `data-raw/insper_color_reference.xlsx` file mirrors this table with color-filled swatch cells for use outside R.

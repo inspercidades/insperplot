@@ -31,6 +31,8 @@ navbar:
         href: articles/getting-started.html
       - text: How to follow Insper's design guide
         href: articles/brand-kit.html
+      - text: Color Reference Table
+        href: articles/color-reference.html
     news:
       text: News
       href: news/index.html
@@ -43,6 +45,7 @@ reference:
   desc: Apply Insper's visual identity to ggplot2 plots
   contents:
   - theme_insper
+  - theme_insper_doc
 
 - title: Colors and Palettes
   desc: Access Insper brand colors and palettes
@@ -75,7 +78,7 @@ reference:
   - format_num_br
 
 - title: Data
-  desc: Internal package data
+  desc: Package datasets
   contents:
   - has_keyword("datasets")
 

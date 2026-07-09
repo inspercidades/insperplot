@@ -9,7 +9,7 @@ insper_heatmap(
   show_values = FALSE,
   value_color = "white",
   value_size = 3,
-  palette = "diverging",
+  palette = "vermelho_turquesa",
   ...
 )
 }
@@ -23,7 +23,7 @@ correlation matrix}
 
 \item{value_size}{Numeric. Size of value text. Default is 3}
 
-\item{palette}{Character. Palette name for fill scale. Default is "diverging"}
+\item{palette}{Character. Palette name for fill scale. Default is "vermelho_turquesa"}
 
 \item{...}{Additional arguments passed to \code{ggplot2::geom_tile()}}
 }
@@ -44,7 +44,7 @@ insper_heatmap(cor_mat)
 insper_heatmap(cor_mat, show_values = FALSE)
 
 # Custom palette
-insper_heatmap(cor_mat, palette = "diverging")
+insper_heatmap(cor_mat, palette = "vermelho_turquesa")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

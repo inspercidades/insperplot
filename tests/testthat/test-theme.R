@@ -10,6 +10,31 @@ test_that("theme_insper accepts base_size parameter", {
   expect_no_error(theme_insper(base_size = 18))
 })
 
+test_that("theme_insper propagates base_size to text elements", {
+  expect_equal(
+    ggplot2::calc_element("text", theme_insper(base_size = 12))$size,
+    12
+  )
+  expect_equal(
+    ggplot2::calc_element("text", theme_insper(base_size = 20))$size,
+    20
+  )
+  # Relative sizes scale with base_size (axis.text is rel(0.8))
+  expect_equal(
+    ggplot2::calc_element("axis.text", theme_insper(base_size = 20))$size,
+    16
+  )
+})
+
+test_that("theme_insper_doc defaults to a smaller base size", {
+  theme <- theme_insper_doc()
+  expect_s3_class(theme, "theme")
+  expect_equal(ggplot2::calc_element("text", theme)$size, 10)
+  # Passes extra arguments through to theme_insper()
+  expect_no_error(theme_insper_doc(base_size = 9, grid = FALSE))
+  expect_error(theme_insper_doc(border = "invalid"), "must be one of")
+})
+
 test_that("theme_insper grid parameter works", {
   expect_no_error(theme_insper(grid = TRUE))
   expect_no_error(theme_insper(grid = FALSE))
