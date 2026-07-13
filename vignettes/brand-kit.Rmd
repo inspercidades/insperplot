@@ -76,7 +76,7 @@ The approach used by `insperplot` tries to be safe: it bundles Inter, meaning th
 tinsper <- theme_insper()
 
 tinsper$plot.title@family
-#> "PT Serif"
+#> "Georgia"
 
 tinsper$plot.subtitle@family
 #> "Inter"
