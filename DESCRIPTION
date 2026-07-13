@@ -41,7 +41,9 @@ Suggests:
     pkgdown,
     RcppRoll,
     lubridate,
-    dplyr
+    dplyr,
+    reactable,
+    htmltools
 URL: https://portalcidados.github.io/insperplot/, https://github.com/portalcidados/insperplot
 BugReports: https://github.com/portalcidados/insperplot/issues
 Config/testthat/edition: 3
