@@ -64,9 +64,14 @@ insper_density <- function(
   }
 
   # Smart detection for fill aesthetic
+  palette_supplied <- !missing(palette)
   fill_quo <- rlang::enquo(fill)
   fill_type <- detect_aesthetic_type(fill_quo, "fill", data)
-  warn_palette_ignored(fill_type, palette, "fill")
+  warn_palette_ignored(
+    fill_type,
+    if (palette_supplied) palette else NULL,
+    "fill"
+  )
 
   # Use default palette if not specified
   if (is.null(palette)) {

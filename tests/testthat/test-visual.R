@@ -8,11 +8,11 @@ skip_if_not_installed("vdiffr")
 # Visual tests require fonts for consistent rendering across systems
 skip_if_no_fonts()
 
-library(ggplot2)
+suppressWarnings(library(ggplot2))
 
 # Test data
 test_df <- data.frame(
-  category = c("A", "B", "C", "D"),
+  category = factor(c("A", "B", "C", "D")),
   value = c(10, 25, 15, 30),
   group = rep(c("X", "Y"), 2)
 )
@@ -103,14 +103,14 @@ test_that("insper_scatterplot with color aesthetic renders correctly", {
 })
 
 test_that("insper_timeseries renders correctly", {
-  set.seed(123)  # Ensure reproducible random data
+  set.seed(123) # Ensure reproducible random data
   ts_data <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
   p <- insper_timeseries(ts_data, x = time, y = value)
   vdiffr::expect_doppelganger("timeseries_basic", p)
 })
 
 test_that("insper_timeseries with groups renders correctly", {
-  set.seed(456)  # Ensure reproducible random data
+  set.seed(456) # Ensure reproducible random data
   ts_data <- data.frame(
     time = rep(1:20, 2),
     value = cumsum(rnorm(40)),
@@ -126,7 +126,7 @@ test_that("insper_boxplot renders correctly", {
 })
 
 test_that("insper_area renders correctly", {
-  set.seed(789)  # Ensure reproducible random data
+  set.seed(789) # Ensure reproducible random data
   area_data <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
   p <- insper_area(area_data, x = time, y = value)
   vdiffr::expect_doppelganger("area_basic", p)
@@ -142,4 +142,3 @@ test_that("insper_heatmap renders correctly", {
   p <- insper_heatmap(cor_mat)
   vdiffr::expect_doppelganger("heatmap_basic", p)
 })
-

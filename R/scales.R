@@ -24,7 +24,9 @@ scale_color_insper_d <- function(palette = "main", reverse = FALSE, ...) {
 
 #' @rdname scale_color_insper_d
 #' @export
-scale_colour_insper_d <- scale_color_insper_d
+scale_colour_insper_d <- function(palette = "main", reverse = FALSE, ...) {
+  scale_color_insper_d(palette = palette, reverse = reverse, ...)
+}
 
 #' @rdname scale_color_insper_d
 #' @export
@@ -61,7 +63,9 @@ scale_color_insper_c <- function(palette = "turquesa", reverse = FALSE, ...) {
 
 #' @rdname scale_color_insper_c
 #' @export
-scale_colour_insper_c <- scale_color_insper_c
+scale_colour_insper_c <- function(palette = "turquesa", reverse = FALSE, ...) {
+  scale_color_insper_c(palette = palette, reverse = reverse, ...)
+}
 
 #' @rdname scale_color_insper_c
 #' @importFrom ggplot2 scale_fill_gradientn

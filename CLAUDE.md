@@ -65,7 +65,7 @@ This package follows **modern R development best practices** (2025 standards):
 - `R/scales.R` — `scale_color_insper_{c,d}()` / `scale_fill_insper_{c,d}()` (+ `colour` aliases)
 - `R/utils.R` — `save_insper_plot()`, `format_num_br()`, plus internal helpers: `detect_aesthetic_type()`, `warn_palette_ignored()`, `calculate_luminance()`, `get_contrast_text_color()`, `has_insper_fonts()`, `is_valid_color()`
 - `R/data.R` — dataset documentation; data lives in `data/` and `R/sysdata.rda`
-- `R/zzz.R` — `.onLoad()` registers bundled fonts (Inter, EB Garamond, Playfair Display) via `systemfonts::register_font()`
+- `R/zzz.R` — `.onLoad()` registers the bundled Inter font via `systemfonts::register_font()`
 - `R/globals.R` — `utils::globalVariables()` declarations
 
 ## Development Guidelines
@@ -135,7 +135,7 @@ Rscript data-raw/create_logo.R
 
 ### Color Palette Definition
 ```bash
-# Color palettes defined in data-raw/create_colors_and_palettes.R
+# Color palettes defined in data-raw/colors_palettes.R
 # Creates R/sysdata.rda with insper_colors list
 # Updates should maintain backward compatibility with old names
 ```
@@ -143,8 +143,8 @@ Rscript data-raw/create_logo.R
 ## Common Workflows
 
 ### Adding a New Color Palette
-1. Edit `data-raw/create_colors_and_palettes.R` to add palette definition
-2. Run `Rscript data-raw/create_colors_and_palettes.R` to regenerate `R/sysdata.rda`
+1. Edit `data-raw/colors_palettes.R` to add palette definition
+2. Run `Rscript data-raw/colors_palettes.R` to regenerate `R/sysdata.rda`
 3. Update `insper_palette()` documentation with new palette name
 4. Add tests in `tests/testthat/test-colors.R`
 5. Update `show_insper_palettes()` to support new palette (if special handling needed)
@@ -169,10 +169,10 @@ Rscript data-raw/create_logo.R
 ## Important Constraints and Gotchas
 
 ### Bundled Fonts (inst/fonts/)
-- Inter, EB Garamond, and Playfair Display are shipped as TTF files in `inst/fonts/` (OFL-licensed)
+- Inter is shipped as TTF files in `inst/fonts/inter/` (OFL-licensed)
 - Registered automatically in `.onLoad()` via `systemfonts::register_font()` — no user action needed
 - `detect_font()` checks both `registry_fonts()` (bundled) and `system_fonts()` (system-installed)
-- Georgia (title font) is NOT bundled — it's a system font pre-installed on most OSes; bundled serifs serve as fallbacks
+- Georgia (title font) is NOT bundled — it's a system font pre-installed on most OSes; `serif` is the fallback
 - To refresh or update fonts, run `data-raw/download_fonts.R`
 
 ### ggplot2 Integration
@@ -193,7 +193,7 @@ Rscript data-raw/create_logo.R
 - Consider adding English alternatives when appropriate
 
 ### Package Load Behavior (R/zzz.R)
-- `.onLoad()` registers the three bundled font families via `systemfonts::register_font()`; skips any font already present as a system font to avoid conflicts
+- `.onLoad()` registers the bundled Inter family via `systemfonts::register_font()`; skips it if already present as a system font to avoid conflicts
 
 ### Smart Aesthetic Detection (R/utils.R)
 - Plot functions that accept a `color`/`fill` argument call `detect_aesthetic_type()` to distinguish a mapped variable from a constant color string

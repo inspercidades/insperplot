@@ -141,7 +141,10 @@ test_that("theme_insper accepts custom font names", {
   # Should not error even with non-existent fonts (will fall back)
   expect_no_error(theme_insper(font_title = "NonExistentFont"))
   expect_no_error(theme_insper(font_text = "AnotherFakeFont"))
-  expect_no_error(theme_insper(font_title = "FakeTitle", font_text = "FakeText"))
+  expect_no_error(theme_insper(
+    font_title = "FakeTitle",
+    font_text = "FakeText"
+  ))
 })
 
 test_that("theme_insper multiple parameters work together", {
@@ -253,4 +256,3 @@ test_that("match_font_family returns NULL when nothing matches", {
   expect_null(match_font_family("Inter", c("Arial", "Georgia")))
   expect_null(match_font_family("Inter", character(0)))
 })
-

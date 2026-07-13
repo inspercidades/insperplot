@@ -21,11 +21,16 @@ test_that("scale_fill_insper_c returns continuous scale", {
 })
 
 test_that("scale_colour_insper_d is alias for scale_color_insper_d", {
-  expect_identical(scale_colour_insper_d, scale_color_insper_d)
+  scale <- scale_colour_insper_d()
+  expect_s3_class(scale, "ScaleDiscrete")
+  expect_s3_class(scale, "Scale")
+  expect_equal(scale$aesthetics, "colour")
 })
 
 test_that("scale_colour_insper_c is alias for scale_color_insper_c", {
-  expect_identical(scale_colour_insper_c, scale_color_insper_c)
+  scale <- scale_colour_insper_c()
+  expect_s3_class(scale, "Scale")
+  expect_equal(scale$aesthetics, "colour")
 })
 
 test_that("discrete scales accept different palettes", {
@@ -51,12 +56,18 @@ test_that("scales accept reverse parameter", {
 test_that("discrete scales can be added to ggplot", {
   skip_if_not_installed("ggplot2")
 
-  p_color <- ggplot2::ggplot(mtcars, ggplot2::aes(x = wt, y = mpg, color = factor(cyl))) +
+  p_color <- ggplot2::ggplot(
+    mtcars,
+    ggplot2::aes(x = wt, y = mpg, color = factor(cyl))
+  ) +
     ggplot2::geom_point() +
     scale_color_insper_d()
   expect_s3_class(p_color, "ggplot")
 
-  p_fill <- ggplot2::ggplot(mtcars, ggplot2::aes(x = factor(cyl), fill = factor(cyl))) +
+  p_fill <- ggplot2::ggplot(
+    mtcars,
+    ggplot2::aes(x = factor(cyl), fill = factor(cyl))
+  ) +
     ggplot2::geom_bar() +
     scale_fill_insper_d()
   expect_s3_class(p_fill, "ggplot")

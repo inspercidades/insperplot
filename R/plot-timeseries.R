@@ -56,11 +56,16 @@ insper_timeseries <- function(
   }
 
   # Smart detection for color
+  palette_supplied <- !missing(palette)
   color_quo <- rlang::enquo(color)
   color_type <- detect_aesthetic_type(color_quo, "color", data)
 
   # Warn if palette specified with static color
-  warn_palette_ignored(color_type, palette, "color")
+  warn_palette_ignored(
+    color_type,
+    if (palette_supplied) palette else NULL,
+    "color"
+  )
 
   # Initialize plot based on color type
   if (color_type$type == "missing") {

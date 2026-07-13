@@ -59,11 +59,16 @@ insper_violin <- function(
   }
 
   # Smart detection for fill
+  palette_supplied <- !missing(palette)
   fill_quo <- rlang::enquo(fill)
   fill_type <- detect_aesthetic_type(fill_quo, "fill", data)
 
   # Warn if palette specified with static fill
-  warn_palette_ignored(fill_type, palette, "fill")
+  warn_palette_ignored(
+    fill_type,
+    if (palette_supplied) palette else NULL,
+    "fill"
+  )
 
   # Initialize plot based on fill type
   if (fill_type$type == "missing") {

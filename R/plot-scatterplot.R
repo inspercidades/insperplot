@@ -90,6 +90,7 @@ insper_scatterplot <- function(
   }
 
   # Smart detection for color and fill
+  palette_supplied <- !missing(palette)
   color_quo <- rlang::enquo(color)
   fill_quo <- rlang::enquo(fill)
 
@@ -97,7 +98,11 @@ insper_scatterplot <- function(
   fill_type <- detect_aesthetic_type(fill_quo, "fill", data)
 
   # Warn if palette specified with static aesthetics
-  if (color_type$type == "static_color" && fill_type$type == "static_color") {
+  if (
+    palette_supplied &&
+      color_type$type == "static_color" &&
+      fill_type$type == "static_color"
+  ) {
     warn_palette_ignored(color_type, palette, "color")
   }
 
