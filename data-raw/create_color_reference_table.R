@@ -187,7 +187,13 @@ build_color_reference_xlsx <- function(df, path) {
         fontColour = font,
         halign = "center"
       )
-      openxlsx::addStyle(wb, "cores", acess_style, rows = i + 1, cols = acess_col)
+      openxlsx::addStyle(
+        wb,
+        "cores",
+        acess_style,
+        rows = i + 1,
+        cols = acess_col
+      )
     }
   }
 

@@ -35,7 +35,7 @@ test_that("insper_pal validates palette names", {
 })
 
 test_that("insper_pal reverse parameter works", {
-  pal_normal  <- insperplot:::insper_pal("vermelho")
+  pal_normal <- insperplot:::insper_pal("vermelho")
   pal_reverse <- insperplot:::insper_pal("vermelho", reverse = TRUE)
   expect_equal(pal_normal, rev(pal_reverse))
 })
@@ -79,7 +79,7 @@ test_that("insper_palette n parameter subsets colors", {
 })
 
 test_that("insper_palette reverse parameter works", {
-  normal  <- insper_palette("vermelho")
+  normal <- insper_palette("vermelho")
   reversed <- insper_palette("vermelho", reverse = TRUE)
   expect_equal(as.character(normal), rev(as.character(reversed)))
 })

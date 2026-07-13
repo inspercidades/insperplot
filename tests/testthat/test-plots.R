@@ -13,9 +13,24 @@ test_that("insper_barplot validates data frame input", {
 test_that("insper_barplot validates position parameter", {
   df <- data.frame(x = c("A", "B"), y = c(1, 2), grp = c("X", "Y"))
   # Dodge warns about non-factor x but still works
-  expect_warning(insper_barplot(df, x = x, y = y, fill = grp, position = "dodge"), "factor")
-  expect_no_error(insper_barplot(df, x = x, y = y, fill = grp, position = "stack"))
-  expect_error(insper_barplot(df, x = x, y = y, fill = grp, position = "invalid"))
+  expect_warning(
+    insper_barplot(df, x = x, y = y, fill = grp, position = "dodge"),
+    "factor"
+  )
+  expect_no_error(insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack"
+  ))
+  expect_error(insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "invalid"
+  ))
 })
 
 test_that("insper_barplot handles grouped bars", {
@@ -79,11 +94,20 @@ test_that("insper_barplot text labels work with stacked bars", {
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack", text = TRUE)
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE
+  )
   expect_s3_class(p, "ggplot")
 
   # Check that geom_text has position_stack
-  text_layer <- p$layers[[which(sapply(p$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
+  text_layer <- p$layers[[which(sapply(p$layers, function(l) {
+    inherits(l$geom, "GeomText")
+  }))[1]]]
   expect_true(inherits(text_layer$position, "PositionStack"))
 })
 
@@ -94,11 +118,20 @@ test_that("insper_barplot text labels work with filled bars", {
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
   expect_s3_class(p, "ggplot")
 
   # Check that geom_text has position_fill
-  text_layer <- p$layers[[which(sapply(p$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
+  text_layer <- p$layers[[which(sapply(p$layers, function(l) {
+    inherits(l$geom, "GeomText")
+  }))[1]]]
   expect_true(inherits(text_layer$position, "PositionFill"))
 })
 
@@ -122,11 +155,21 @@ test_that("insper_barplot uses WCAG-contrast text for stacked bars on default pa
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack", text = TRUE)
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE
+  )
 
   colours <- text_layer_colours(p)
-  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
-              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
+  expect_equal(
+    colours,
+    c("white", "#2C2C2C", "white", "#2C2C2C"),
+    info = "Red bars get white text, teal bars get dark text (WCAG contrast)"
+  )
 })
 
 test_that("insper_barplot uses WCAG-contrast text for filled bars on default palette", {
@@ -136,11 +179,21 @@ test_that("insper_barplot uses WCAG-contrast text for filled bars on default pal
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
 
   colours <- text_layer_colours(p)
-  expect_equal(colours, c("white", "#2C2C2C", "white", "#2C2C2C"),
-              info = "Red bars get white text, teal bars get dark text (WCAG contrast)")
+  expect_equal(
+    colours,
+    c("white", "#2C2C2C", "white", "#2C2C2C"),
+    info = "Red bars get white text, teal bars get dark text (WCAG contrast)"
+  )
 })
 
 test_that("insper_barplot uses dark text on light stacked fills", {
@@ -151,11 +204,20 @@ test_that("insper_barplot uses dark text on light stacked fills", {
     grp = rep(c("X", "Y"), 2)
   )
   # "cinza" is a light sequential palette -> some segments need dark text
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                      text = TRUE, palette = "cinza")
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE,
+    palette = "cinza"
+  )
 
-  expect_true(any(text_layer_colours(p) == "#2C2C2C"),
-              info = "Light bars should get dark text for readability")
+  expect_true(
+    any(text_layer_colours(p) == "#2C2C2C"),
+    info = "Light bars should get dark text for readability"
+  )
 })
 
 test_that("insper_barplot respects custom text_color parameter", {
@@ -167,18 +229,42 @@ test_that("insper_barplot respects custom text_color parameter", {
   )
 
   # Test custom color is not overridden for stack
-  p1 <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                       text = TRUE, text_color = "red")
-  text_layer1 <- p1$layers[[which(sapply(p1$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
-  expect_equal(text_layer1$aes_params$colour, "red",
-               info = "Custom text_color should be respected for stacked bars")
+  p1 <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE,
+    text_color = "red"
+  )
+  text_layer1 <- p1$layers[[which(sapply(p1$layers, function(l) {
+    inherits(l$geom, "GeomText")
+  }))[1]]]
+  expect_equal(
+    text_layer1$aes_params$colour,
+    "red",
+    info = "Custom text_color should be respected for stacked bars"
+  )
 
   # Test custom color is not overridden for fill
-  p2 <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill",
-                       text = TRUE, text_color = "blue")
-  text_layer2 <- p2$layers[[which(sapply(p2$layers, function(l) inherits(l$geom, "GeomText")))[1]]]
-  expect_equal(text_layer2$aes_params$colour, "blue",
-               info = "Custom text_color should be respected for filled bars")
+  p2 <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "fill",
+    text = TRUE,
+    text_color = "blue"
+  )
+  text_layer2 <- p2$layers[[which(sapply(p2$layers, function(l) {
+    inherits(l$geom, "GeomText")
+  }))[1]]]
+  expect_equal(
+    text_layer2$aes_params$colour,
+    "blue",
+    info = "Custom text_color should be respected for filled bars"
+  )
 })
 
 test_that("insper_barplot stack_vjust parameter works", {
@@ -190,12 +276,33 @@ test_that("insper_barplot stack_vjust parameter works", {
   )
 
   # Test different stack_vjust values
-  p1 <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                       text = TRUE, stack_vjust = 0)
-  p2 <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                       text = TRUE, stack_vjust = 0.5)
-  p3 <- insper_barplot(df, x = x, y = y, fill = grp, position = "stack",
-                       text = TRUE, stack_vjust = 1)
+  p1 <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE,
+    stack_vjust = 0
+  )
+  p2 <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE,
+    stack_vjust = 0.5
+  )
+  p3 <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "stack",
+    text = TRUE,
+    stack_vjust = 1
+  )
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -205,7 +312,7 @@ test_that("insper_barplot stack_vjust parameter works", {
 test_that("insper_barplot warns when dodge used with non-factor x", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
-    x = rep(c("A", "B"), each = 2),  # character, not factor
+    x = rep(c("A", "B"), each = 2), # character, not factor
     y = c(10, 15, 20, 25),
     grp = rep(c("X", "Y"), 2)
   )
@@ -221,11 +328,18 @@ test_that("insper_barplot automatic percentage formatting for fill position", {
   # Test with proportion data (0-1)
   df <- data.frame(
     x = rep(c("A", "B"), each = 2),
-    y = c(0.4, 0.6, 0.3, 0.7),  # proportions
+    y = c(0.4, 0.6, 0.3, 0.7), # proportions
     grp = rep(c("X", "Y"), 2)
   )
 
-  p <- insper_barplot(df, x = x, y = y, fill = grp, position = "fill", text = TRUE)
+  p <- insper_barplot(
+    df,
+    x = x,
+    y = y,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
   expect_s3_class(p, "ggplot")
 
   # The plot should build without errors
@@ -251,7 +365,9 @@ test_that("insper_scatterplot add_smooth parameter works", {
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
   # Check smooth is present in p1
-  expect_true(any(sapply(p1$layers, function(l) inherits(l$geom, "GeomSmooth"))))
+  expect_true(any(sapply(p1$layers, function(l) {
+    inherits(l$geom, "GeomSmooth")
+  })))
 })
 
 test_that("insper_timeseries creates plot", {
@@ -308,22 +424,28 @@ test_that("plot functions work without title/subtitle/caption (use labs() instea
   expect_s3_class(p1, "ggplot")
 
   # Users can add labels with labs()
-  p1_with_labs <- p1 + ggplot2::labs(
-    title = "Test Title",
-    subtitle = "Test Subtitle",
-    caption = "Test Caption"
-  )
+  p1_with_labs <- p1 +
+    ggplot2::labs(
+      title = "Test Title",
+      subtitle = "Test Subtitle",
+      caption = "Test Caption"
+    )
   expect_s3_class(p1_with_labs, "ggplot")
 
   p2 <- insper_timeseries(
     data.frame(time = 1:10, value = rnorm(10)),
-    x = time, y = value
-  ) + ggplot2::labs(title = "Test")
+    x = time,
+    y = value
+  ) +
+    ggplot2::labs(title = "Test")
   expect_s3_class(p2, "ggplot")
 
   p3 <- insper_boxplot(
-    mtcars, x = factor(cyl), y = mpg
-  ) + ggplot2::labs(caption = "Test")
+    mtcars,
+    x = factor(cyl),
+    y = mpg
+  ) +
+    ggplot2::labs(caption = "Test")
   expect_s3_class(p3, "ggplot")
 })
 
@@ -361,18 +483,26 @@ test_that("insper_area stacked parameter works", {
 test_that("insper_area custom fill_color works", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_area(df, x = time, y = value,
-                   fill_color = get_insper_colors("vermelho"))
+  p <- insper_area(
+    df,
+    x = time,
+    y = value,
+    fill_color = get_insper_colors("vermelho")
+  )
   expect_s3_class(p, "ggplot")
 })
 
 test_that("insper_area custom line parameters work", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_area(df, x = time, y = value,
-                   line_color = get_insper_colors("laranja_0"),
-                   line_width = 2,
-                   line_alpha = 0.5)
+  p <- insper_area(
+    df,
+    x = time,
+    y = value,
+    line_color = get_insper_colors("laranja_0"),
+    line_width = 2,
+    line_alpha = 0.5
+  )
   expect_s3_class(p, "ggplot")
 })
 
@@ -671,7 +801,13 @@ test_that("insper_scatterplot validates data frame input", {
 test_that("insper_scatterplot validates smooth_method parameter", {
   skip_if_not_installed("ggplot2")
   expect_error(
-    insper_scatterplot(mtcars, x = wt, y = mpg, add_smooth = TRUE, smooth_method = "invalid"),
+    insper_scatterplot(
+      mtcars,
+      x = wt,
+      y = mpg,
+      add_smooth = TRUE,
+      smooth_method = "invalid"
+    ),
     "smooth_method.*must be one of"
   )
 })
@@ -679,39 +815,74 @@ test_that("insper_scatterplot validates smooth_method parameter", {
 test_that("insper_scatterplot smooth_method variations work", {
   skip_if_not_installed("ggplot2")
   # Test all valid smooth methods
-  p_lm <- insper_scatterplot(mtcars, x = wt, y = mpg, add_smooth = TRUE, smooth_method = "lm")
-  p_loess <- insper_scatterplot(mtcars, x = wt, y = mpg, add_smooth = TRUE, smooth_method = "loess")
-  p_glm <- insper_scatterplot(mtcars, x = wt, y = mpg, add_smooth = TRUE, smooth_method = "glm")
+  p_lm <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    add_smooth = TRUE,
+    smooth_method = "lm"
+  )
+  p_loess <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    add_smooth = TRUE,
+    smooth_method = "loess"
+  )
+  p_glm <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    add_smooth = TRUE,
+    smooth_method = "glm"
+  )
 
   expect_s3_class(p_lm, "ggplot")
   expect_s3_class(p_loess, "ggplot")
   expect_s3_class(p_glm, "ggplot")
 
   # Check smooth layer is present
-  expect_true(any(sapply(p_lm$layers, function(l) inherits(l$geom, "GeomSmooth"))))
+  expect_true(any(sapply(p_lm$layers, function(l) {
+    inherits(l$geom, "GeomSmooth")
+  })))
 })
 
 test_that("insper_scatterplot fill aesthetic with variable mapping", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg, fill = factor(cyl), shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    fill = factor(cyl),
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
 
 test_that("insper_scatterplot fill aesthetic with static color", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg, fill = "lightblue", shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    fill = "lightblue",
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
 
 test_that("insper_scatterplot both color and fill variable mappings", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars,
-                          x = wt, y = mpg,
-                          color = factor(cyl),
-                          fill = factor(gear),
-                          shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = factor(cyl),
+    fill = factor(gear),
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
 
   # Check both scales are present
@@ -755,11 +926,14 @@ test_that("insper_scatterplot continuous fill scale applied", {
 
 test_that("insper_scatterplot color and fill both continuous", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars,
-                          x = wt, y = mpg,
-                          color = hp,
-                          fill = disp,
-                          shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = hp,
+    fill = disp,
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -776,8 +950,20 @@ test_that("insper_scatterplot default color when NULL", {
 
 test_that("insper_scatterplot palette parameter works with color", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_scatterplot(mtcars, x = wt, y = mpg, color = factor(cyl), palette = "main")
-  p2 <- insper_scatterplot(mtcars, x = wt, y = mpg, color = factor(cyl), palette = "main")
+  p1 <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = factor(cyl),
+    palette = "main"
+  )
+  p2 <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = factor(cyl),
+    palette = "main"
+  )
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -785,7 +971,14 @@ test_that("insper_scatterplot palette parameter works with color", {
 
 test_that("insper_scatterplot palette parameter works with fill", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg, fill = factor(cyl), palette = "muted", shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    fill = factor(cyl),
+    palette = "muted",
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
 })
 
@@ -793,7 +986,15 @@ test_that("insper_scatterplot warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when both color and fill are static
   expect_warning(
-    insper_scatterplot(mtcars, x = wt, y = mpg, color = "blue", fill = "red", palette = "main", shape = 21),
+    insper_scatterplot(
+      mtcars,
+      x = wt,
+      y = mpg,
+      color = "blue",
+      fill = "red",
+      palette = "main",
+      shape = 21
+    ),
     "palette.*ignored"
   )
 })
@@ -820,32 +1021,42 @@ test_that("insper_scatterplot shape 21-25 with color and fill", {
   skip_if_not_installed("ggplot2")
   # Test multiple fill-supporting shapes
   for (shp in c(21, 22, 23, 24, 25)) {
-    p <- insper_scatterplot(mtcars,
-                            x = wt, y = mpg,
-                            color = "black",
-                            fill = factor(cyl),
-                            shape = shp)
+    p <- insper_scatterplot(
+      mtcars,
+      x = wt,
+      y = mpg,
+      color = "black",
+      fill = factor(cyl),
+      shape = shp
+    )
     expect_s3_class(p, "ggplot")
   }
 })
 
 test_that("insper_scatterplot stroke parameter for outlined shapes", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars, x = wt, y = mpg,
-                          color = factor(cyl),
-                          shape = 21,
-                          stroke = 2)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = factor(cyl),
+    shape = 21,
+    stroke = 2
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
 
 test_that("insper_scatterplot discrete color with discrete fill", {
   skip_if_not_installed("ggplot2")
-  p <- insper_scatterplot(mtcars,
-                          x = wt, y = mpg,
-                          color = factor(cyl),
-                          fill = factor(gear),
-                          shape = 21)
+  p <- insper_scatterplot(
+    mtcars,
+    x = wt,
+    y = mpg,
+    color = factor(cyl),
+    fill = factor(gear),
+    shape = 21
+  )
   expect_s3_class(p, "ggplot")
 
   # Both should have discrete scales
@@ -870,7 +1081,9 @@ test_that("insper_timeseries validates data frame input", {
 test_that("insper_timeseries static color string works", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_timeseries(df, x = time, y = value, color = "#E50505")
+  expect_no_warning(
+    p <- insper_timeseries(df, x = time, y = value, color = "#E50505")
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -917,7 +1130,15 @@ test_that("insper_timeseries continuous color scale applied", {
 test_that("insper_timeseries static color with add_points", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(time = 1:20, value = cumsum(rnorm(20)))
-  p <- insper_timeseries(df, x = time, y = value, color = "#2BA680", add_points = TRUE)
+  expect_no_warning(
+    p <- insper_timeseries(
+      df,
+      x = time,
+      y = value,
+      color = "#2BA680",
+      add_points = TRUE
+    )
+  )
   expect_s3_class(p, "ggplot")
 
   # Check both line and point layers present
@@ -934,7 +1155,13 @@ test_that("insper_timeseries variable color with add_points", {
     value = c(cumsum(rnorm(20)), cumsum(rnorm(20))),
     group = rep(c("A", "B"), each = 20)
   )
-  p <- insper_timeseries(df, x = time, y = value, color = group, add_points = TRUE)
+  p <- insper_timeseries(
+    df,
+    x = time,
+    y = value,
+    color = group,
+    add_points = TRUE
+  )
   expect_s3_class(p, "ggplot")
 
   # Check both layers present
@@ -984,8 +1211,20 @@ test_that("insper_timeseries palette parameter works", {
     value = c(cumsum(rnorm(20)), cumsum(rnorm(20)), cumsum(rnorm(20))),
     group = rep(c("A", "B", "C"), each = 20)
   )
-  p1 <- insper_timeseries(df, x = time, y = value, color = group, palette = "main")
-  p2 <- insper_timeseries(df, x = time, y = value, color = group, palette = "muted")
+  p1 <- insper_timeseries(
+    df,
+    x = time,
+    y = value,
+    color = group,
+    palette = "main"
+  )
+  p2 <- insper_timeseries(
+    df,
+    x = time,
+    y = value,
+    color = group,
+    palette = "muted"
+  )
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -997,7 +1236,13 @@ test_that("insper_timeseries warns when palette ignored", {
 
   # Palette should be ignored when color is static
   expect_warning(
-    insper_timeseries(df, x = time, y = value, color = "blue", palette = "main"),
+    insper_timeseries(
+      df,
+      x = time,
+      y = value,
+      color = "blue",
+      palette = "main"
+    ),
     "palette.*ignored"
   )
 })
@@ -1028,7 +1273,9 @@ test_that("insper_violin validates data frame input", {
 
 test_that("insper_violin static fill color works", {
   skip_if_not_installed("ggplot2")
-  p <- insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E50505")
+  expect_no_warning(
+    p <- insper_violin(iris, x = Species, y = Sepal.Length, fill = "#E50505")
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })
@@ -1054,38 +1301,69 @@ test_that("insper_violin variable fill mapping", {
 
 test_that("insper_violin show_boxplot parameter works", {
   skip_if_not_installed("ggplot2")
-  p_with <- insper_violin(iris, x = Species, y = Sepal.Length, show_boxplot = TRUE)
-  p_without <- insper_violin(iris, x = Species, y = Sepal.Length, show_boxplot = FALSE)
+  p_with <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    show_boxplot = TRUE
+  )
+  p_without <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    show_boxplot = FALSE
+  )
 
   expect_s3_class(p_with, "ggplot")
   expect_s3_class(p_without, "ggplot")
 
   # Check boxplot layer is present in p_with
-  has_boxplot <- any(sapply(p_with$layers, function(l) inherits(l$geom, "GeomBoxplot")))
+  has_boxplot <- any(sapply(p_with$layers, function(l) {
+    inherits(l$geom, "GeomBoxplot")
+  }))
   expect_true(has_boxplot)
 })
 
 test_that("insper_violin show_points parameter works", {
   skip_if_not_installed("ggplot2")
-  p_with <- insper_violin(iris, x = Species, y = Sepal.Length, show_points = TRUE)
-  p_without <- insper_violin(iris, x = Species, y = Sepal.Length, show_points = FALSE)
+  p_with <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    show_points = TRUE
+  )
+  p_without <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    show_points = FALSE
+  )
 
   expect_s3_class(p_with, "ggplot")
   expect_s3_class(p_without, "ggplot")
 
   # Check jitter layer is present in p_with
-  has_jitter <- any(sapply(p_with$layers, function(l) inherits(l$geom, "GeomPoint")))
+  has_jitter <- any(sapply(p_with$layers, function(l) {
+    inherits(l$geom, "GeomPoint")
+  }))
   expect_true(has_jitter)
 })
 
 test_that("insper_violin show_boxplot and show_points together", {
   skip_if_not_installed("ggplot2")
-  p <- insper_violin(iris, x = Species, y = Sepal.Length,
-                     show_boxplot = TRUE, show_points = TRUE)
+  p <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    show_boxplot = TRUE,
+    show_points = TRUE
+  )
   expect_s3_class(p, "ggplot")
 
   # Check both layers present
-  has_boxplot <- any(sapply(p$layers, function(l) inherits(l$geom, "GeomBoxplot")))
+  has_boxplot <- any(sapply(p$layers, function(l) {
+    inherits(l$geom, "GeomBoxplot")
+  }))
   has_points <- any(sapply(p$layers, function(l) inherits(l$geom, "GeomPoint")))
   expect_true(has_boxplot)
   expect_true(has_points)
@@ -1102,8 +1380,20 @@ test_that("insper_violin violin_alpha parameter works", {
 
 test_that("insper_violin palette parameter works", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
-  p2 <- insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "muted")
+  p1 <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    fill = Species,
+    palette = "main"
+  )
+  p2 <- insper_violin(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    fill = Species,
+    palette = "muted"
+  )
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -1113,7 +1403,13 @@ test_that("insper_violin warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when fill is static
   expect_warning(
-    insper_violin(iris, x = Species, y = Sepal.Length, fill = "purple", palette = "main"),
+    insper_violin(
+      iris,
+      x = Species,
+      y = Sepal.Length,
+      fill = "purple",
+      palette = "main"
+    ),
     "palette.*ignored"
   )
 })
@@ -1240,7 +1536,9 @@ test_that("insper_heatmap show_values displays text layer", {
   expect_s3_class(p_without, "ggplot")
 
   # Check text layer is present in p_with
-  has_text <- any(sapply(p_with$layers, function(l) inherits(l$geom, "GeomText")))
+  has_text <- any(sapply(p_with$layers, function(l) {
+    inherits(l$geom, "GeomText")
+  }))
   expect_true(has_text)
 })
 
@@ -1322,8 +1620,12 @@ test_that("insper_area add_line parameter works", {
   expect_s3_class(p_without, "ggplot")
 
   # Check line is present only in p_with
-  has_line_with <- any(sapply(p_with$layers, function(l) inherits(l$geom, "GeomLine")))
-  has_line_without <- any(sapply(p_without$layers, function(l) inherits(l$geom, "GeomLine")))
+  has_line_with <- any(sapply(p_with$layers, function(l) {
+    inherits(l$geom, "GeomLine")
+  }))
+  has_line_without <- any(sapply(p_without$layers, function(l) {
+    inherits(l$geom, "GeomLine")
+  }))
   expect_true(has_line_with)
   expect_false(has_line_without)
 })
@@ -1418,8 +1720,20 @@ test_that("insper_boxplot box_alpha parameter works", {
 
 test_that("insper_boxplot palette parameter works", {
   skip_if_not_installed("ggplot2")
-  p1 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
-  p2 <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = Species, palette = "muted")
+  p1 <- insper_boxplot(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    fill = Species,
+    palette = "main"
+  )
+  p2 <- insper_boxplot(
+    iris,
+    x = Species,
+    y = Sepal.Length,
+    fill = Species,
+    palette = "muted"
+  )
 
   expect_s3_class(p1, "ggplot")
   expect_s3_class(p2, "ggplot")
@@ -1429,14 +1743,22 @@ test_that("insper_boxplot warns when palette ignored", {
   skip_if_not_installed("ggplot2")
   # Palette should be ignored when fill is static
   expect_warning(
-    insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "lightblue", palette = "main"),
+    insper_boxplot(
+      iris,
+      x = Species,
+      y = Sepal.Length,
+      fill = "lightblue",
+      palette = "main"
+    ),
     "palette.*ignored"
   )
 })
 
 test_that("insper_boxplot static fill matches expected color", {
   skip_if_not_installed("ggplot2")
-  p <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F89D49")
+  expect_no_warning(
+    p <- insper_boxplot(iris, x = Species, y = Sepal.Length, fill = "#F89D49")
+  )
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
 })

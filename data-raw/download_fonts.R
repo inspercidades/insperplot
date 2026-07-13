@@ -23,21 +23,34 @@ get_from_google_fonts("Inter", dir = file.path(tmpdir, "inter"))
 # Copy only the weights we need (Regular, Bold, Italic, BoldItalic) ----
 
 # Inter (sans-serif, body text)
-file.copy(file.path(tmpdir, "inter", "Inter-regular.ttf"),
-          file.path(font_dir, "inter", "Inter-Regular.ttf"), overwrite = TRUE)
-file.copy(file.path(tmpdir, "inter", "Inter-700.ttf"),
-          file.path(font_dir, "inter", "Inter-Bold.ttf"), overwrite = TRUE)
-file.copy(file.path(tmpdir, "inter", "Inter-italic.ttf"),
-          file.path(font_dir, "inter", "Inter-Italic.ttf"), overwrite = TRUE)
-file.copy(file.path(tmpdir, "inter", "Inter-700italic.ttf"),
-          file.path(font_dir, "inter", "Inter-BoldItalic.ttf"), overwrite = TRUE)
+file.copy(
+  file.path(tmpdir, "inter", "Inter-regular.ttf"),
+  file.path(font_dir, "inter", "Inter-Regular.ttf"),
+  overwrite = TRUE
+)
+file.copy(
+  file.path(tmpdir, "inter", "Inter-700.ttf"),
+  file.path(font_dir, "inter", "Inter-Bold.ttf"),
+  overwrite = TRUE
+)
+file.copy(
+  file.path(tmpdir, "inter", "Inter-italic.ttf"),
+  file.path(font_dir, "inter", "Inter-Italic.ttf"),
+  overwrite = TRUE
+)
+file.copy(
+  file.path(tmpdir, "inter", "Inter-700italic.ttf"),
+  file.path(font_dir, "inter", "Inter-BoldItalic.ttf"),
+  overwrite = TRUE
+)
 
 # Subset to Latin glyphs ----
 # Strips Cyrillic, Greek, Vietnamese, etc. to reduce package size (~50% smaller).
 # Requires Python fonttools: pip3 install fonttools
 message("Subsetting fonts to Latin glyphs...")
 subset_script <- tempfile(fileext = ".py")
-writeLines('
+writeLines(
+  '
 import os, glob, sys
 from fontTools.subset import Subsetter, Options, load_font, save_font
 
@@ -65,13 +78,24 @@ for ttf in sorted(glob.glob(os.path.join(font_dir, "**/*.ttf"), recursive=True))
     font.close()
     new = os.path.getsize(ttf)
     print(f"  {os.path.basename(ttf)}: {old//1024}KB -> {new//1024}KB ({100*(1-new/old):.0f}% smaller)")
-', subset_script)
+',
+  subset_script
+)
 system2("python3", args = c(subset_script, font_dir))
 
 # Report ----
-files <- list.files(font_dir, pattern = "\\.ttf$", recursive = TRUE, full.names = TRUE)
+files <- list.files(
+  font_dir,
+  pattern = "\\.ttf$",
+  recursive = TRUE,
+  full.names = TRUE
+)
 sizes <- file.info(files)$size
 for (i in seq_along(files)) {
   message(sprintf("  %s  (%s KB)", basename(files[i]), round(sizes[i] / 1024)))
 }
-message(sprintf("\nTotal: %s KB (%s files)", round(sum(sizes) / 1024), length(files)))
+message(sprintf(
+  "\nTotal: %s KB (%s files)",
+  round(sum(sizes) / 1024),
+  length(files)
+))
