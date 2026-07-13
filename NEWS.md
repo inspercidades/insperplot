@@ -60,6 +60,7 @@ cinza/azul neutrals.
 
 ## Bug fixes
 
+* Plot functions no longer warn that `palette` is ignored when a static color is used with the default palette. They still warn when a static color is combined with an explicitly supplied `palette`.
 * `theme_insper()` now actually applies `base_size`. Previously the internal
   theme construction replaced the root `text` element with a relative size,
   so all text rendered at ggplot2's 11 pt default regardless of the

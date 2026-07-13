@@ -34,27 +34,27 @@ test_that("is_valid_color() recognizes named R colors", {
 })
 
 test_that("is_valid_color() rejects invalid color names", {
-  expect_false(is_valid_color("bleu"))  # Typo
-  expect_false(is_valid_color("Species"))  # Column name
-  expect_false(is_valid_color("gear"))  # Column name
+  expect_false(is_valid_color("bleu")) # Typo
+  expect_false(is_valid_color("Species")) # Column name
+  expect_false(is_valid_color("gear")) # Column name
   expect_false(is_valid_color("notacolor"))
 })
 
 test_that("is_valid_color() rejects invalid hex patterns", {
-  expect_false(is_valid_color("#FF"))  # Too short
-  expect_false(is_valid_color("#FFFF"))  # Invalid length
-  expect_false(is_valid_color("#FFFFF"))  # Invalid length
-  expect_false(is_valid_color("#FFFFFFFFF"))  # Too long
-  expect_false(is_valid_color("FF0000"))  # Missing #
-  expect_false(is_valid_color("#GG0000"))  # Invalid hex characters
+  expect_false(is_valid_color("#FF")) # Too short
+  expect_false(is_valid_color("#FFFF")) # Invalid length
+  expect_false(is_valid_color("#FFFFF")) # Invalid length
+  expect_false(is_valid_color("#FFFFFFFFF")) # Too long
+  expect_false(is_valid_color("FF0000")) # Missing #
+  expect_false(is_valid_color("#GG0000")) # Invalid hex characters
 })
 
 test_that("is_valid_color() handles edge cases", {
-  expect_false(is_valid_color(""))  # Empty string
-  expect_false(is_valid_color(c("blue", "red")))  # Vector length > 1
+  expect_false(is_valid_color("")) # Empty string
+  expect_false(is_valid_color(c("blue", "red"))) # Vector length > 1
   expect_false(is_valid_color(NULL))
   expect_false(is_valid_color(NA))
-  expect_false(is_valid_color(123))  # Not character
+  expect_false(is_valid_color(123)) # Not character
 })
 
 
@@ -177,7 +177,7 @@ test_that("detect_aesthetic_type() works without data argument", {
   # Variable mapping detected, but can't determine if continuous
   result <- test_fn(cyl)
   expect_equal(result$type, "variable_mapping")
-  expect_false(result$is_continuous)  # Defaults to FALSE without data
+  expect_false(result$is_continuous) # Defaults to FALSE without data
 })
 
 
@@ -192,7 +192,11 @@ test_that("warn_palette_ignored() warns when palette specified with static color
   )
 
   expect_warning(
-    warn_palette_ignored(aesthetic_type, palette = "muted", param_name = "color"),
+    warn_palette_ignored(
+      aesthetic_type,
+      palette = "muted",
+      param_name = "color"
+    ),
     "palette.*ignored"
   )
 })
@@ -213,7 +217,11 @@ test_that("warn_palette_ignored() does NOT warn with variable mapping", {
   )
 
   expect_no_warning(
-    warn_palette_ignored(aesthetic_type, palette = "muted", param_name = "color")
+    warn_palette_ignored(
+      aesthetic_type,
+      palette = "muted",
+      param_name = "color"
+    )
   )
 })
 
@@ -247,7 +255,7 @@ test_that("Smart detection workflow works end-to-end", {
   expect_equal(result1$type, "missing")
 
   # Test 2: Static color
-  result2 <- smart_plot(mtcars, wt, mpg, color = "blue")
+  result2 <- smart_plot(mtcars, wt, mpg, color = "blue", palette = NULL)
   expect_equal(result2$type, "static_color")
   expect_equal(result2$value, "blue")
 
@@ -272,9 +280,21 @@ test_that("Smart detection handles common R color names", {
   # Test a sample of universally-recognized R color names
   # These are guaranteed to work across all R versions
   sample_colors <- c(
-    "white", "black", "red", "green", "blue",
-    "yellow", "cyan", "magenta", "gray", "grey",
-    "orange", "purple", "pink", "brown", "tan"
+    "white",
+    "black",
+    "red",
+    "green",
+    "blue",
+    "yellow",
+    "cyan",
+    "magenta",
+    "gray",
+    "grey",
+    "orange",
+    "purple",
+    "pink",
+    "brown",
+    "tan"
   )
 
   for (col in sample_colors) {
