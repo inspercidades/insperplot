@@ -83,3 +83,6 @@ pkgdown/favicon/
 # Large brand reference binaries (kept locally, not in git)
 Rplots.pdf
 data-raw/refs/*.pdf
+docs
+
+/.playwright-mcp
