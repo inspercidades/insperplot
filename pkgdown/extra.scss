@@ -1,0 +1,51 @@
+// Insper brand touches ----
+
+$insper-red: #E50505;
+$insper-dark: #0E171D;
+
+// Navbar: white text on Insper red, in both light and dark modes
+// (pkgdown's light-switch ignores `navbar: bg:`, so set it here)
+.navbar {
+  background-color: $insper-red !important;
+
+  .navbar-brand,
+  .nav-link,
+  .navbar-nav .nav-link.active {
+    color: #fff !important;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+}
+
+// Page titles: serif with a red accent rule, echoing theme_insper()
+.page-header h1,
+main h1 {
+  border-bottom: 3px solid $insper-red;
+  padding-bottom: 0.3rem;
+}
+
+// Sidebar headings: uppercase with letter-spacing, like plot captions
+aside h2,
+#toc > .nav-title {
+  font-family: var(--bs-font-sans-serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $insper-dark;
+}
+
+// Inline code in Insper red instead of Bootstrap pink
+code:not(pre code) {
+  color: $insper-red;
+}
+
+[data-bs-theme="dark"] {
+  aside h2,
+  #toc > .nav-title {
+    color: #dcdcdc;
+  }
+}
