@@ -5,42 +5,32 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/portalcidados/insperplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/portalcidados/insperplot/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/inspercidades/insperplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/inspercidades/insperplot/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
-**insperplot** extends ggplot2 with [Insper Instituto de Ensino e
-Pesquisa](https://www.insper.edu.br/en/home) visual identity, providing
+**insperplot** extends ggplot2 with Insper's visual identity, providing
 custom themes, color palettes, and specialized plotting functions for
-academic and institutional use.
-[Insper](https://www.insper.edu.br/en/quem-somos) is a non-profit
-institution dedicated to teaching and research.
+academic and institutional use. Insper is a non-profit institution
+dedicated to teaching and research.
 
 ## Installation
 
-Install insperplot from CRAN:
-
-``` r
-install.packages("insperplot")
-```
-
-Or install the development version from GitHub:
+Currently, the development version is available on GitHub.
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("portalcidados/insperplot")
+remotes::install_github("inspercidades/insperplot")
 ```
 
 ## Quick Start
 
-`insperplot` is built upon Insper's brand colors. To improve
-functionality, additional palettes were created based on these basic
-colors.
+`insperplot` is built upon Insper's brand colors.
 
 <p align="center">
 
-<img src="man/figures/readme-treemap.png" width="50%"/>
+<img src="man/figures/readme-treemap.png" width="50%" alt="Treemap of the Insper brand palette, each rectangle filled with one brand color and labelled with its name."/>
 </p>
 
 To use `insperplot` we recommend using `ggplot2`. The basic functions of
@@ -66,49 +56,16 @@ ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
 
 <p align="center">
 
-<img src="man/figures/readme-mtcars-example.png" width="80%"/>
+<img src="man/figures/readme-mtcars-example.png" width="80%" alt="Scatter plot of fuel efficiency against car weight, points filled by cylinder count using Insper brand colors and styled with theme_insper()."/>
 </p>
 
-The package is based on Insper's brand colors.
+To see all palettes, use `show_insper_palettes()`. To see a particular
+palette, use `insper_palette()`.
 
 ``` r
 # View the core Insper brand colors (prints a color swatch)
 insper_palette("main")
 ```
-
-<img src="man/figures/README-unnamed-chunk-5-1.png" alt="" width="100%" />
-
-insperplot includes several pre-defined palettes:
-
-- **main**: Primary Insper brand hues for categorical data
-- **muted**: Softer (desaturated) categorical palette
-- **vermelho**, **turquesa**, **verde**, **amarelo**, **laranja**,
-  **rosa**, **roxo**, **cinza**, **azul**: Sequential single-hue
-  gradients
-- **vermelho_turquesa**, **roxo_verde**, **laranja_roxo**,
-  **rosa_verde**: Diverging palettes for data with a meaningful center
-- **categorical_ito**, **categorical_tab**, **categorical_set**:
-  Colorblind-safe reference palettes
-
-Use `show_insper_palettes()` to see all available palettes and visualize
-the colors in each one (it also invisibly returns a data frame of
-palette metadata):
-
-``` r
-show_insper_palettes()
-```
-
-## Main Functions
-
-- `theme_insper()`: Apply Insper's visual identity to ggplot2 plots.
-- `scale_color_insper_d()` / `scale_fill_insper_d()`: Discrete color
-  scales.
-- `scale_color_insper_c()` / `scale_fill_insper_c()`: Continuous color
-  scales.
-- `insper_palette()`: Get a palette as a character vector (prints a
-  swatch).
-- `show_insper_palettes()`: Visualize available color palettes.
-- `insper_*()`: Specialized plotting functions.
 
 ## Fonts and Rendering
 
@@ -136,16 +93,4 @@ users can skip this step since it uses ragg by default.
 ## Documentation
 
 For detailed documentation and examples, visit the [package
-website](https://portalcidados.github.io/insperplot/).
-
-## License
-
-MIT © Vinicius Oike
-
-## Disclaimer
-
-**This is not an official Insper product.** This package is developed
-independently and is not endorsed, supported, or maintained by Insper
-Instituto de Ensino e Pesquisa. For official Insper communications and
-materials, please refer to [Insper's
-GitHub](https://github.com/Insper/).
+website](https://inspercidades.github.io/insperplot/).

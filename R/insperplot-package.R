@@ -1,116 +1,14 @@
 #' @keywords internal
+#'
+#' @section Getting started:
+#' \itemize{
+#'   \item \code{vignette("getting-started", package = "insperplot")} — themes,
+#'     scales, and the convenience plot functions
+#'   \item \code{vignette("brand-kit", package = "insperplot")} — typography,
+#'     palette provenance, accessibility, and the Insper Cidades sub-brand
+#' }
+#'
+#' Everything else on this page is generated from \code{DESCRIPTION}. For the
+#' function reference see the package website linked below, and for palettes
+#' start at \code{\link{show_insper_palettes}}.
 "_PACKAGE"
-
-#' insperplot: Insper Themed ggplot2 Extensions
-#'
-#' @description
-#' This package extends ggplot2 with Insper Instituto de Ensino e Pesquisa
-#' visual identity, providing custom themes, color palettes, and specialized
-#' plotting functions for academic and institutional use.
-#'
-#' **Disclaimer:** This is an unofficial package created by an Insper employee,
-#' not an official Insper product. This package is developed independently and
-#' is not endorsed, supported, or maintained by Insper Instituto de Ensino e
-#' Pesquisa.
-#'
-#' @section Main Functions:
-#'
-#' **Themes:**
-#' \itemize{
-#'   \item \code{\link{theme_insper}} - Apply Insper's visual identity to plots
-#' }
-#'
-#' **Colors:**
-#' \itemize{
-#'   \item \code{\link{insper_palette}} - Get a palette as a character vector (prints a swatch)
-#'   \item \code{\link{show_insper_palettes}} - Show an overview of all palettes
-#' }
-#'
-#' **Scales:**
-#' \itemize{
-#'   \item \code{\link{scale_color_insper_d}} / \code{\link{scale_fill_insper_d}} - Discrete color scales
-#'   \item \code{\link{scale_color_insper_c}} / \code{\link{scale_fill_insper_c}} - Continuous color scales
-#' }
-#'
-#' **Plot Functions:**
-#' \itemize{
-#'   \item \code{\link{insper_barplot}} - Create bar plots with Insper theme
-#'   \item \code{\link{insper_scatterplot}} - Create scatter plots
-#'   \item \code{\link{insper_timeseries}} - Create time series plots
-#'   \item \code{\link{insper_boxplot}} - Create box plots
-#' }
-#'
-#' **Utilities:**
-#' \itemize{
-#'   \item \code{\link{save_insper_plot}} - Save plots with institutional defaults
-#'   \item \code{\link{format_num_br}} - Format Brazilian numbers (supports currency and percentages)
-#' }
-#'
-#' @section Color Palettes:
-#' The package includes 18 pre-defined palettes from the 2026 Insper brand kit:
-#' \itemize{
-#'   \item **main, muted** - Qualitative palettes for categorical data (`muted`
-#'     is a softer, desaturated variant of `main`)
-#'   \item **vermelho, turquesa, verde, amarelo, laranja, rosa, roxo, cinza, azul** -
-#'     Sequential single-hue gradients
-#'   \item **vermelho_turquesa, roxo_verde, laranja_roxo, rosa_verde** - Diverging
-#'     palettes for data with a meaningful center
-#'   \item **categorical_ito, categorical_tab, categorical_set** - Colorblind-safe categorical options
-#' }
-#'
-#' Use \code{\link{show_insper_palettes}()} to see all available palettes.
-#'
-#' @section Getting Started:
-#' \preformatted{
-#' library(insperplot)
-#' library(ggplot2)
-#'
-#' # Create a basic plot with Insper theme
-#' ggplot(mtcars, aes(x = wt, y = mpg)) +
-#'   geom_point(color = insper_palette("vermelho", n = 1), size = 3) +
-#'   theme_insper() +
-#'   labs(title = "Fuel Efficiency vs Weight")
-#'
-#' # Use Insper color palettes
-#' ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
-#'   geom_bar() +
-#'   scale_fill_insper_d(palette = "vermelho") +
-#'   theme_insper()
-#' }
-#'
-#' @section Package Development:
-#' This package follows modern R development best practices:
-#' \itemize{
-#'   \item Native pipe operator (\code{|>}) throughout
-#'   \item Modern tidyverse patterns (dplyr 1.1+)
-#'   \item Comprehensive documentation with roxygen2
-#'   \item Continuous integration with GitHub Actions
-#' }
-#'
-#' @references
-#' For official Insper communications and materials, please visit:
-#' \url{https://www.insper.edu.br/}
-#'
-#' @seealso
-#' Useful links:
-#' \itemize{
-#'   \item Report bugs at \url{https://github.com/portalcidados/insperplot/issues}
-#'   \item Package website at \url{https://portalcidados.github.io/insperplot/}
-#' }
-#'
-#' @examples
-#' # View available palettes
-#' show_insper_palettes()
-#'
-#' # Get colors from a palette
-#' insper_palette("vermelho", n = 3)
-#'
-#' \dontrun{
-#' # Create a simple plot (requires fonts to be set up)
-#' library(ggplot2)
-#' ggplot(mtcars, aes(x = wt, y = mpg)) +
-#'   geom_point(color = insper_palette("vermelho", n = 1)) +
-#'   theme_insper()
-#' }
-#' @name insperplot-package
-NULL

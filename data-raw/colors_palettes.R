@@ -86,10 +86,32 @@ neutral <- c(
   preto = "#000000" #                        R0   G0   B0
 )
 
+# Insper Cidades — sub-brand tokens --------------------------------------------
+#
+# Centro de Estudos das Cidades / Laboratório Arq.Futuro. Transcribed from
+# `refs/Manual de Aplicação - Insper Cidades.pdf` (June 2026), p.12, and
+# `refs/brand-guide-cidades.png`. The manual gives CMYK only (no Pantone) and
+# ships no tints/shades, so every Cidades ramp below is derived.
+#
+# These sit close to institutional hues in CIELAB (asfalto is dE 6.6 from roxo,
+# solar 8.8 from laranja) — near enough that mixing the two palette families in
+# one chart reads as a rendering error. Kept as a separate palette family.
+
+cidades <- c(
+  folhagem = "#019881", # R1   G152 B129  C80 M15  Y60 K5  ("Fohagem" in guide)
+  solar = "#FFA701", #    R255 G167 B1    C0  M40  Y95 K0
+  asfalto = "#7F1582", #  R127 G21  B130  C65 M100 Y0  K0
+  tijolo = "#FF4B01" #    R255 G75  B1    C0  M80  Y95 K0
+)
+
 # Open questions (do not bake in until confirmed with brand team):
 #   - roxo_0: guide prints hex #730D9F but RGB "R155" (=#9B0D9F); using the hex.
 #   - vivid orange #FF6B06 appears in the accessibility chart but not the color
 #     pages — unclear if it is an official token. Excluded for now.
+#   - the Cidades manual prints the green as "Fohagem"; shipped here as
+#     `folhagem`, the correct Portuguese spelling. Assumed a typo in the manual.
+#   - the Cidades manual prints Preto as #000000 but its RGB reads "R0 G0 B20"
+#     (=#000014). Immaterial — `preto` is already #000000 from the main kit.
 
 # Convenience bundle -----------------------------------------------------------
 
@@ -117,6 +139,20 @@ ramp_lab <- function(anchors, n) {
   grDevices::colorRampPalette(anchors, space = "Lab")(n)
 }
 
+# Sequential ramp around a single token: light -> base -> dark, with the official
+# color pinned at the exact midpoint. Lab interpolation rounds endpoints by 1 bit
+# (#019881 comes back as #009880), so the pin is what guarantees the brand color
+# actually appears in its own ramp. `n` must be odd so the base lands on a step.
+ramp_from_base <- function(x, n = 7) {
+  stopifnot(n %% 2 == 1)
+  out <- ramp_lab(
+    c(colorspace::lighten(x, 0.75), x, colorspace::darken(x, 0.45)),
+    n
+  )
+  out[(n + 1) / 2] <- toupper(x)
+  out
+}
+
 # Neutral midpoint shared by all diverging palettes (warm near-white).
 diverging_mid <- "#F4F4F2"
 
@@ -125,11 +161,15 @@ diverging_mid <- "#F4F4F2"
 # Building blocks exposed via get_insper_colors(). Brand tokens plus a few
 # English aliases for the primaries.
 
+# Cidades tokens are exposed bare (not `cidades_*`): this namespace has no
+# grouping convention and the four names do not collide. The `cidades_` prefix
+# exists to group *palettes*.
 insper_individual_colors <- c(
   red = unname(primary["vermelho"]),
   white = unname(primary["branco"]),
   black = unname(primary["preto"]),
-  insper_brand_colors
+  insper_brand_colors,
+  cidades
 )
 
 # Derived palettes -------------------------------------------------------------
@@ -204,12 +244,44 @@ insper_palettes <- list(
   laranja_roxo = c("#996017", "#F89D49", diverging_mid, "#9148B0", "#40015B"),
   rosa_verde = c("#CD2F9A", "#F47DCD", diverging_mid, "#92D053", "#5E9428"),
 
-  # -- Colorblind-safe reference sets (brand-independent) ----
-  categorical_ito = unname(grDevices::palette.colors(palette = "Okabe-Ito")[
-    -1
-  ]),
-  categorical_tab = unname(grDevices::palette.colors(palette = "Tableau 10")),
-  categorical_set = unname(grDevices::palette.colors(palette = "Set1"))
+  # -- Insper Cidades (sub-brand) ----
+  # Opt-in only; nothing in the package defaults to these. Do not mix with the
+  # institutional palettes above — the hues are too close (see header note).
+  cidades = unname(cidades),
+  cidades_folhagem = ramp_from_base(cidades[["folhagem"]]),
+  cidades_solar = ramp_from_base(cidades[["solar"]]),
+  cidades_asfalto = ramp_from_base(cidades[["asfalto"]]),
+  cidades_tijolo = ramp_from_base(cidades[["tijolo"]]),
+
+  # Preferred Cidades diverging palette. Its arms are deliberately unbalanced in
+  # lightness (folhagem L*56 vs asfalto L*31). Do NOT "fix" that: lightening the
+  # asfalto arm to balance it drops colorblind separation from dE 42 to 29
+  # (protanopia) and 27 to 18 (deuteranopia), because the lightness gap is the
+  # cue that survives once hue collapses. The imbalance matches the shipped
+  # `vermelho_turquesa` default (26/15), so it is in line with house standards.
+  cidades_folhagem_asfalto = c(
+    colorspace::darken(cidades[["folhagem"]], 0.35),
+    cidades[["folhagem"]],
+    diverging_mid,
+    cidades[["asfalto"]],
+    colorspace::darken(cidades[["asfalto"]], 0.35)
+  ),
+  # Near-perfect lightness symmetry, so it reads well in greyscale, but green vs
+  # orange-red is the classic red-green failure: weakest protanopia separation
+  # in the package (dE 22). Prefer `cidades_folhagem_asfalto` on screen.
+  cidades_folhagem_tijolo = c(
+    colorspace::darken(cidades[["folhagem"]], 0.35),
+    cidades[["folhagem"]],
+    diverging_mid,
+    cidades[["tijolo"]],
+    colorspace::darken(cidades[["tijolo"]], 0.35)
+  ),
+
+  # -- Accessibility fallback (brand-independent) ----
+  # Okabe-Ito, minus its leading black. NOT an Insper palette: bundled as an
+  # escape hatch for when `main`'s brand hues are not distinguishable by
+  # colorblind readers. Source: https://jfly.uni-koeln.de/color/
+  colorblind = unname(grDevices::palette.colors(palette = "Okabe-Ito")[-1])
 )
 
 # Save internal data -----------------------------------------------------------

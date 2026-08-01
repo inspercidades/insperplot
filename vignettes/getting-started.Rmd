@@ -23,28 +23,26 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-**insperplot** extends ggplot2 with [Insper](https://www.insper.edu.br/en/)'s visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use.
+**insperplot** extends ggplot2 with Insper's visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use.
 
 ### Installation
 
+The easiest way to install insperplot currently is from GitHub using either the `remotes` or the `pak` package:
+
 ```{r eval=FALSE}
 # Install from GitHub
-remotes::install_github("portalcidados/insperplot")
+remotes::install_github("inspercidades/insperplot")
+
+# or
+pak::pkg_install("inspercidades/insperplot")
 ```
 
+We recommend using `insperplot` alongside the `ggplot2` package.
 ```{r setup}
 library(insperplot)
 library(ggplot2)
 library(dplyr)
 ```
-
-### Fonts
-
-insperplot bundles the **Inter** font family and registers it automatically when the package is loaded — no manual setup required. Inter is the only free font in Insper's 2026 brand kit.
-
-The default title font is **Georgia** (a system font pre-installed on most operating systems and the documented substitute for Insper's primary GT Ultra). If Georgia is unavailable, the theme falls back to the system serif family.
-
-For the best rendering quality, install the [ragg](https://ragg.r-lib.org/) package (`install.packages("ragg")`) and, if using RStudio, set the graphics backend to AGG under **Tools > Global Options > General > Graphics**.
 
 ## Basic Usage: theme_insper()
 
@@ -71,7 +69,7 @@ ggplot(mtcars, aes(mpg, wt)) +
 - `border`: Border style. Options are `"none"` (default), `"half"`, or `"closed"`.
 - `align`: Title, subtitle, and caption alignment. Default is `"panel"`.
 
-The following examples use `macro_series`, a dataset bundled with insperplot. It contains monthly Brazilian macroeconomic indicators — including inflation (IPCA), industrial production (IPI), and economic activity (IBC-Br) — sourced from the [Brazilian Central Bank](https://www3.bcb.gov.br/sgspub/). See `?macro_series` for details.
+The following examples use `macro_series`, a dataset bundled with insperplot. It contains monthly Brazilian macroeconomic indicators — including inflation (IPCA), industrial production (IPI), and economic activity (IBC-Br) — sourced from the Brazilian Central Bank. See `?macro_series` for details.
 
 Here we plot the IBC-Br index (a monthly GDP proxy) with a `"half"` border and a sans-serif title font:
 
@@ -115,13 +113,32 @@ ggplot(macro_series, aes(date, ibcbr_dessaz)) +
 
 ## Working with Colors
 
-The colors used in insperplot are based on Insper's [brandkit](https://github.com/Insper/Cores-Marca-Insper). Use `insper_palette()` to preview a specific palette and `show_insper_palettes()` to see all available palettes at a glance:
+Use `insper_palette()` to preview a specific palette and `show_insper_palettes()` to see all available palettes at a glance.
 
 ```{r palettes-overview, fig.height=4}
 insper_palette("vermelho")
+```
 
+```{r palettes-all, fig.height=7}
 show_insper_palettes()
 ```
+
+Palettes come in three types — qualitative for categorical data, sequential for ordered magnitudes, and diverging for data with a meaningful centre — and in three families:
+
+- **Institutional** (`main`, `muted`, and the single-hue ramps like `vermelho` and `turquesa`) is built from Insper's 2026 brand kit and is what every function defaults to.
+- **Insper Cidades** (everything prefixed `cidades`) belongs to the Centro de Estudos das Cidades sub-brand. Use it for that centre's work, and don't mix it with the institutional palettes in one chart — the two families are close enough in color that a chart using both looks like a rendering error.
+- **`colorblind`** is the Okabe-Ito palette. It contains no Insper colors and exists as an accessibility fallback for when the brand hues can't be told apart by all readers.
+
+`show_insper_palettes()` also returns a data frame of palette metadata invisibly, including a `recommended_use` column, and accepts a `type` filter:
+
+```{r palettes-filter, eval=FALSE}
+show_insper_palettes("diverging")
+
+meta <- show_insper_palettes()
+subset(meta, type == "qualitative")
+```
+
+The design guide vignette, `vignette("brand-kit", package = "insperplot")`, covers palette provenance and accessibility in more depth.
 
 ### Using Colors in ggplot2
 
@@ -272,6 +289,6 @@ All functions return ggplot objects, apply `theme_insper()` by default, and acce
 
 ## Learn More
 
-- [Package website](https://portalcidados.github.io/insperplot/) — full function reference and additional articles
-- [GitHub repository](https://github.com/portalcidados/insperplot) — source code, issues, and contributing
+- [Package website](https://inspercidades.github.io/insperplot/) — full function reference and additional articles
+- [GitHub repository](https://github.com/inspercidades/insperplot) — source code, issues, and contributing
 - [Insper brand colors](https://github.com/Insper/Cores-Marca-Insper) — the color system this package is built on

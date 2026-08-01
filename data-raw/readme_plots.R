@@ -1,23 +1,24 @@
 library(insperplot)
 library(ggplot2)
 library(treemapify)
-library(dplyr)
 
 inds <- c(1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144)
 
 insper_cols <- insper_palette("main")
 
-dat <- tibble(
+accessibility_white <- c("#E50505", "#730D9F", "#3ACC9F")
+
+dat <- tibble::tibble(
   colors = factor(insper_cols, levels = insper_cols),
-  area = 1 / inds[1:length(colors)]
+  area = 1 / inds[1:length(colors)],
+  col_text = ifelse(colors %in% accessibility_white, "#ffffff", "#000000")
 )
 
 p1 <- ggplot(dat, aes(area = area, fill = colors, label = colors)) +
   geom_treemap() +
-  geom_treemap_text() +
-  scale_fill_manual(
-    values = insper_cols
-  ) +
+  geom_treemap_text(aes(color = col_text), size = 25, family = "Inter") +
+  scale_color_identity() +
+  scale_fill_manual(values = insper_cols) +
   theme(
     legend.position = "none",
     plot.margin = margin(10, 10, 10, 10)
@@ -26,7 +27,7 @@ p1 <- ggplot(dat, aes(area = area, fill = colors, label = colors)) +
 p2 <- ggplot(mtcars, aes(x = wt, y = mpg, fill = factor(cyl))) +
   geom_point(color = "#ffffff", size = 4, shape = 21, alpha = 0.9) +
   scale_fill_insper_d(name = NULL) +
-  theme_insper() +
+  theme_insper(font_text = "Inter") +
   labs(
     title = "Fuel Efficiency vs Weight",
     subtitle = "Motor Trend Car Road Tests",

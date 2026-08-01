@@ -18,9 +18,11 @@ test_that("deprecated palette names warn and resolve to the new palette", {
   )
 })
 
-test_that("palettes renamed in 0.3.0 warn and resolve to the new palette", {
-  lifecycle::expect_deprecated(insper_palette("grays"), "0.3.0")
-  lifecycle::expect_deprecated(insper_palette("diverging"), "0.3.0")
+test_that("palettes renamed in 0.2.0 warn and resolve to the new palette", {
+  # These were renamed in the 0.2.0 line and NEWS.md documents them there, so
+  # the warning must cite 0.2.0 — not the version that happens to be current.
+  lifecycle::expect_deprecated(insper_palette("grays"), "0.2.0")
+  lifecycle::expect_deprecated(insper_palette("diverging"), "0.2.0")
 
   withr::local_options(lifecycle_verbosity = "quiet")
   expect_identical(

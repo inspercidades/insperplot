@@ -42,6 +42,14 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      # pkgdown renders every root-level .md into the published site and ignores
+      # .Rbuildignore entirely (see pkgdown:::package_mds), so our internal agent
+      # instructions would end up on the public site, in sitemap.xml and in the
+      # search index. Delete them in the runner before the build — they are not
+      # part of the package, and the checkout is discarded afterwards.
+      - name: Drop internal agent docs before building
+        run: rm -f CLAUDE.md AGENTS.md
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}

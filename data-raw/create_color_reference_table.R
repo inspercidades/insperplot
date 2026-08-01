@@ -76,7 +76,16 @@ insper_color_reference <- tribble(
   "Neutros", "Cinza", "cinza 2", "Cool Gray 8 C", "128, 128, 128", "#808080",
   "Neutros", "Cinza", "cinza 3", "Cool Gray 8 C", "91, 91, 91", "#5B5B5B",
   "Neutros", "Cinza", "cinza 4", "Black 7 C", "63, 63, 63", "#3F3F3F",
-  "Neutros", "Azul", "azul escuro", "5395 C", "14, 23, 29", "#0E171D"
+  "Neutros", "Azul", "azul escuro", "5395 C", "14, 23, 29", "#0E171D",
+
+  # Cidades — Insper Cidades sub-brand ------------------------------------------
+  # From `refs/Manual de Aplicação - Insper Cidades.pdf` (June 2026), p.12. The
+  # manual specifies CMYK only, so `pantone` is "-" for all four. It has no
+  # accessibility page, so `acessibilidade` stays NA (see below).
+  "Cidades", "Folhagem", "folhagem", "-", "1, 152, 129", "#019881",
+  "Cidades", "Solar", "solar", "-", "255, 167, 1", "#FFA701",
+  "Cidades", "Asfalto", "asfalto", "-", "127, 21, 130", "#7F1582",
+  "Cidades", "Tijolo", "tijolo", "-", "255, 75, 1", "#FF4B01"
 ) |>
   tibble::add_column(amostra = NA_character_, .after = "nome") |>
   dplyr::mutate(amostra = hex) # swatch column mirrors the hex (no image payload)
@@ -86,7 +95,10 @@ insper_color_reference <- tribble(
 # Permitted text/logo color on each background, per the brand guide's
 # accessibility and logo-background pages (`refs/brand-guide-accessibility-
 # contrast.png`, `refs/brand-guide-logo-backgrounds.png`). The guide only
-# rules on the family base colors and neutrals; tints/shades are NA.
+# rules on the family base colors and neutrals; tints/shades are NA. The
+# Insper Cidades manual has no accessibility page, so its four colors are NA
+# too — this column records what a guide *rules*, not what the package
+# computes. Derived contrast guidance lives in `vignettes/brand-kit.Rmd`.
 #   "branco" — only white text/logo
 #   "preto"  — only black text/logo
 #   "ambos"  — both pass
@@ -114,7 +126,7 @@ insper_color_reference <- insper_color_reference |>
   )
 
 stopifnot(
-  nrow(insper_color_reference) == 39,
+  nrow(insper_color_reference) == 43,
   all(grepl("^#[0-9A-F]{6}$", insper_color_reference$hex)),
   sum(!is.na(insper_color_reference$acessibilidade)) ==
     length(acessibilidade_guide)
