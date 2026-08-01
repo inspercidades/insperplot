@@ -5,11 +5,12 @@
 \alias{insper_color_reference}
 \title{Insper Brand Color Reference Table}
 \format{
-A data frame with 39 rows and 8 variables:
+A data frame with 43 rows and 8 variables:
 \describe{
   \item{hierarquia}{Character, color hierarchy: "Principais" (Vermelho,
     Branco, Preto), "Secundários" (Turquesa, Verde, Amarelo, Laranja, Rosa,
-    Roxo), or "Neutros" (Cinza, Azul)}
+    Roxo), "Neutros" (Cinza, Azul), or "Cidades" (the Insper Cidades
+    sub-brand: Folhagem, Solar, Asfalto, Tijolo)}
   \item{familia}{Character, hue family (e.g. "Vermelho", "Verde", "Cinza")}
   \item{nome}{Character, lowercase identifier for the specific swatch
     (e.g. "vermelho", "verde 0"..."verde 4"). Matches the `_N` suffix used
@@ -19,18 +20,22 @@ A data frame with 39 rows and 8 variables:
     companion \code{data-raw/insper_color_reference.xlsx} this column is
     rendered as a color-filled cell instead}
   \item{pantone}{Character, Pantone spot color reference, or "-" when the
-    brand guide does not specify one (Branco, Preto)}
+    brand guide does not specify one (Branco, Preto, and all four Cidades
+    colors — the Cidades manual gives CMYK only)}
   \item{rgb}{Character, "R, G, B" digital color values as printed in the
     brand guide}
   \item{hex}{Character, hexadecimal color code, uppercase with leading "#"}
   \item{acessibilidade}{Character, which text/logo color the brand guide
     permits on this background: "branco" (white only), "preto" (black
     only), or "ambos" (both pass). The guide only rules on the family base
-    colors and neutrals; tints/shades are \code{NA}}
+    colors and neutrals; tints/shades are \code{NA}, as are the Cidades
+    colors (that manual has no accessibility page). This column records what
+    a brand guide rules, not what the package computes}
 }
 }
 \source{
-Insper brand guide (2026), \code{data-raw/create_color_reference_table.R}
+Insper brand guide (2026) and the Insper Cidades application manual
+  (June 2026), via \code{data-raw/create_color_reference_table.R}
 }
 \usage{
 insper_color_reference
@@ -48,6 +53,13 @@ brand hex codes. The "Neutros" rows (Cinza ramp and Azul) are not part of
 the guide's main "2.1 Cores" section — they appear in segment-specific
 pages (Pós-Graduação, Educação Executiva) — but are included here for a
 complete quick-reference.
+
+The "Cidades" rows come from a second document, the Insper Cidades
+application manual (`data-raw/refs/Manual de Aplicação - Insper Cidades.pdf`,
+June 2026). Those four colors belong to the Centro de Estudos das Cidades /
+Laboratório Arq.Futuro sub-brand and are close enough to the institutional
+hues that the two families should not be mixed in one chart — see
+\code{\link{insper_palette}}.
 
 The \code{acessibilidade} column condenses the guide's accessibility and
 logo-background pages (white/black text contrast per background). Package

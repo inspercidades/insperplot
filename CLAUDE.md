@@ -136,18 +136,34 @@ Rscript data-raw/create_logo.R
 ### Color Palette Definition
 ```bash
 # Color palettes defined in data-raw/colors_palettes.R
-# Creates R/sysdata.rda with insper_colors list
-# Updates should maintain backward compatibility with old names
+# Creates R/sysdata.rda with two objects: insper_individual_colors, insper_palettes
+# Updates should maintain backward compatibility with old names (R/deprecated.R)
 ```
+
+Palette families in `insper_palettes`: institutional (2026 brand kit), Insper
+Cidades (prefixed `cidades`, from a separate application manual), and the
+`colorblind` Okabe-Ito accessibility fallback — the only palette containing no
+Insper colors. Do not mix institutional and Cidades colors in one chart; they
+are close enough in CIELAB (asfalto is 6.6 dE from roxo) to look like a
+rendering error.
+
+For a token that ships no tints/shades, build its sequential ramp with
+`ramp_from_base()`, which pins the official color at the exact midpoint — Lab
+interpolation otherwise rounds it off by a bit.
 
 ## Common Workflows
 
 ### Adding a New Color Palette
 1. Edit `data-raw/colors_palettes.R` to add palette definition
 2. Run `Rscript data-raw/colors_palettes.R` to regenerate `R/sysdata.rda`
-3. Update `insper_palette()` documentation with new palette name
-4. Add tests in `tests/testthat/test-colors.R`
-5. Update `show_insper_palettes()` to support new palette (if special handling needed)
+3. **Add a row to `palette_metadata()` in `R/palette-utils.R`** — it is four
+   hand-maintained parallel vectors (`name`, `type`, `n_colors`,
+   `recommended_use`) and all four must be edited together. Integrity tests in
+   `test-colors.R` assert it stays in sync with `insper_palettes`, so skipping
+   this fails the suite rather than drifting silently.
+4. Update `insper_palette()` roxygen `@details` with the new palette name
+5. Add tests in `tests/testthat/test-colors.R`
+6. `show_insper_palettes()` needs no change — it reads `palette_metadata()`
 
 ### Adding a New Plot Function
 1. Create a new file `R/plot-<name>.R` (one plot function per file — see existing `plot-barplot.R`, `plot-scatterplot.R`, etc.)
@@ -188,8 +204,7 @@ Rscript data-raw/create_logo.R
 - Never use string parsing or `eval(parse())` patterns
 
 ### Brazilian Localization
-- Formatter functions default to Brazilian conventions (comma decimal, period thousands)
-- Caption function defaults to Portuguese (`lang = "pt"`)
+- Formatter functions default to Brazilian conventions (comma decimal, period thousands) — see `format_num_br()`
 - Consider adding English alternatives when appropriate
 
 ### Package Load Behavior (R/zzz.R)
@@ -211,7 +226,10 @@ The package website (_pkgdown.yml) organizes functions into categories:
 - **Colors and Palettes**: Color access and palette functions
 - **ggplot2 Scales**: Scale functions for continuous/discrete data
 - **Plot Functions**: High-level plotting functions
-- **Utilities**: Formatters, caption builder, save function
+- **Utilities**: `save_insper_plot()`, `format_num_br()`, `has_insper_fonts()`
 - **Data**: Package datasets
 
-Website uses Insper colors in theme (primary: #E4002B, secondary: #009491).
+Website theme uses 2026 brand colors: primary `#0E171D` (azul escuro), secondary
+`#3ACC9F` (turquesa). Heading font is `Georgia, serif`, mirroring
+`theme_insper()` — Playfair Display and EB Garamond were dropped in 0.2.0 and
+must not be re-added.

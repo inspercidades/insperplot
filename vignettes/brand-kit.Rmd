@@ -16,14 +16,13 @@ knitr::opts_chunk$set(
   fig.asp = 0.618,
   fig.align = "center",
   warning = FALSE,
-  message = FALSE,
-  eval = FALSE
+  message = FALSE
 )
 ```
 
 # Introduction
 
-**insperplot** extends ggplot2 with [Insper](https://www.insper.edu.br/en/)'s visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use. That said, while Insper has very specific brand guidelines, it lacks a data visualization module.
+While Insper has very specific brand guidelines, it lacks a data visualization module.
 
 This vignette is a small step towards filling this gap.
 
@@ -36,21 +35,45 @@ library(ggplot2)
 
 ### Accessibility
 
+The `main` palette is the brand's own hue set, and it puts red, green, orange and yellow next to one another. That is a difficult combination under the common forms of color vision deficiency: deuteranopia and protanopia both compress the red-green axis, so categories that look obviously distinct to you may collapse into one another for roughly 1 in 12 male readers.
+
 ```{r}
 insper_palette("main")
 ```
+
+When distinguishability matters more than brand fidelity — a chart with many categories, a slide seen from the back of a room, a document you cannot control the rendering of — use the `colorblind` palette instead. It is the [Okabe-Ito](https://jfly.uni-koeln.de/color/) set, chosen precisely so that its colors stay separable across the usual color vision deficiencies.
+
+```{r}
+insper_palette("colorblind")
+```
+
+This is the one palette in `insperplot` that contains no Insper colors, and that is deliberate. Treat it as an escape hatch rather than a default: reach for `main` for on-brand work, and switch when you have a reason to.
+
+A second, separate question is what color text should sit *on top of* a brand color. The brand guide rules on this directly for the family base colors and neutrals, and those rules are shipped in the `acessibilidade` column of the `insper_color_reference` dataset:
+
+```{r}
+subset(
+  insper_color_reference,
+  !is.na(acessibilidade),
+  select = c(nome, hex, acessibilidade)
+)
+```
+
+The guide does not rule on the tints and shades, so those rows are `NA`. For those, `insperplot` falls back to computing WCAG relative luminance at draw time — this is what picks the per-bar label color in `insper_barplot()` when you use the stacked or filled variants, so labels stay readable without you specifying anything.
 
 ## Typography
 
 ### Brand guidelines
 
-According to Insper's brand guidelines, the typography scheme should be something like the code below.
+According to Insper's brand guidelines:
 
 - GT Ultra Fine Bold should be used in titles, subtitles and most highlights.
 - Acumin Pro ExtraCondensed Bold should be used in other highlights always in uppercase.
 - Inter should be used in body text with Verdana as a fallback.
 
-```{r}
+This results in something like the code below.
+
+```{r, eval=FALSE}
 theme_minimal(base_family = "Inter 18pt") +
   theme_sub_plot(
     title = element_text(family = "GT Ultra Fine Bold", size = 22),
@@ -70,9 +93,9 @@ There are several problems with this typography scheme. GT Ultra is a proprietar
 
 ### `insperplot` implementation
 
-The approach used by `insperplot` tries to be safe: it bundles Inter, meaning the font is installed together with the package, and uses safe fallbacks for titles. Essentially, the package uses Inter for everything except for the title, which uses `'serif'`.
+The approach used by `insperplot` tries to be safe: it bundles Inter, meaning the font is installed together with the package, and uses safe fallbacks for titles. Essentially, the package uses Inter for everything except for the title, which uses `'Georgia'`.
 
-```{r}
+```{r, eval=FALSE}
 tinsper <- theme_insper()
 
 tinsper$plot.title@family
@@ -85,8 +108,7 @@ tinsper$text@family
 #> "Inter"
 ```
 
-Users that have GT Ultra, Acumin, or Verdana installed can use them by setting `font_title` and `font_text` in `theme_insper()`.
-
+The default `theme_insper()` will produce a plot like the one below.
 ```{r}
 base_plot <- ggplot(mtcars, aes(mpg, wt)) +
   geom_point() +
@@ -97,32 +119,16 @@ base_plot <- ggplot(mtcars, aes(mpg, wt)) +
     y = "Weight (lbs)",
     caption = "Source: mtcars | Insper"
   )
+
+base_plot +
+  theme_insper()
 ```
 
-A nice working alternative, that is usually available in most operating systems, is to use Georgia for titles (and some highlights) and Inter for everything else. There are no official fallbacks from Georgia, but EB Garamond and Playfair Display work as free serif alternatives (though neither is an official fallback).
+Users that have GT Ultra, Acumin, or Verdana installed can use them by setting `font_title` and `font_text` in `theme_insper()`.
 
-Note that, as of the 2026 brand kit, EB Garamond and Playfair Display are **no longer bundled with the package** — only Inter is. To use them in the examples below, you must have them installed on your system (both are freely available from [Google Fonts](https://fonts.google.com/)). When a requested title font is unavailable, `theme_insper()` falls back to the system `'serif'` family.
-
-```{r}
-# Recommended typography scheme
+```{r, eval = FALSE}
 base_plot +
-  theme_insper(
-    font_title = "Georgia",
-    font_text = "Inter"
-  )
-
-# Google font alternatives
-base_plot +
-  theme_insper(
-    font_title = "EB Garamond",
-    font_text = "Inter"
-  )
-
-base_plot +
-  theme_insper(
-    font_title = "Playfair Display",
-    font_text = "Inter"
-  )
+  theme_insper(font_title = "GT Ultra", font_text = "Verdana")
 ```
 
 On some operating systems, Acumin is available which can be used for subtitles and highlights.
@@ -135,7 +141,7 @@ base_plot +
     font_text = "Inter"
   ) +
   theme_sub_plot(
-    subtitle = element_text(family = "Acumin Pro ExtraCondensed", size = 10)
+    subtitle = element_text(family = "Acumin Pro ExtraCondensed", size = 14)
   )
 ```
 
@@ -146,8 +152,121 @@ base_plot +
   theme_insper(
     font_title = "Georgia",
     font_text = "Verdana"
-  ) +
-  theme_sub_plot(
-    subtitle = element_text(family = "Acumin Pro ExtraCondensed", size = 10)
   )
 ```
+
+## Colors
+
+Insper's brand guidelines are written for printed materials, with little emphasis on data visualization. The kit specifies Pantone references and a handful of tints and shades per hue family; it does not specify a categorical sequence, and it does not say which colors survive being reduced to a 4mm bar in a small multiple. As a result, the bundled palettes will not always work out of the box, and it helps to know how each one was built.
+
+### Where each palette comes from
+
+Some palettes are the brand kit verbatim:
+
+- `main` is the six secondary hue bases plus vermelho, interleaved so that adjacent categories contrast.
+- The six hue sequentials — `turquesa`, `verde`, `amarelo`, `laranja`, `rosa`, `roxo` — are the kit's own five tokens per family, sorted light to dark by perceptual lightness. No color was invented.
+- `cinza` is the five neutral grays.
+
+Others are derived, because the kit does not ship what a chart needs:
+
+- `muted` is `main` desaturated by 25%. None of its seven hexes appear in the guide. It exists because full-chroma brand hues are overwhelming across large filled areas.
+- `vermelho` and `azul` are interpolated ramps. The kit ships no tints or shades for either, only the single base token, so the intermediate steps were generated perceptually and only the endpoints are official.
+- The four diverging palettes have brand colors at both arms but share a neutral midpoint, `#F4F4F2`, which is not a brand token.
+
+And `colorblind` is not an Insper palette at all — see the accessibility section above.
+
+### Building a categorical set by hand
+
+When `main` is too loud and `muted` is not distinct enough, you can pull mid-range steps out of the sequential ramps. Those steps are still brand colors, but they sit closer together in lightness than the hue bases do, which is what makes them work side by side:
+
+```{r}
+paleta <- c(
+  insper_palette("turquesa")[4],
+  insper_palette("amarelo")[3],
+  insper_palette("roxo")[2],
+  insper_palette("muted")[1],
+  insper_palette("cinza")[3],
+  insper_palette("verde")[3],
+  insper_palette("laranja")[3]
+)
+```
+
+The indices are chosen by eye rather than by rule: darker steps for the light families (turquesa, amarelo, verde, laranja) and a lighter step for roxo, which is very dark at its base. The result is shown below on a stacked bar chart and a stacked area chart.
+
+
+```{r, echo = FALSE}
+dat_barplot <- data.frame(
+  x = rep(c("A", "B", "C"), each = 5),
+  group = rep(paste0("Group", 1:5), 3),
+  y = c(40, 20, 20, 10, 10, 20, 35, 15, 15, 15, 10, 10, 20, 30, 30)
+)
+
+ggplot(dat_barplot, aes(x, y, fill = group)) +
+  geom_col() +
+  scale_fill_manual(values = paleta) +
+  guides(fill = "none") +
+  theme_insper()
+
+recent_fuel <- subset(fossil_fuel, year >= 1960)
+
+ggplot(recent_fuel, aes(year, consumption, fill = fuel)) +
+  geom_area() +
+  scale_fill_manual(values = paleta) +
+  scale_x_continuous(expand = expansion(mult = c(0))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  theme_insper(border = "half")
+```
+
+## Insper Cidades
+
+The Centro de Estudos das Cidades — Laboratório Arq.Futuro publishes its own application manual, with four colors of its own alongside the shared institutional vermelho, branco and preto:
+
+```{r}
+insper_palette("cidades")
+```
+
+These are `folhagem` (the manual prints it "Fohagem", which we read as a typo), `solar`, `asfalto` and `tijolo`. Everything prefixed `cidades` in `insperplot` comes from that manual rather than the institutional brand kit, and nothing in the package defaults to them — they are opt-in.
+
+### Do not mix the two families
+
+This is the one rule worth internalising. The Cidades colors sit very close to institutional hues in perceptual space: `asfalto` is only 6.6 ΔE from `roxo`, and `solar` 8.8 ΔE from `laranja`. For reference, a trained eye starts noticing a difference around 2 ΔE, and 6.6 is "these are two printings of the same purple", not "these are two colors".
+
+So a chart that pulls some series from `main` and others from `cidades` will not look like a considered design decision. It will look like a rendering bug. Pick one family per chart.
+
+### The sequential ramps are derived
+
+Unlike the six institutional hue families, the Cidades manual ships no tints or shades — just the four standalone colors. The ramps are therefore built here, not transcribed: seven steps interpolated in CIELAB from a lightened anchor through the official color to a darkened one, with the official color pinned at position 4.
+
+```{r}
+insper_palette("cidades_folhagem")
+```
+
+The pin matters more than it sounds. Lab interpolation rounds endpoints by a bit, so without it `folhagem` would come back from its own ramp as `#009880` rather than the official `#019881`.
+
+### Text contrast
+
+The Cidades manual has no accessibility page, so unlike the institutional colors there is no official ruling on what text color to put on these backgrounds. The values below are computed from WCAG relative luminance rather than taken from a guide — treat them as a sensible default, not as brand policy:
+
+| Color | Contrast vs white | Contrast vs black | Use |
+| --- | --- | --- | --- |
+| `folhagem` | 3.61 | 5.81 | black text |
+| `solar` | 1.95 | 10.78 | black text |
+| `asfalto` | 9.01 | 2.33 | white text |
+| `tijolo` | 3.36 | 6.26 | black text |
+
+Asfalto is the only one of the four that takes white text.
+
+### Diverging data
+
+There are two Cidades diverging palettes, and they fail in opposite ways.
+
+```{r}
+insper_palette("cidades_folhagem_asfalto")
+insper_palette("cidades_folhagem_tijolo")
+```
+
+Prefer **`cidades_folhagem_asfalto`** on screen. Its arms are noticeably unbalanced in lightness — folhagem sits at L\* 56 and asfalto at L\* 31 — but that imbalance is doing useful work: it is exactly the cue a colorblind reader relies on once hue collapses, and it gives this palette the widest separation under protanopia of any diverging palette in the package. It is also no more unbalanced than `vermelho_turquesa`, the institutional default.
+
+Reach for **`cidades_folhagem_tijolo`** when lightness symmetry matters more, typically print or greyscale reproduction, where its near-perfectly matched arms read evenly on both sides of the midpoint. Be aware that it pairs green against orange-red, the classic red-green difficulty, and it has the weakest protanopia separation in the package.
+
+Both share the same neutral midpoint (`#F4F4F2`) as the institutional diverging palettes, so they drop into `scale_fill_insper_c()` the same way.

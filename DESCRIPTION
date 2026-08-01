@@ -1,23 +1,23 @@
 Package: insperplot
 Type: Package
 Title: Insper Themed 'ggplot2' Extensions
-Version: 0.2.0
-Date: 2026-06-30
+Version: 0.3.0
+Date: 2026-08-01
 Authors@R: c(
     person(
       "Vinicius", "Oike",
       email = "viniciusor@insper.edu.br",
-      role = c("aut", "cre", "cph"),
+      role = c("aut", "cre"),
       comment = c(ORCID = "0009-0005-8015-9189")
+    ),
+    person(
+        "Insper - Instituto de Ensino e Pesquisa",
+        role = "cph"
     )
   )
-Description: Extends 'ggplot2' with the visual identity of Insper Instituto de
-    Ensino e Pesquisa, a Brazilian non-profit institution dedicated to teaching
-    and research. Provides custom themes, color palettes, discrete and
-    continuous scales, and high-level plotting functions for producing
-    publication-ready charts with consistent institutional branding. All plot
-    functions return standard 'ggplot2' objects that can be further customized
-    with additional layers.
+Description: Extends 'ggplot2' with the visual identity of Insper.
+    Provides custom themes, color palettes, and high-level plotting
+    functions consistent with Insper's visual identity.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -44,7 +44,7 @@ Suggests:
     dplyr,
     reactable,
     htmltools
-URL: https://portalcidados.github.io/insperplot/, https://github.com/portalcidados/insperplot
-BugReports: https://github.com/portalcidados/insperplot/issues
+URL: https://inspercidades.github.io/insperplot/, https://github.com/inspercidades/insperplot
+BugReports: https://github.com/inspercidades/insperplot/issues
 Config/testthat/edition: 3
 VignetteBuilder: knitr

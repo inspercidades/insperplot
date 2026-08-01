@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This page is a searchable quick-reference for every official Insper brand color: Pantone spot color, RGB, and hex values, organized by hierarchy (Principais, Secundários, Neutros) and hue family. It is generated directly from the `insper_color_reference` dataset shipped with the package.
+This page is a searchable quick-reference for every official Insper brand color: Pantone spot color, RGB, and hex values, organized by hierarchy (Principais, Secundários, Neutros, Cidades) and hue family. It is generated directly from the `insper_color_reference` dataset shipped with the package.
+
+The four **Cidades** rows belong to the Insper Cidades sub-brand (Centro de Estudos das Cidades — Laboratório Arq.Futuro), which publishes its own application manual. That manual specifies CMYK only, so those rows have no Pantone reference.
 
 For programmatic access in plots, use `insper_palette()` or the `scale_*_insper_*()` functions instead — this table is documentation, not an API.
 
@@ -95,7 +97,9 @@ reactable(
 
 ## Acessibilidade: text on colored backgrounds
 
-The brand guide rules on which text (or logo) color may sit on each base background: white only, black only, or both. The `acessibilidade` column above condenses those rules — the swatch in the "Texto" column shows the permitted color in use. Tints and shades (`_1`–`_4`) are not covered by the guide, so they are blank.
+The brand guide rules on which text (or logo) color may sit on each base background: white only, black only, or both. The `acessibilidade` column above condenses those rules — the swatch in the "Texto" column shows the permitted color in use.
+
+Two sets of rows are blank, for different reasons. Tints and shades (`_1`–`_4`) are not covered by the brand guide. The Cidades colors are not covered either, because that manual has no accessibility page at all. This column records what a brand guide *rules*, not what the package computes — for derived contrast guidance on the Cidades colors, see `vignette("brand-kit", package = "insperplot")`.
 
 ```{r accessibility-guide, echo = FALSE, fig.width = 8, fig.height = 3.5, fig.alt = "Grid of Insper base colors, each swatch labeled with sample text in the permitted color: white, black, or both."}
 library(ggplot2)
@@ -150,4 +154,4 @@ The same logic is applied automatically inside the package: plot functions that 
 
 ## Source
 
-Values are transcribed from Insper's 2026 brand guide via `data-raw/colors_palettes.R` and assembled into this flat table by `data-raw/create_color_reference_table.R`. See `?insper_color_reference` for column definitions. A companion `data-raw/insper_color_reference.xlsx` file mirrors this table with color-filled swatch cells for use outside R.
+Values are transcribed from two documents — Insper's 2026 brand guide, and the Insper Cidades application manual (June 2026) for the Cidades rows — via `data-raw/colors_palettes.R`, then assembled into this flat table by `data-raw/create_color_reference_table.R`. See `?insper_color_reference` for column definitions. A companion `data-raw/insper_color_reference.xlsx` file mirrors this table with color-filled swatch cells for use outside R.

@@ -3,10 +3,10 @@
 $insper-red: #E50505;
 $insper-dark: #0E171D;
 
-// Navbar: white text on Insper red, in both light and dark modes
+// Navbar: white text on azul escuro, in both light and dark modes
 // (pkgdown's light-switch ignores `navbar: bg:`, so set it here)
 .navbar {
-  background-color: $insper-red !important;
+  background-color: $insper-dark !important;
 
   .navbar-brand,
   .nav-link,

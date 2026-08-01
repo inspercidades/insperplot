@@ -1,20 +1,21 @@
-url: https://portalcidados.github.io/insperplot/
+url: https://inspercidades.github.io/insperplot/
 
 template:
   bootstrap: 5
   light-switch: true
   bslib:
-    primary: "#E50505"
+    primary: "#0E171D"
     secondary: "#3ACC9F"
     base_font: {google: "Inter"}
-    heading_font: 'Georgia, "Playfair Display", "EB Garamond", serif'
+    # Mirrors theme_insper()'s title fallback chain. Playfair Display and EB
+    # Garamond were dropped from the package in 0.2.0 — do not re-add them here.
+    heading_font: 'Georgia, serif'
     code_font: {google: "JetBrains Mono"}
-    link-color: "#E50505"
-    link-hover-color: "#A50404"
-    navbar-bg: "#E50505"
     pkgdown-nav-height: 72px
 
 navbar:
+  # Navbar colour is set in pkgdown/extra.scss, not here: pkgdown ignores
+  # `navbar: bg:` whenever `light-switch` is enabled.
   structure:
     left: [intro, reference, articles, news]
     right: [search, github, lightswitch]
@@ -36,7 +37,7 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/portalcidados/insperplot
+      href: https://github.com/inspercidades/insperplot
       aria-label: GitHub
 
 home:
@@ -51,7 +52,10 @@ reference:
   - theme_insper_doc
 
 - title: Colors and Palettes
-  desc: Access Insper brand colors and palettes
+  desc: >
+    Access Insper brand colors and palettes. Three families ship: institutional
+    (from the 2026 brand kit), Insper Cidades (prefixed `cidades`), and a
+    `colorblind` accessibility fallback.
   contents:
   - insper_palette
   - show_insper_palettes

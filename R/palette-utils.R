@@ -6,9 +6,8 @@ palette_metadata <- function() {
       # qualitative
       "main",
       "muted",
-      "categorical_ito",
-      "categorical_tab",
-      "categorical_set",
+      "colorblind",
+      "cidades",
       # sequential
       "vermelho",
       "turquesa",
@@ -19,23 +18,28 @@ palette_metadata <- function() {
       "roxo",
       "cinza",
       "azul",
+      "cidades_folhagem",
+      "cidades_solar",
+      "cidades_asfalto",
+      "cidades_tijolo",
       # diverging
       "vermelho_turquesa",
       "roxo_verde",
       "laranja_roxo",
-      "rosa_verde"
+      "rosa_verde",
+      "cidades_folhagem_asfalto",
+      "cidades_folhagem_tijolo"
     ),
     type = c(
-      rep("qualitative", 5),
-      rep("sequential", 9),
-      rep("diverging", 4)
+      rep("qualitative", 4),
+      rep("sequential", 13),
+      rep("diverging", 6)
     ),
     n_colors = c(
       7,
       7,
       8,
-      10,
-      9,
+      4,
       5,
       5,
       5,
@@ -43,6 +47,12 @@ palette_metadata <- function() {
       5,
       5,
       5,
+      5,
+      5,
+      7,
+      7,
+      7,
+      7,
       5,
       5,
       5,
@@ -53,9 +63,8 @@ palette_metadata <- function() {
     recommended_use = c(
       "Primary brand hues for categorical data",
       "Softer (desaturated) categorical data",
-      "Okabe-Ito colorblind-safe palette",
-      "Tableau 10 categorical palette",
-      "ColorBrewer Set1 palette",
+      "Colorblind-safe fallback (Okabe-Ito, not a brand palette)",
+      "Insper Cidades sub-brand; do not mix with main",
       "Intensity scales (light to dark red)",
       "Intensity scales (light to dark turquesa)",
       "Intensity scales (light to dark verde)",
@@ -65,10 +74,16 @@ palette_metadata <- function() {
       "Intensity scales (light to dark roxo)",
       "Intensity scales (light to dark cinza)",
       "Intensity scales (light to dark azul)",
+      "Insper Cidades: intensity scale (light to dark folhagem)",
+      "Insper Cidades: intensity scale (light to dark solar)",
+      "Insper Cidades: intensity scale (light to dark asfalto)",
+      "Insper Cidades: intensity scale (light to dark tijolo)",
       "Diverging data (vermelho/turquesa, default)",
       "Diverging data (roxo/verde)",
       "Diverging data (laranja/roxo)",
-      "Diverging data (rosa/verde)"
+      "Diverging data (rosa/verde)",
+      "Insper Cidades diverging (preferred)",
+      "Insper Cidades diverging (weak under red-green CVD)"
     ),
     stringsAsFactors = FALSE
   )
@@ -125,13 +140,43 @@ get_insper_colors <- function(...) {
 #' @details
 #' Available palettes by type:
 #' \itemize{
-#'   \item \strong{Qualitative}: main, muted, categorical_ito,
-#'     categorical_tab, categorical_set
+#'   \item \strong{Qualitative}: main, muted, colorblind, cidades
 #'   \item \strong{Sequential}: vermelho, turquesa, verde, amarelo, laranja,
-#'     rosa, roxo, cinza, azul
+#'     rosa, roxo, cinza, azul, cidades_folhagem, cidades_solar,
+#'     cidades_asfalto, cidades_tijolo
 #'   \item \strong{Diverging}: vermelho_turquesa (default for diverging data),
-#'     roxo_verde, laranja_roxo, rosa_verde
+#'     roxo_verde, laranja_roxo, rosa_verde, cidades_folhagem_asfalto,
+#'     cidades_folhagem_tijolo
 #' }
+#'
+#' @section Insper Cidades:
+#' Palettes prefixed \code{cidades} belong to the Insper Cidades sub-brand
+#' (Centro de Estudos das Cidades / Laboratório Arq.Futuro) and are built from
+#' its own application manual rather than the institutional brand kit. They are
+#' opt-in: nothing in the package defaults to them.
+#'
+#' \strong{Do not mix them with the institutional palettes in one chart.} The two
+#' families sit close together in CIELAB — \code{asfalto} is only 6.6 dE from
+#' \code{roxo}, and \code{solar} 8.8 dE from \code{laranja} — close enough that a
+#' chart drawing from both reads as a rendering error rather than a design
+#' choice. Pick one family per chart.
+#'
+#' The Cidades manual ships no tints or shades, so the four \code{cidades_*}
+#' sequential ramps are derived: seven steps each, with the official color pinned
+#' at position 4. For diverging data prefer \code{cidades_folhagem_asfalto},
+#' which has the widest colorblind separation of any diverging palette in the
+#' package; \code{cidades_folhagem_tijolo} is more symmetric in lightness (so it
+#' reads better in greyscale) but pairs green against orange-red, which is hard
+#' under red-green color vision deficiency.
+#'
+#' All palettes are built from the 2026 Insper brand kit except
+#' \code{"colorblind"}, which is the Okabe-Ito set
+#' (\url{https://jfly.uni-koeln.de/color/}) and contains no Insper tokens. It is
+#' bundled as an accessibility fallback for when the brand hues in \code{"main"}
+#' cannot be told apart by colorblind readers — \code{"main"} mixes red, green,
+#' orange and yellow, which is a difficult combination under the common forms of
+#' color vision deficiency. Use \code{"main"} for on-brand work and reach for
+#' \code{"colorblind"} when distinguishability matters more than brand fidelity.
 #'
 #' @family colors
 #' @seealso \code{\link{show_insper_palettes}},
