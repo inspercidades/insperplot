@@ -11,7 +11,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  device = "ragg_png",
+  dev = "ragg_png",
   fig.width = 7,
   fig.asp = 0.618,
   fig.align = "center",
@@ -157,7 +157,7 @@ base_plot +
 
 ## Colors
 
-Insper's brand guidelines are written for printed materials, with little emphasis on data visualization. The kit specifies Pantone references and a handful of tints and shades per hue family; it does not specify a categorical sequence, and it does not say which colors survive being reduced to a 4mm bar in a small multiple. As a result, the bundled palettes will not always work out of the box, and it helps to know how each one was built.
+Insper's brand guidelines are written for printed materials, with little emphasis on data visualization. The kit specifies Pantone references and a handful of tints and shades per hue family; it does not specify a categorical sequence. As a result, the bundled palettes will not always work out of the box, and it helps to know how each one was built.
 
 ### Where each palette comes from
 
@@ -173,11 +173,11 @@ Others are derived, because the kit does not ship what a chart needs:
 - `vermelho` and `azul` are interpolated ramps. The kit ships no tints or shades for either, only the single base token, so the intermediate steps were generated perceptually and only the endpoints are official.
 - The four diverging palettes have brand colors at both arms but share a neutral midpoint, `#F4F4F2`, which is not a brand token.
 
-And `colorblind` is not an Insper palette at all — see the accessibility section above.
+And `colorblind` is derived from the Okabe-Ito palette, which is not an Insper palette.
 
 ### Building a categorical set by hand
 
-When `main` is too loud and `muted` is not distinct enough, you can pull mid-range steps out of the sequential ramps. Those steps are still brand colors, but they sit closer together in lightness than the hue bases do, which is what makes them work side by side:
+When `main` is too loud and `muted` is not distinct enough, you can pull mid-range steps out of the sequential ramps. Those steps are still brand colors, and getting them to work is mostly a trial and error process.
 
 ```{r}
 paleta <- c(
@@ -225,13 +225,7 @@ The Centro de Estudos das Cidades — Laboratório Arq.Futuro publishes its own 
 insper_palette("cidades")
 ```
 
-These are `folhagem` (the manual prints it "Fohagem", which we read as a typo), `solar`, `asfalto` and `tijolo`. Everything prefixed `cidades` in `insperplot` comes from that manual rather than the institutional brand kit, and nothing in the package defaults to them — they are opt-in.
-
-### Do not mix the two families
-
-This is the one rule worth internalising. The Cidades colors sit very close to institutional hues in perceptual space: `asfalto` is only 6.6 ΔE from `roxo`, and `solar` 8.8 ΔE from `laranja`. For reference, a trained eye starts noticing a difference around 2 ΔE, and 6.6 is "these are two printings of the same purple", not "these are two colors".
-
-So a chart that pulls some series from `main` and others from `cidades` will not look like a considered design decision. It will look like a rendering bug. Pick one family per chart.
+These are `folhagem`, `solar`, `asfalto` and `tijolo`. Everything prefixed `cidades` in `insperplot` comes from that manual rather than the institutional brand kit, and nothing in the package defaults to them — they are opt-in.
 
 ### The sequential ramps are derived
 
@@ -245,7 +239,7 @@ The pin matters more than it sounds. Lab interpolation rounds endpoints by a bit
 
 ### Text contrast
 
-The Cidades manual has no accessibility page, so unlike the institutional colors there is no official ruling on what text color to put on these backgrounds. The values below are computed from WCAG relative luminance rather than taken from a guide — treat them as a sensible default, not as brand policy:
+The Cidades manual has no accessibility page, so unlike the institutional colors there is no official ruling on what text color to put on these backgrounds. The values below are computed from WCAG relative luminance rather than taken from a guide:
 
 | Color | Contrast vs white | Contrast vs black | Use |
 | --- | --- | --- | --- |
@@ -258,15 +252,11 @@ Asfalto is the only one of the four that takes white text.
 
 ### Diverging data
 
-There are two Cidades diverging palettes, and they fail in opposite ways.
+There are two Cidades diverging palettes.
 
 ```{r}
 insper_palette("cidades_folhagem_asfalto")
 insper_palette("cidades_folhagem_tijolo")
 ```
-
-Prefer **`cidades_folhagem_asfalto`** on screen. Its arms are noticeably unbalanced in lightness — folhagem sits at L\* 56 and asfalto at L\* 31 — but that imbalance is doing useful work: it is exactly the cue a colorblind reader relies on once hue collapses, and it gives this palette the widest separation under protanopia of any diverging palette in the package. It is also no more unbalanced than `vermelho_turquesa`, the institutional default.
-
-Reach for **`cidades_folhagem_tijolo`** when lightness symmetry matters more, typically print or greyscale reproduction, where its near-perfectly matched arms read evenly on both sides of the midpoint. Be aware that it pairs green against orange-red, the classic red-green difficulty, and it has the weakest protanopia separation in the package.
 
 Both share the same neutral midpoint (`#F4F4F2`) as the institutional diverging palettes, so they drop into `scale_fill_insper_c()` the same way.

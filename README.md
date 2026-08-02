@@ -17,7 +17,18 @@ dedicated to teaching and research.
 
 ## Installation
 
-Currently, the development version is available on GitHub.
+Install the latest release from the Insper Cidades
+[r-universe](https://inspercidades.r-universe.dev), which ships
+pre-built binaries for Windows, macOS, and Linux.
+
+``` r
+install.packages(
+  "insperplot",
+  repos = c("https://inspercidades.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+Alternatively, install the development version directly from GitHub.
 
 ``` r
 # install.packages("remotes")

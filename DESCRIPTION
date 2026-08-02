@@ -2,7 +2,6 @@ Package: insperplot
 Type: Package
 Title: Insper Themed 'ggplot2' Extensions
 Version: 0.3.0
-Date: 2026-08-01
 Authors@R: c(
     person(
       "Vinicius", "Oike",
