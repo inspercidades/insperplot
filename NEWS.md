@@ -61,8 +61,8 @@ defaults to them.
 **Do not mix Cidades and institutional palettes in one chart.** The families sit
 close together in CIELAB — `asfalto` is 6.6 ΔE from `roxo`, `solar` 8.8 ΔE from
 `laranja` — close enough that a chart using both reads as a rendering error. The
-new *Insper Cidades* section of the design-guide vignette covers this, along with
-computed text-contrast guidance and when to pick each diverging palette.
+new *Insper Cidades* section of the design-guide vignette includes computed
+text-contrast guidance for the four colors.
 
 ## Documentation
 
