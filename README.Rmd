@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/inspercidades/insperplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/inspercidades/insperplot/actions/workflows/R-CMD-check.yaml)
+[![r-universe](https://inspercidades.r-universe.dev/badges/insperplot)](https://inspercidades.r-universe.dev)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
@@ -27,7 +28,16 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-Currently, the development version is available on GitHub.
+Install the latest release from the Insper Cidades [r-universe](https://inspercidades.r-universe.dev), which ships pre-built binaries for Windows, macOS, and Linux.
+
+```{r eval=FALSE}
+install.packages(
+  "insperplot",
+  repos = c("https://inspercidades.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+Alternatively, install the development version directly from GitHub.
 
 ```{r eval=FALSE}
 # install.packages("remotes")
