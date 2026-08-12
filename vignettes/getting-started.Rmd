@@ -27,14 +27,22 @@ knitr::opts_chunk$set(
 
 ### Installation
 
-The easiest way to install insperplot currently is from GitHub using either the `remotes` or the `pak` package:
+Install the latest release from the Insper Cidades [r-universe](https://inspercidades.r-universe.dev), which ships pre-built binaries for Windows, macOS, and Linux.
 
 ```{r eval=FALSE}
-# Install from GitHub
-remotes::install_github("inspercidades/insperplot")
+install.packages(
+  "insperplot",
+  repos = c(
+    "https://inspercidades.r-universe.dev",
+    "https://cloud.r-project.org"
+  )
+)
+```
 
-# or
-pak::pkg_install("inspercidades/insperplot")
+The development version installs from GitHub.
+
+```{r eval=FALSE}
+remotes::install_github("inspercidades/insperplot")
 ```
 
 We recommend using `insperplot` alongside the `ggplot2` package.

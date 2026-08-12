@@ -31,12 +31,12 @@ insper_area(
 \item{fill}{Fill aesthetic.
 Can be:
 \itemize{
-  \item A quoted color name/hex (e.g., `"teal"`, `"#00BFFF"`) for static color
+  \item A quoted color name/hex (e.g., `"#3ACC9F"`, `"grey40"`) for static color
   \item A bare column name (e.g., `category`) for discrete grouping
   \item A continuous variable (e.g., `intensity`) for gradient coloring
 }
-If `NULL` (default), uses Insper teal. When a variable is mapped, it applies to
-both area fill and line color (if `add_line = TRUE`).}
+If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
+applies to both area fill and line color (if `add_line = TRUE`).}
 
 \item{palette}{Character. Color palette name for variable mappings.
 Options: "main", "muted", "turquesa", "vermelho", etc.
@@ -50,12 +50,13 @@ overlapping areas even with fill mappings}
 \item{area_alpha}{Numeric. Transparency of areas (0-1). Default is 0.9}
 
 \item{fill_color}{Character. Hex color code for area when not using fill aesthetic.
-Default is Insper teal. (Deprecated: use `fill = "color"` instead)}
+Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)}
 
 \item{add_line}{Logical. If TRUE, adds line on top of area. Default is TRUE}
 
 \item{line_color}{Character. Hex color code for line when not using fill aesthetic.
-Default is darker Insper teal. (Deprecated: use in combination with `fill = "color"`)}
+Defaults to `turquesa_2`, a lighter step of the turquesa ramp than the area
+fill. (Deprecated: use in combination with `fill = "color"`)}
 
 \item{line_width}{Numeric. Width of line. Default is 0.8}
 

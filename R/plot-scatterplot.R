@@ -11,7 +11,7 @@
 #'   \itemize{
 #'     \item A bare column name for variable mapping (e.g., \code{color = Species})
 #'     \item A quoted color string for static color (e.g., \code{color = "blue"})
-#'     \item \code{NULL} (default) to use default Insper teal
+#'     \item \code{NULL} (default) to use default Insper turquesa
 #'   }
 #'   When mapping a variable, the appropriate scale is automatically applied.
 #' @param fill Fill aesthetic (for shapes 21-25 with fill interiors). Accepts either:

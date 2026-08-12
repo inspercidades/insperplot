@@ -11,7 +11,7 @@
 #'   \itemize{
 #'     \item A bare column name for variable mapping (e.g., \code{color = category})
 #'     \item A quoted color string for static color (e.g., \code{color = "blue"})
-#'     \item \code{NULL} (default) to use default Insper teal
+#'     \item \code{NULL} (default) to use default Insper turquesa
 #'   }
 #'   When mapping a variable, the appropriate scale is automatically applied.
 #' @param palette Character. Color palette for variable mappings. Default is "main".
@@ -69,7 +69,7 @@ insper_timeseries <- function(
 
   # Initialize plot based on color type
   if (color_type$type == "missing") {
-    # Default: Insper teal
+    # Default: Insper turquesa
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_line(
         color = get_insper_colors("turquesa_3"),

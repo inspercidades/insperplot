@@ -10,7 +10,7 @@
 #'   \itemize{
 #'     \item A bare column name for variable mapping (e.g., \code{fill = Species})
 #'     \item A quoted color string for static fill (e.g., \code{fill = "purple"})
-#'     \item \code{NULL} (default) to use default Insper teal
+#'     \item \code{NULL} (default) to use default Insper turquesa
 #'   }
 #' @param palette Character. Color palette for variable mappings. Default is "main".
 #' @param show_boxplot Logical. If TRUE, overlays a boxplot. Default is FALSE
@@ -72,7 +72,7 @@ insper_violin <- function(
 
   # Initialize plot based on fill type
   if (fill_type$type == "missing") {
-    # Default: Insper teal
+    # Default: Insper turquesa
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_violin(
         fill = get_insper_colors("turquesa_0"),

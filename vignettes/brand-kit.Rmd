@@ -131,10 +131,9 @@ base_plot +
   theme_insper(font_title = "GT Ultra", font_text = "Verdana")
 ```
 
-On some operating systems, Acumin is available which can be used for subtitles and highlights.
+Where Acumin is installed, it can carry subtitles and highlights. Neither of the two chunks below is evaluated when this vignette is built, because the fonts they name are not bundled and `element_text()` falls back silently when a family is missing, which would show you a rendered figure in the wrong font.
 
-```{r}
-# Neat typography scheme
+```{r, eval = FALSE}
 base_plot +
   theme_insper(
     font_title = "Georgia",
@@ -145,9 +144,9 @@ base_plot +
   )
 ```
 
-Verdana is also available on most operating systems, but it's mostly unnecessary, since Inter is bundled with the package.
+Verdana ships with most operating systems, but it buys little here, since Inter is bundled with the package.
 
-```{r}
+```{r, eval = FALSE}
 base_plot +
   theme_insper(
     font_title = "Georgia",

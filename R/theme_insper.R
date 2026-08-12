@@ -14,8 +14,8 @@
 #'   (axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
 #'   Insper's official template). Falls back to "Arial" then "sans" if unavailable.
 #' @param grid Logical. Whether to display major grid lines. If TRUE, shows
-#'   dashed grid lines in light gray. If FALSE, removes all grid lines.
-#'   Default is TRUE.
+#'   light gray grid lines. If FALSE, removes all grid lines. Minor grid lines
+#'   are always removed. Default is TRUE.
 #' @param border Character. Type of plot border to display. Must be one of:
 #'   \itemize{
 #'     \item "none" - No border or axis lines (default)
@@ -33,14 +33,9 @@
 #'   \code{+} operator.
 #'
 #' @details
-#' The theme applies Insper's visual identity through:
-#' \itemize{
-#'   \item Off-white background color for both plot and panel
-#'   \item Horizontal legend positioned at the top
-#'   \item Bold legend titles
-#'   \item Custom color scheme using get_insper_colors() function
-#'   \item Consistent spacing and typography hierarchy
-#' }
+#' The theme sets a white plot background, places a horizontal legend at the
+#' top with a bold title, removes minor grid lines, and draws remaining
+#' elements in Insper brand grays.
 #'
 #' **Fonts:**
 #'

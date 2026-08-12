@@ -26,7 +26,7 @@ insper_timeseries(
 \itemize{
   \item A bare column name for variable mapping (e.g., \code{color = category})
   \item A quoted color string for static color (e.g., \code{color = "blue"})
-  \item \code{NULL} (default) to use default Insper teal
+  \item \code{NULL} (default) to use default Insper turquesa
 }
 When mapping a variable, the appropriate scale is automatically applied.}
 
