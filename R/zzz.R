@@ -1,5 +1,8 @@
-# Package hooks for startup/load events
+# Package load hooks ----
 
+# Registers the bundled Inter family with systemfonts. Registration is skipped
+# when Inter is already installed system-wide: registering over a system font
+# shadows it for the whole session, and the user's own copy should win.
 #' @keywords internal
 .onLoad <- function(libname, pkgname) {
   font_dir <- system.file("fonts", package = "insperplot")

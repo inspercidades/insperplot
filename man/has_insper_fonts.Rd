@@ -10,11 +10,11 @@ has_insper_fonts()
 Logical scalar.
 }
 \description{
-Returns \code{TRUE} when the session is interactive. Fonts are always
-available because they are bundled with the package and registered
-automatically on load. The interactive-only guard prevents examples from
-running during \code{R CMD check}, where the graphics device may not
-support custom fonts.
+Returns \code{TRUE} when the session is interactive, and does not inspect
+the font registry. Inter is bundled and registered on load, so the check
+would almost always pass; what the guard actually does is keep
+\code{@examplesIf} blocks from rendering during \code{R CMD check}, where
+the graphics device may not support custom fonts.
 }
 \examples{
 has_insper_fonts()

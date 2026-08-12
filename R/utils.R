@@ -146,8 +146,8 @@ format_num_br <- function(
 #' Check if string is a valid color
 #'
 #' Validates hex colors and named colors recognized by R's graphics device.
-#' Used internally by smart detection functions to distinguish between
-#' static color strings and column names.
+#' [detect_aesthetic_type()] uses it to tell a static color string from a
+#' column name, so a plausible column name like "Species" must return FALSE.
 #'
 #' @param x Character vector of length 1
 #'
@@ -309,11 +309,11 @@ warn_palette_ignored <- function(aesthetic_type, palette, param_name) {
 
 #' Check Whether Insper Fonts Are Available
 #'
-#' Returns \code{TRUE} when the session is interactive. Fonts are always
-#' available because they are bundled with the package and registered
-#' automatically on load. The interactive-only guard prevents examples from
-#' running during \code{R CMD check}, where the graphics device may not
-#' support custom fonts.
+#' Returns \code{TRUE} when the session is interactive, and does not inspect
+#' the font registry. Inter is bundled and registered on load, so the check
+#' would almost always pass; what the guard actually does is keep
+#' \code{@examplesIf} blocks from rendering during \code{R CMD check}, where
+#' the graphics device may not support custom fonts.
 #'
 #' @return Logical scalar.
 #'
@@ -328,6 +328,10 @@ has_insper_fonts <- function() {
 }
 
 #' Calculate Relative Luminance of a Color
+#'
+#' Implements the WCAG 2.x relative luminance formula: linearize each sRGB
+#' channel, then weight by the BT.709 coefficients. Contrast ratios computed
+#' from this feed [get_contrast_text_color()].
 #'
 #' @param hex_color Character. Hex color code (e.g., "#E50505")
 #' @return Numeric. Relative luminance value between 0 (black) and 1 (white)
