@@ -95,7 +95,7 @@ primary GT Ultra. If Georgia is unavailable, the theme falls back to the
 system serif family.
 
 For the best rendering quality, install the
-[ragg](https://ragg.r-lib.org/) graphics device:
+[ragg](https://ragg.r-lib.org/) graphics device.
 
 ``` r
 install.packages("ragg")

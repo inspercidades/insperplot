@@ -1,7 +1,7 @@
 #' Insper Histogram
 #'
-#' Create histograms with formal bin selection methods using Insper's visual identity.
-#' Implements Sturges, Freedman-Diaconis, and Scott algorithms for optimal bin width.
+#' Create histograms using Insper's visual identity. Bin width comes from the
+#' Sturges, Freedman-Diaconis, or Scott rule, or from a bin count you supply.
 #'
 #' @param data A data frame containing the data to plot
 #' @param x Variable for x-axis (numeric)
@@ -25,12 +25,15 @@
 #' @return A ggplot2 object
 #'
 #' @details
-#' Bin selection methods:
+#' The four bin selection methods are described below.
 #' \itemize{
-#'   \item **Sturges**: \eqn{k = \lceil \log_2(n) + 1 \rceil}. Works well for normal distributions.
-#'   \item **Freedman-Diaconis**: Uses IQR to determine bin width. Robust to outliers.
-#'   \item **Scott**: Uses standard deviation. Optimal for normal distributions.
-#'   \item **Manual**: Specify exact number of bins with the `bins` parameter.
+#'   \item **Sturges**: \eqn{k = \lceil \log_2(n) + 1 \rceil}. Assumes roughly
+#'     normal data and tends to undersmooth large samples.
+#'   \item **Freedman-Diaconis**: Derives bin width from the IQR, so outliers
+#'     move it less than the other two.
+#'   \item **Scott**: Derives bin width from the standard deviation, assuming
+#'     roughly normal data.
+#'   \item **Manual**: Uses the bin count given in `bins`.
 #' }
 #'
 #' @examplesIf has_insper_fonts()

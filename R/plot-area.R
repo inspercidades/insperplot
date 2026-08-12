@@ -4,27 +4,19 @@
 #' Supports both single and grouped/stacked areas.
 #'
 #' @details
-#' ## Smart Stacking Behavior
+#' ## Stacking
 #'
-#' By default (`stacked = NULL`), the function automatically detects whether to
-#' stack areas based on context:
-#' \itemize{
-#'   \item When `fill` is a variable (e.g., `fill = category`): automatically
-#'         creates stacked areas to show part-to-whole relationships
-#'   \item When `fill` is missing or a static color: uses overlapping areas
-#'         (stacking has no effect)
-#' }
-#'
-#' You can override this behavior by explicitly setting `stacked = TRUE` (force
-#' stacking) or `stacked = FALSE` (force overlapping, useful for comparing
-#' distributions of different groups).
+#' Under the default `stacked = NULL`, areas stack when `fill` maps a variable
+#' and overlap when `fill` is missing or a static color, where stacking would
+#' have no effect anyway. Set `stacked = TRUE` or `stacked = FALSE` to choose
+#' directly. Overlapping areas suit comparing group trajectories; stacked areas
+#' suit part-to-whole.
 #'
 #' ## Line Overlay
 #'
-#' By default, a line is drawn on top of each area (`add_line = TRUE`). This
-#' helps emphasize trends and makes the areas more visually distinct. The line
-#' color matches the fill color. Set `add_line = FALSE` for cleaner appearance
-#' when comparing many groups.
+#' A line is drawn on top of each area by default (`add_line = TRUE`), in the
+#' fill color. Set `add_line = FALSE` to drop it, which helps when many groups
+#' are stacked.
 #'
 #' @param data A data frame containing the data to plot
 #' @param x Time variable (numeric, Date, or POSIXct)

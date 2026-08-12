@@ -4,7 +4,7 @@
 #' do Brasil), covering economic activity, inflation, industrial production,
 #' services, and oil production.
 #'
-#' @format A data frame with 560 rows and 6 variables:
+#' @format A data frame with 279 rows and 5 variables:
 #' \describe{
 #'   \item{date}{Date, first day of the month (YYYY-MM-DD)}
 #'   \item{ibcbr_dessaz}{IBC-Br dessazonalizado (Seasonally adjusted Central Bank
@@ -20,11 +20,9 @@
 #' }
 #'
 #' @details
-#' This dataset contains key macroeconomic indicators widely used for economic
-#' analysis and forecasting in Brazil. The data is sourced directly from the
-#' Brazilian Central Bank's Time Series Management System (SGS).
+#' The Brazilian Central Bank publishes these indicators through its Time
+#' Series Management System (SGS), under the codes below.
 #'
-#' **Series codes used:**
 #' \itemize{
 #'   \item IPCA: 433
 #'   \item IPI: 21859
@@ -51,26 +49,21 @@
 
 #' Brazilian Macroeconomic Time Series (Long Format)
 #'
-#' Long-format version of the \code{\link{macro_series}} dataset. Each row represents
-#' a single observation for one indicator on a specific date. This format is particularly
-#' useful for faceted plots and grouped visualizations.
+#' Long-format version of the \code{\link{macro_series}} dataset, with one row
+#' per indicator per date. Faceted and grouped plots take this shape directly.
 #'
-#' @format A data frame with 2,800 rows and 3 variables:
+#' @format A data frame with 1,116 rows and 3 variables:
 #' \describe{
 #'   \item{date}{Date, first day of the month (YYYY-MM-DD)}
 #'   \item{name_series}{Character, name of the macroeconomic indicator.
-#'     Values: "ibcbr_dessaz", "ipca", "ipi", "oil", "pms"}
+#'     Values: "ibcbr_dessaz", "ipca", "ipi", "oil"}
 #'   \item{value}{Numeric, value of the indicator on that date}
 #' }
 #'
 #' @details
-#' This dataset is created by pivoting \code{\link{macro_series}} from wide to long format,
-#' making it easier to create faceted plots or perform grouped operations where you need
-#' to treat each indicator as a separate group.
-#'
-#' The dataset contains the same data as \code{\link{macro_series}}, just restructured
-#' for different use cases. See \code{\link{macro_series}} for detailed information about
-#' each indicator and data sources.
+#' Pivoting \code{\link{macro_series}} from wide to long produces this table.
+#' The values are the same. See \code{\link{macro_series}} for what each
+#' indicator measures and where it comes from.
 #'
 #' @source Brazilian Central Bank (Banco Central do Brasil)
 #'   \url{https://www3.bcb.gov.br/sgspub/}
@@ -98,14 +91,10 @@
 #' }
 #'
 #' @details
-#' This dataset contains comprehensive information about all bus lines operating
-#' in the Greater Recife metropolitan area. It is part of Insper's research on
-#' sustainable urban mobility in Brazilian metropolitan areas.
-#'
-#' The Observatório Nacional de Mobilidade Sustentável conducts comprehensive
-#' studies on public transportation systems, focusing on efficiency,
-#' accessibility, and sustainability metrics to support evidence-based policy
-#' making.
+#' Reference table of bus lines and their operating companies. It shares the
+#' \code{code_line} column with \code{\link{rec_passengers}}. Note that
+#' \code{code_line} repeats across rows here, since a line can appear under
+#' more than one company.
 #'
 #' @source Insper - Observatório Nacional de Mobilidade Sustentável
 #'   \url{https://dataverse.datascience.insper.edu.br}
@@ -127,24 +116,16 @@
 #'   \item{name_company}{Character, full name of the bus company}
 #'   \item{code_line}{Character, unique code identifier for the bus line}
 #'   \item{name_line}{Character, name and route description of the bus line}
-#'   \item{date}{Date, daily observation date (YYYY-MM-DD), data from 2024}
+#'   \item{date}{Date, daily observation date (YYYY-MM-DD), from January 2024
+#'     to March 2025}
 #'   \item{passengers}{Numeric, total number of passengers transported on
 #'     that date for the specific line}
 #' }
 #'
 #' @details
-#' This dataset contains daily passenger count information for the Greater Recife
-#' bus system. It provides detailed insights into public transportation usage
-#' patterns, allowing analysis of temporal trends, peak periods, and route
-#' popularity.
-#'
-#' The dataset is part of Insper's broader research initiative on sustainable
-#' urban mobility. The Observatório Nacional de Mobilidade Sustentável analyzes
-#' this transportation data to support evidence-based policy making and urban
-#' planning decisions.
-#'
-#' With over 237,000 observations, the dataset enables comprehensive analysis
-#' of passenger flow patterns across different bus lines and time periods.
+#' One row per bus line per day, running from January 2024 to March 2025. The
+#' company and route columns repeat the values in \code{\link{rec_buslines}},
+#' which shares the \code{code_line} column.
 #'
 #' @source Insper - Observatório Nacional de Mobilidade Sustentável
 #'   \url{https://dataverse.datascience.insper.edu.br}
@@ -163,21 +144,15 @@
 #' \describe{
 #'   \item{date}{Date, daily observations (YYYY-MM-DD)}
 #'   \item{year}{Year as numeric}
-#'   \item{name_station}{Character, name of the metro station. Stations include:
-#'     São Paulo-Morumbi, Butantã, Pinheiros, Faria Lima, Fradique Coutinho,
-#'     Oscar Freire, Paulista, República, Luz, and Higienópolis-Mackenzie}
+#'   \item{name_station}{Character, name of the metro station. Covers the
+#'     eleven stations on Line 4, from São Paulo - Morumbi to Luz}
 #'   \item{value}{Numeric, number of passenger entries at the station on that date}
 #' }
 #'
 #' @details
-#' Line 4 (Yellow Line) is one of the most important metro lines in São Paulo,
-#' connecting the western neighborhoods to the city center. It serves high-traffic
-#' areas including Paulista Avenue, one of São Paulo's main financial and
-#' commercial districts.
-#'
-#' The data covers the period from 2018 onwards and can be used to analyze
-#' passenger flow patterns, peak hours, and the impact of events or policies on
-#' metro usage.
+#' Line 4 (Yellow Line) runs from the western neighborhoods of São Paulo to the
+#' city center, passing Paulista Avenue. Daily entries run from January 2018 to
+#' July 2024, a window that covers the pandemic drop and the recovery after it.
 #'
 #' @source São Paulo Metro Company (Companhia do Metropolitano de São Paulo)
 "spo_metro"
@@ -188,33 +163,21 @@
 #' Primary energy consumption from fossil fuels (coal, oil, and gas) measured
 #' in terawatt-hours (TWh). Data covers global consumption from 1800 to recent years.
 #'
-#' @format A data frame with 231 rows and 5 variables:
+#' @format A data frame with 228 rows and 5 variables:
 #' \describe{
 #'   \item{entity}{Character, name of the country or region (currently "World")}
 #'   \item{code}{Character, country/region code (OWID_WRL for World)}
 #'   \item{year}{Numeric, year of observation (1800-present)}
 #'   \item{fuel}{Ordered factor with 3 levels: Oil, Gas, Coal.
 #'     Levels are ordered for logical stacking in plots}
-#'   \item{consumption}{Numeric, primary energy consumption in terawatt-hours (TWh).
-#'     All values are positive, making this dataset ideal for area plots}
+#'   \item{consumption}{Numeric, primary energy consumption in terawatt-hours
+#'     (TWh)}
 #' }
 #'
 #' @details
-#' This dataset tracks the historical consumption of fossil fuels globally,
-#' showing the dramatic increase in energy use since the Industrial Revolution.
-#' The data is particularly useful for visualizing energy transitions and the
-#' relative importance of different fossil fuels over time.
-#'
-#' **Key features:**
-#' \itemize{
-#'   \item All consumption values are positive (no negative values)
-#'   \item Fuel types are ordered factors for better plot aesthetics
-#'   \item Covers over 200 years of energy history
-#'   \item Ideal for demonstrating area plots and stacked visualizations
-#' }
-#'
-#' The fuel factor is ordered as Oil > Gas > Coal, which creates an intuitive
-#' visual hierarchy when creating stacked area charts.
+#' Global fossil fuel consumption since the Industrial Revolution, split by
+#' fuel. The \code{fuel} factor is ordered Oil, Gas, Coal, which fixes the
+#' stacking order in area charts.
 #'
 #' @source Our World in Data (OWID)
 #'   \url{https://ourworldindata.org/grapher/global-fossil-fuel-consumption}

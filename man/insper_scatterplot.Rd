@@ -58,8 +58,8 @@ A ggplot2 object
 }
 \description{
 Create scatter plots with regression lines and confidence intervals using
-Insper's visual identity. Supports both color and fill aesthetics for
-maximum flexibility with different point shapes.
+Insper's visual identity. Accepts both color and fill aesthetics, so
+outlined point shapes can carry two mappings.
 }
 \details{
 This function supports two types of point shapes:

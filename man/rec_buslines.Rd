@@ -30,14 +30,10 @@ Observatório Nacional de Mobilidade Sustentável (National Observatory of
 Sustainable Mobility).
 }
 \details{
-This dataset contains comprehensive information about all bus lines operating
-in the Greater Recife metropolitan area. It is part of Insper's research on
-sustainable urban mobility in Brazilian metropolitan areas.
-
-The Observatório Nacional de Mobilidade Sustentável conducts comprehensive
-studies on public transportation systems, focusing on efficiency,
-accessibility, and sustainability metrics to support evidence-based policy
-making.
+Reference table of bus lines and their operating companies. It shares the
+\code{code_line} column with \code{\link{rec_passengers}}. Note that
+\code{code_line} repeats across rows here, since a line can appear under
+more than one company.
 }
 \seealso{
 \code{\link{rec_passengers}} for related passenger transport data

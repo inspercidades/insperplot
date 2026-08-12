@@ -63,8 +63,8 @@ allowing custom aesthetics like width, alpha, etc.}
 A ggplot2 object
 }
 \description{
-This function creates a customized bar plot using ggplot2 with Insper's
-visual identity. Supports grouped bars, text labels, and automatic orientation.
+Create bar plots using Insper's visual identity, with grouped and stacked
+bars, value labels, and orientation detected from the variable types.
 }
 \details{
 The function automatically detects bar orientation based on variable types:

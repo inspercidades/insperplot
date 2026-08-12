@@ -1,25 +1,23 @@
 #' Save Insper Plot
 #'
-#' Enhanced ggsave with institutional defaults and ragg device support
+#' Wraps \code{\link[ggplot2]{ggsave}} with defaults for Insper-branded output:
+#' dimensions in centimeters, a golden-ratio aspect, and the ragg device for
+#' PNG files.
 #'
 #' @param plot ggplot object
 #' @param filename File name
-#' @param width Plot width in inches
-#' @param height Plot height in inches
+#' @param width Plot width, in \code{unit}. Derived from \code{height} and
+#'   \code{asp_ratio} when not supplied.
+#' @param height Plot height, in \code{unit}. Default is 8.
 #' @param dpi Resolution
 #' @param asp_ratio Aspect ratio (width / height). Default is the golden ratio (1.618).
 #'   Used only when \code{width} is not supplied directly.
 #' @param unit Units for \code{width} and \code{height}. Default \code{"cm"}.
 #'   Passed to \code{\link[ggplot2]{ggsave}}.
-#' @param device Graphics device to use. If NULL (default), automatically uses
-#'   ragg::agg_png() for PNG files when ragg is installed, otherwise falls back
-#'   to ggplot2 defaults. You can override by passing a device function.
+#' @param device Graphics device to use. If NULL (default), uses
+#'   \code{ragg::agg_png()} for PNG files when ragg is installed, otherwise the
+#'   ggplot2 default. Pass a device function to override.
 #' @param ... Additional arguments passed to ggsave
-#'
-#' @details
-#' This function automatically uses the ragg device for PNG output when available,
-#' which provides better font rendering and eliminates DPI issues. Install the
-#' \pkg{ragg} package and set the RStudio backend to AGG for best results.
 #'
 #' @return The file path of the saved plot (invisibly), as returned by
 #'   \code{\link[ggplot2]{ggsave}}.
@@ -189,9 +187,9 @@ is_valid_color <- function(x) {
 
 #' Detect if aesthetic parameter is static color or variable mapping
 #'
-#' Intelligently determines whether a user-provided aesthetic parameter (color/fill)
-#' is a static color string ("blue", "#FF0000") or a variable mapping (column name
-#' or expression). This enables intuitive API where both use cases work naturally.
+#' Determines whether a user-provided aesthetic parameter (color/fill) is a
+#' static color string ("blue", "#FF0000") or a variable mapping (column name
+#' or expression), so a plot function can accept both forms in one argument.
 #'
 #' @param quo Quosure from rlang::enquo()
 #' @param param_name Character. Parameter name for error messages (e.g., "color", "fill")
@@ -271,9 +269,10 @@ detect_aesthetic_type <- function(quo, param_name = "parameter", data = NULL) {
 
 #' Warn if palette specified with static aesthetic
 #'
-#' Educates users when they specify a palette parameter but use a static color
-#' instead of a variable mapping. The palette parameter only applies to variable
-#' mappings (discrete or continuous scales), not static colors.
+#' Warns when a palette is supplied alongside a static color. The palette
+#' argument applies to variable mappings (discrete or continuous scales) only,
+#' so it has no effect on a static color and would otherwise be dropped
+#' silently.
 #'
 #' @param aesthetic_type List returned from detect_aesthetic_type()
 #' @param palette Character or NULL. The palette argument value

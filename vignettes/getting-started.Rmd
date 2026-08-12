@@ -21,11 +21,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
+**insperplot** extends ggplot2 with Insper's visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use. This vignette walks through the theme, the color scales, and the convenience plot functions.
 
-**insperplot** extends ggplot2 with Insper's visual identity, providing custom themes, color palettes, and specialized plotting functions for academic and institutional use.
-
-### Installation
+## Installation
 
 Install the latest release from the Insper Cidades [r-universe](https://inspercidades.r-universe.dev), which ships pre-built binaries for Windows, macOS, and Linux.
 
@@ -54,7 +52,7 @@ library(dplyr)
 
 ## Basic Usage: theme_insper()
 
-The foundation of insperplot is `theme_insper()`, which applies Insper's visual identity to any ggplot2 plot. Simply add it to any ggplot2 chart to get a clean, branded appearance with Insper's typography and colors.
+`theme_insper()` applies Insper's typography and colors to a ggplot2 plot. Add it as a layer like any other theme.
 
 ```{r theme-basic}
 ggplot(mtcars, aes(mpg, wt)) +
@@ -69,7 +67,7 @@ ggplot(mtcars, aes(mpg, wt)) +
 
 ### Customizing the Theme
 
-`theme_insper()` supports several arguments for quick customization:
+`theme_insper()` supports several arguments for quick customization.
 
 - `font_title`: Font for titles. Default is `"Georgia"`.
 - `font_text`: Font for body text. Default is `"Inter"`.
@@ -79,7 +77,7 @@ ggplot(mtcars, aes(mpg, wt)) +
 
 The following examples use `macro_series`, a dataset bundled with insperplot. It contains monthly Brazilian macroeconomic indicators — including inflation (IPCA), industrial production (IPI), and economic activity (IBC-Br) — sourced from the Brazilian Central Bank. See `?macro_series` for details.
 
-Here we plot the IBC-Br index (a monthly GDP proxy) with a `"half"` border and a sans-serif title font:
+Here we plot the IBC-Br index (a monthly GDP proxy) with a `"half"` border and a sans-serif title font.
 
 ```{r theme-border-half}
 ggplot(macro_series, aes(date, ibcbr_dessaz)) +
@@ -98,7 +96,7 @@ ggplot(macro_series, aes(date, ibcbr_dessaz)) +
 
 For more granular control, ggplot2 4.0+ provides `theme_sub_*()` helper functions that target specific theme components. Add them after `theme_insper()` to override individual elements without resetting the whole theme.
 
-In the example below, we add axis ticks and lines to the x-axis with `theme_sub_axis_x()`, and change the panel background with `theme_sub_panel()`:
+In the example below, we add axis ticks and lines to the x-axis with `theme_sub_axis_x()`, and change the panel background with `theme_sub_panel()`.
 
 ```{r theme-sub-override}
 ggplot(macro_series, aes(date, ibcbr_dessaz)) +
@@ -131,13 +129,13 @@ insper_palette("vermelho")
 show_insper_palettes()
 ```
 
-Palettes come in three types — qualitative for categorical data, sequential for ordered magnitudes, and diverging for data with a meaningful centre — and in three families:
+Palettes come in three types — qualitative for categorical data, sequential for ordered magnitudes, and diverging for data with a meaningful centre — and in three families.
 
 - **Institutional** (`main`, `muted`, and the single-hue ramps like `vermelho` and `turquesa`) is built from Insper's 2026 brand kit and is what every function defaults to.
 - **Insper Cidades** (everything prefixed `cidades`) belongs to the Centro de Estudos das Cidades sub-brand. Use it for that centre's work, and don't mix it with the institutional palettes in one chart — the two families are close enough in color that a chart using both looks like a rendering error.
 - **`colorblind`** is the Okabe-Ito palette. It contains no Insper colors and exists as an accessibility fallback for when the brand hues can't be told apart by all readers.
 
-`show_insper_palettes()` also returns a data frame of palette metadata invisibly, including a `recommended_use` column, and accepts a `type` filter:
+`show_insper_palettes()` also returns a data frame of palette metadata invisibly, including a `recommended_use` column, and accepts a `type` filter.
 
 ```{r palettes-filter, eval=FALSE}
 show_insper_palettes("diverging")
@@ -158,7 +156,7 @@ For categorical variables, use `scale_color_insper_d()` or `scale_fill_insper_d(
 
 The examples below use `fossil_fuel`, a dataset bundled with insperplot. It tracks global primary energy consumption (in TWh) by fuel type (coal, oil, and gas) from 1800 to the present, sourced from [Our World in Data](https://ourworldindata.org/grapher/global-fossil-fuel-consumption). See `?fossil_fuel` for details.
 
-First, a stacked area chart of consumption since 1960 using `scale_fill_insper_d()`:
+First, a stacked area chart of consumption since 1960 using `scale_fill_insper_d()`.
 
 ```{r scale-discrete-fill}
 recent_fuel <- subset(fossil_fuel, year >= 1960)
@@ -171,7 +169,7 @@ ggplot(recent_fuel, aes(year, consumption, fill = fuel)) +
   theme_insper(border = "half")
 ```
 
-The same data shown as a line chart with `scale_color_insper_d()`:
+The same data shown as a line chart with `scale_color_insper_d()`.
 
 ```{r scale-discrete-color}
 ggplot(fossil_fuel, aes(year, consumption, color = fuel)) +
@@ -191,7 +189,7 @@ ggplot(fossil_fuel, aes(year, consumption, color = fuel)) +
 
 For numeric variables, use `scale_color_insper_c()` or `scale_fill_insper_c()`. These create smooth color gradients from any Insper palette.
 
-The heatmap below shows 12-month rolling inflation (IPCA) across years and months using the `"vermelho"` palette. We compute the rolling product from the `macro_series` dataset using `lubridate` (for date parts) and `RcppRoll` (for the rolling window):
+The heatmap below shows 12-month rolling inflation (IPCA) across years and months using the `"vermelho"` palette. We compute the rolling product from the `macro_series` dataset using `lubridate` (for date parts) and `RcppRoll` (for the rolling window).
 
 ```{r scale-continuous-fill}
 #| fig-width: 8
@@ -251,7 +249,7 @@ insper_timeseries(recent_macro, x = date, y = ipca) +
 
 ## Saving Plots
 
-For best results when saving plots, use `ggsave()` with the [ragg](https://ragg.r-lib.org/) device to ensure proper font rendering:
+For best results when saving plots, use `ggsave()` with the [ragg](https://ragg.r-lib.org/) device to ensure proper font rendering.
 
 ```{r save-ggsave, eval=FALSE}
 p <- ggplot(mtcars, aes(wt, mpg)) +
@@ -279,7 +277,7 @@ save_insper_plot(p, "my_plot.png", width = 16, height = 10)
 
 ## Available Functions
 
-In addition to `insper_timeseries()` shown above, insperplot includes convenience functions for other common chart types:
+In addition to `insper_timeseries()` shown above, insperplot includes convenience functions for other common chart types.
 
 | Function | Chart type |
 |---|---|

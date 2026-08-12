@@ -5,7 +5,7 @@
 \alias{macro_series}
 \title{Brazilian Macroeconomic Time Series}
 \format{
-A data frame with 560 rows and 6 variables:
+A data frame with 279 rows and 5 variables:
 \describe{
   \item{date}{Date, first day of the month (YYYY-MM-DD)}
   \item{ibcbr_dessaz}{IBC-Br dessazonalizado (Seasonally adjusted Central Bank
@@ -33,11 +33,9 @@ do Brasil), covering economic activity, inflation, industrial production,
 services, and oil production.
 }
 \details{
-This dataset contains key macroeconomic indicators widely used for economic
-analysis and forecasting in Brazil. The data is sourced directly from the
-Brazilian Central Bank's Time Series Management System (SGS).
+The Brazilian Central Bank publishes these indicators through its Time
+Series Management System (SGS), under the codes below.
 
-**Series codes used:**
 \itemize{
   \item IPCA: 433
   \item IPI: 21859

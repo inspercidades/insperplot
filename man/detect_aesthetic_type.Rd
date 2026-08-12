@@ -23,9 +23,9 @@ List with:
   }
 }
 \description{
-Intelligently determines whether a user-provided aesthetic parameter (color/fill)
-is a static color string ("blue", "#FF0000") or a variable mapping (column name
-or expression). This enables intuitive API where both use cases work naturally.
+Determines whether a user-provided aesthetic parameter (color/fill) is a
+static color string ("blue", "#FF0000") or a variable mapping (column name
+or expression), so a plot function can accept both forms in one argument.
 }
 \examples{
 \dontrun{
