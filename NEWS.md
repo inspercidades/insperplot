@@ -1,3 +1,62 @@
+# insperplot 0.3.1
+
+A documentation and packaging release. No exported function changed behaviour.
+
+## Installation
+
+* insperplot is now published on the Insper Cidades
+  [r-universe](https://inspercidades.r-universe.dev), which builds binaries for
+  Windows, macOS, and Linux. Both the README and the *Getting started* vignette
+  lead with that route; installing from GitHub still works.
+
+## Bug fixes
+
+* Fixed the chunk option in the design-guide vignette, which read `device`
+  where knitr expects `dev`. Its figures were rendering on the default device
+  instead of ragg, so the bundled fonts did not appear in the published
+  vignette.
+
+* Stopped evaluating the two brand-kit chunks that set Acumin and Verdana.
+  Neither font ships with the package, `element_text()` falls back silently,
+  and the figures therefore did not show the fonts the surrounding prose
+  described.
+
+## Documentation
+
+Statements that described behaviour the code does not have were corrected
+throughout.
+
+* Corrected `?theme_insper`. The plot background is `#FFFFFF` rather than
+  off-white, `paper` sets the plot background rather than the panel, grid lines
+  are solid rather than dashed, and the details block no longer points readers
+  at the unexported `get_insper_colors()`.
+
+* Corrected `line_color` in `insper_area()` and `insper_density()`. It defaults
+  to `turquesa_2`, a tint, so it is lighter than the `turquesa_3` fill rather
+  than darker.
+
+* Corrected `save_insper_plot()`, which documented `width` and `height` in
+  inches. Both pass through `unit`, which defaults to centimeters.
+
+* Corrected the dataset help pages. Four declared row or column counts that did
+  not match the shipped data, `macro_series_long` listed a `pms` series it does
+  not contain, `rec_passengers` was dated to 2024 when it runs to March 2025,
+  `spo_metro` was described as daily when it is monthly and enumerated ten of
+  its eleven stations.
+
+* Renamed the last "Insper teal" references to turquesa, following the 0.2.0
+  palette rename. The `insper_area()` fill example offered `"teal"`, which is
+  R's named color and not a brand token.
+
+* Documented the internal helpers whose constraints are not visible from the
+  code. `palette_metadata()` now records its four-parallel-vector invariant and
+  what the integrity tests do and do not catch, `insper_pal()` explains why the
+  discrete and continuous scales pass different `type` values, and
+  `get_insper_colors()` covers its zero-argument form.
+
+* Rewrote user-facing prose against the package writing guidelines, cutting
+  claims about validation, error handling, and "optimal" bin widths.
+
 # insperplot 0.3.0
 
 ## Palette cleanup (breaking changes)
