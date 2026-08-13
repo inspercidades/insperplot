@@ -1,8 +1,8 @@
 #' Insper Scatter Plot
 #'
 #' Create scatter plots with regression lines and confidence intervals using
-#' Insper's visual identity. Supports both color and fill aesthetics for
-#' maximum flexibility with different point shapes.
+#' Insper's visual identity. Accepts both color and fill aesthetics, so
+#' outlined point shapes can carry two mappings.
 #'
 #' @param data A data frame containing the data to plot
 #' @param x Variable for x-axis
@@ -11,7 +11,7 @@
 #'   \itemize{
 #'     \item A bare column name for variable mapping (e.g., \code{color = Species})
 #'     \item A quoted color string for static color (e.g., \code{color = "blue"})
-#'     \item \code{NULL} (default) to use default Insper teal
+#'     \item \code{NULL} (default) to use default Insper turquesa
 #'   }
 #'   When mapping a variable, the appropriate scale is automatically applied.
 #' @param fill Fill aesthetic (for shapes 21-25 with fill interiors). Accepts either:

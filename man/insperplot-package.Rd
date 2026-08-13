@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Extends 'ggplot2' with the visual identity of Insper. Provides custom themes, color palettes, and high-level plotting functions consistent with Insper's visual identity.
+Extends 'ggplot2' with the visual identity of Insper, a Brazilian non-profit institution for teaching and research. Provides themes, brand color palettes, discrete and continuous scales, and high-level plotting functions.
 }
 \section{Getting started}{
 

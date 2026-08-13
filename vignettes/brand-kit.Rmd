@@ -22,18 +22,18 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-While Insper has very specific brand guidelines, it lacks a data visualization module.
-
-This vignette is a small step towards filling this gap.
-
-## Basics
+Insper's brand guide covers print, not charts. It specifies Pantone
+references, tints and shades per hue family, and rules for text on colored
+backgrounds, but no categorical sequence and no guidance on which palette
+suits which kind of data. This vignette records how `insperplot` fills those
+gaps, which of its palettes are brand tokens verbatim, and which are derived.
 
 ```{r setup}
 library(insperplot)
 library(ggplot2)
 ```
 
-### Accessibility
+## Accessibility
 
 The `main` palette is the brand's own hue set, and it puts red, green, orange and yellow next to one another. That is a difficult combination under the common forms of color vision deficiency: deuteranopia and protanopia both compress the red-green axis, so categories that look obviously distinct to you may collapse into one another for roughly 1 in 12 male readers.
 
@@ -49,7 +49,7 @@ insper_palette("colorblind")
 
 This is the one palette in `insperplot` that contains no Insper colors, and that is deliberate. Treat it as an escape hatch rather than a default: reach for `main` for on-brand work, and switch when you have a reason to.
 
-A second, separate question is what color text should sit *on top of* a brand color. The brand guide rules on this directly for the family base colors and neutrals, and those rules are shipped in the `acessibilidade` column of the `insper_color_reference` dataset:
+A second, separate question is what color text should sit *on top of* a brand color. The brand guide rules on this directly for the family base colors and neutrals, and those rules are shipped in the `acessibilidade` column of the `insper_color_reference` dataset.
 
 ```{r}
 subset(
@@ -65,13 +65,13 @@ The guide does not rule on the tints and shades, so those rows are `NA`. For tho
 
 ### Brand guidelines
 
-According to Insper's brand guidelines:
+Insper's brand guidelines assign three fonts.
 
-- GT Ultra Fine Bold should be used in titles, subtitles and most highlights.
-- Acumin Pro ExtraCondensed Bold should be used in other highlights always in uppercase.
-- Inter should be used in body text with Verdana as a fallback.
+- GT Ultra Fine Bold carries titles, subtitles and most highlights.
+- Acumin Pro ExtraCondensed Bold carries other highlights, always in uppercase.
+- Inter carries body text, with Verdana as a fallback.
 
-This results in something like the code below.
+Following them literally gives the code below.
 
 ```{r, eval=FALSE}
 theme_minimal(base_family = "Inter 18pt") +
@@ -93,7 +93,7 @@ There are several problems with this typography scheme. GT Ultra is a proprietar
 
 ### `insperplot` implementation
 
-The approach used by `insperplot` tries to be safe: it bundles Inter, meaning the font is installed together with the package, and uses safe fallbacks for titles. Essentially, the package uses Inter for everything except for the title, which uses `'Georgia'`.
+`insperplot` bundles Inter, so the font installs with the package, and falls back to a system serif for titles. The package uses Inter for everything except the title, which uses Georgia.
 
 ```{r, eval=FALSE}
 tinsper <- theme_insper()
@@ -131,10 +131,9 @@ base_plot +
   theme_insper(font_title = "GT Ultra", font_text = "Verdana")
 ```
 
-On some operating systems, Acumin is available which can be used for subtitles and highlights.
+Where Acumin is installed, it can carry subtitles and highlights. Neither of the two chunks below is evaluated when this vignette is built, because the fonts they name are not bundled and `element_text()` falls back silently when a family is missing, which would show you a rendered figure in the wrong font.
 
-```{r}
-# Neat typography scheme
+```{r, eval = FALSE}
 base_plot +
   theme_insper(
     font_title = "Georgia",
@@ -145,9 +144,9 @@ base_plot +
   )
 ```
 
-Verdana is also available on most operating systems, but it's mostly unnecessary, since Inter is bundled with the package.
+Verdana ships with most operating systems, but it buys little here, since Inter is bundled with the package.
 
-```{r}
+```{r, eval = FALSE}
 base_plot +
   theme_insper(
     font_title = "Georgia",
@@ -161,13 +160,13 @@ Insper's brand guidelines are written for printed materials, with little emphasi
 
 ### Where each palette comes from
 
-Some palettes are the brand kit verbatim:
+Some palettes are the brand kit verbatim.
 
 - `main` is the six secondary hue bases plus vermelho, interleaved so that adjacent categories contrast.
 - The six hue sequentials — `turquesa`, `verde`, `amarelo`, `laranja`, `rosa`, `roxo` — are the kit's own five tokens per family, sorted light to dark by perceptual lightness. No color was invented.
 - `cinza` is the five neutral grays.
 
-Others are derived, because the kit does not ship what a chart needs:
+Others are derived, because the kit does not ship what a chart needs.
 
 - `muted` is `main` desaturated by 25%. None of its seven hexes appear in the guide. It exists because full-chroma brand hues are overwhelming across large filled areas.
 - `vermelho` and `azul` are interpolated ramps. The kit ships no tints or shades for either, only the single base token, so the intermediate steps were generated perceptually and only the endpoints are official.
@@ -219,7 +218,7 @@ ggplot(recent_fuel, aes(year, consumption, fill = fuel)) +
 
 ## Insper Cidades
 
-The Centro de Estudos das Cidades — Laboratório Arq.Futuro publishes its own application manual, with four colors of its own alongside the shared institutional vermelho, branco and preto:
+The Centro de Estudos das Cidades — Laboratório Arq.Futuro publishes its own application manual, with four colors of its own alongside the shared institutional vermelho, branco and preto.
 
 ```{r}
 insper_palette("cidades")
@@ -239,7 +238,7 @@ The pin matters more than it sounds. Lab interpolation rounds endpoints by a bit
 
 ### Text contrast
 
-The Cidades manual has no accessibility page, so unlike the institutional colors there is no official ruling on what text color to put on these backgrounds. The values below are computed from WCAG relative luminance rather than taken from a guide:
+The Cidades manual has no accessibility page, so unlike the institutional colors there is no official ruling on what text color to put on these backgrounds. The values below are computed from WCAG relative luminance rather than taken from a guide.
 
 | Color | Contrast vs white | Contrast vs black | Use |
 | --- | --- | --- | --- |

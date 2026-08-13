@@ -30,17 +30,18 @@ Can be:
   \item A bare column name (e.g., `factor(cyl)`) for discrete grouping
   \item A continuous variable (e.g., `gear`) for gradient coloring (rare for density)
 }
-If `NULL` (default), uses Insper teal. When a variable is mapped, it applies to
-both density fill and line color.}
+If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
+applies to both density fill and line color.}
 
 \item{palette}{Character. Color palette name for variable mappings.
 Options: "main", "muted", "turquesa", "vermelho", etc.
 If NULL (default), uses "main". Only applies to variable mappings.}
 
 \item{fill_color}{Character. Hex color for density area when not using fill aesthetic.
-Default is Insper teal. (Deprecated: use `fill = "color"` instead)}
+Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)}
 
-\item{line_color}{Character. Color for density line. Default is darker teal.
+\item{line_color}{Character. Color for density line. Defaults to `turquesa_2`,
+a lighter step of the turquesa ramp than the fill.
 (Deprecated: use in combination with `fill = "color"`)}
 
 \item{alpha}{Numeric. Transparency of density area (0-1). Default is 0.6}
@@ -64,7 +65,7 @@ Supports grouped densities with automatic color assignment.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
-# Simple density plot (default teal)
+# Simple density plot (default turquesa)
 insper_density(macro_series, x = ipca)
 
 # Static color

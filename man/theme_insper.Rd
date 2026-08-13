@@ -28,8 +28,8 @@ to the system "serif" family if Georgia is unavailable.}
 Insper's official template). Falls back to "Arial" then "sans" if unavailable.}
 
 \item{grid}{Logical. Whether to display major grid lines. If TRUE, shows
-dashed grid lines in light gray. If FALSE, removes all grid lines.
-Default is TRUE.}
+light gray grid lines. If FALSE, removes all grid lines. Minor grid lines
+are always removed. Default is TRUE.}
 
 \item{border}{Character. Type of plot border to display. Must be one of:
 \itemize{
@@ -51,37 +51,21 @@ A ggplot2 theme object that can be added to ggplot objects using the
   \code{+} operator.
 }
 \description{
-Creates a custom ggplot2 theme based on Insper's visual identity and branding.
-This theme provides a clean, professional appearance with customizable grid
-lines and border options, using Insper's color palette and typography.
+A ggplot2 theme built on Insper's brand colors and typography, with
+arguments for grid lines, borders, and title alignment.
 }
 \details{
-The theme applies Insper's visual identity through:
-\itemize{
-  \item Off-white background color for both plot and panel
-  \item Horizontal legend positioned at the top
-  \item Bold legend titles
-  \item Custom color scheme using get_insper_colors() function
-  \item Consistent spacing and typography hierarchy
-}
+The theme sets a white plot background, places a horizontal legend at the
+top with a bold title, removes minor grid lines, and draws remaining
+elements in Insper brand grays.
 
 **Fonts:**
 
-The theme uses fonts based on Insper's official template:
-\itemize{
-  \item Georgia (serif, system font) for titles - falls back to the system
-        "serif" family
-  \item Inter (sans-serif) for body text - falls back to Arial
-}
-
-Inter is bundled with the package and registered automatically when the
-package is loaded. Georgia is a system font available on most operating
-systems (the documented substitute for Insper's primary GT Ultra). If any
-font is unavailable, the theme falls back to system defaults ("serif" /
-"sans").
-
-The function validates input parameters and will throw an error if invalid
-values are provided for \code{grid} or \code{border} arguments.
+Titles use Georgia and body text uses Inter, following Insper's official
+template. Inter is bundled with the package and registered automatically on
+load. Georgia is a system font, and the documented substitute for Insper's
+primary GT Ultra. Where either is unavailable, the theme falls back to the
+system "serif" and "sans" families.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}

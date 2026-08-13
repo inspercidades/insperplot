@@ -7,11 +7,10 @@
 \format{
 A data frame with 817 rows and 4 variables:
 \describe{
-  \item{date}{Date, daily observations (YYYY-MM-DD)}
+  \item{date}{Date, monthly observations (YYYY-MM-DD)}
   \item{year}{Year as numeric}
-  \item{name_station}{Character, name of the metro station. Stations include:
-    São Paulo-Morumbi, Butantã, Pinheiros, Faria Lima, Fradique Coutinho,
-    Oscar Freire, Paulista, República, Luz, and Higienópolis-Mackenzie}
+  \item{name_station}{Character, name of the metro station. Covers the
+    eleven stations on Line 4, from São Paulo - Morumbi to Luz}
   \item{value}{Numeric, number of passenger entries at the station on that date}
 }
 }
@@ -22,17 +21,12 @@ São Paulo Metro Company (Companhia do Metropolitano de São Paulo)
 spo_metro
 }
 \description{
-Daily passenger entry data for stations on Line 4 (Yellow Line) of the São
+Monthly passenger entry data for stations on Line 4 (Yellow Line) of the São
 Paulo Metro system.
 }
 \details{
-Line 4 (Yellow Line) is one of the most important metro lines in São Paulo,
-connecting the western neighborhoods to the city center. It serves high-traffic
-areas including Paulista Avenue, one of São Paulo's main financial and
-commercial districts.
-
-The data covers the period from 2018 onwards and can be used to analyze
-passenger flow patterns, peak hours, and the impact of events or policies on
-metro usage.
+Line 4 (Yellow Line) runs from the western neighborhoods of São Paulo to the
+city center, passing Paulista Avenue. Monthly entries run from January 2018 to
+July 2024, a window that covers the pandemic drop and the recovery after it.
 }
 \keyword{datasets}

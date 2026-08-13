@@ -14,9 +14,10 @@ Authors@R: c(
         role = "cph"
     )
   )
-Description: Extends 'ggplot2' with the visual identity of Insper.
-    Provides custom themes, color palettes, and high-level plotting
-    functions consistent with Insper's visual identity.
+Description: Extends 'ggplot2' with the visual identity of Insper, a
+    Brazilian non-profit institution for teaching and research. Provides
+    themes, brand color palettes, discrete and continuous scales, and
+    high-level plotting functions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

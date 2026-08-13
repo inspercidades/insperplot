@@ -96,7 +96,7 @@ insper_palette("main")
 
 The default title font is **Georgia**, a system serif font pre-installed on most operating systems and the documented substitute for Insper's primary GT Ultra. If Georgia is unavailable, the theme falls back to the system serif family.
 
-For the best rendering quality, install the [ragg](https://ragg.r-lib.org/) graphics device:
+For the best rendering quality, install the [ragg](https://ragg.r-lib.org/) graphics device.
 
 ```{r eval=FALSE}
 install.packages("ragg")

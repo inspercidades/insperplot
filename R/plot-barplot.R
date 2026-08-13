@@ -1,7 +1,7 @@
 #' Create a Bar Plot with Insper Styling
 #'
-#' This function creates a customized bar plot using ggplot2 with Insper's
-#' visual identity. Supports grouped bars, text labels, and automatic orientation.
+#' Create bar plots using Insper's visual identity, with grouped and stacked
+#' bars, value labels, and orientation detected from the variable types.
 #'
 #' @param data A data frame containing the data to plot
 #' @param x Column name for x-axis

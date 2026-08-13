@@ -14,8 +14,8 @@ Logical. TRUE if x is a valid color specification, FALSE otherwise.
 }
 \description{
 Validates hex colors and named colors recognized by R's graphics device.
-Used internally by smart detection functions to distinguish between
-static color strings and column names.
+[detect_aesthetic_type()] uses it to tell a static color string from a
+column name, so a plausible column name like "Species" must return FALSE.
 }
 \examples{
 \dontrun{

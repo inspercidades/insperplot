@@ -24,15 +24,16 @@ save_insper_plot(
 \item{asp_ratio}{Aspect ratio (width / height). Default is the golden ratio (1.618).
 Used only when \code{width} is not supplied directly.}
 
-\item{width}{Plot width in inches}
+\item{width}{Plot width, in \code{unit}. Derived from \code{height} and
+\code{asp_ratio} when not supplied.}
 
-\item{height}{Plot height in inches}
+\item{height}{Plot height, in \code{unit}. Default is 8.}
 
 \item{dpi}{Resolution}
 
-\item{device}{Graphics device to use. If NULL (default), automatically uses
-ragg::agg_png() for PNG files when ragg is installed, otherwise falls back
-to ggplot2 defaults. You can override by passing a device function.}
+\item{device}{Graphics device to use. If NULL (default), uses
+\code{ragg::agg_png()} for PNG files when ragg is installed, otherwise the
+ggplot2 default. Pass a device function to override.}
 
 \item{unit}{Units for \code{width} and \code{height}. Default \code{"cm"}.
 Passed to \code{\link[ggplot2]{ggsave}}.}
@@ -44,12 +45,9 @@ The file path of the saved plot (invisibly), as returned by
   \code{\link[ggplot2]{ggsave}}.
 }
 \description{
-Enhanced ggsave with institutional defaults and ragg device support
-}
-\details{
-This function automatically uses the ragg device for PNG output when available,
-which provides better font rendering and eliminates DPI issues. Install the
-\pkg{ragg} package and set the RStudio backend to AGG for best results.
+Wraps \code{\link[ggplot2]{ggsave}} with defaults for Insper-branded output:
+dimensions in centimeters, a golden-ratio aspect, and the ragg device for
+PNG files.
 }
 \examples{
 \dontrun{

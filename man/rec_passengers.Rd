@@ -11,7 +11,8 @@ A data frame with 237,852 rows and 6 variables:
   \item{name_company}{Character, full name of the bus company}
   \item{code_line}{Character, unique code identifier for the bus line}
   \item{name_line}{Character, name and route description of the bus line}
-  \item{date}{Date, daily observation date (YYYY-MM-DD), data from 2024}
+  \item{date}{Date, daily observation date (YYYY-MM-DD), from January 2024
+    to March 2025}
   \item{passengers}{Numeric, total number of passengers transported on
     that date for the specific line}
 }
@@ -30,18 +31,9 @@ region from Insper's Observatório Nacional de Mobilidade Sustentável
 (National Observatory of Sustainable Mobility).
 }
 \details{
-This dataset contains daily passenger count information for the Greater Recife
-bus system. It provides detailed insights into public transportation usage
-patterns, allowing analysis of temporal trends, peak periods, and route
-popularity.
-
-The dataset is part of Insper's broader research initiative on sustainable
-urban mobility. The Observatório Nacional de Mobilidade Sustentável analyzes
-this transportation data to support evidence-based policy making and urban
-planning decisions.
-
-With over 237,000 observations, the dataset enables comprehensive analysis
-of passenger flow patterns across different bus lines and time periods.
+One row per bus line per day, running from January 2024 to March 2025. The
+company and route columns repeat the values in \code{\link{rec_buslines}},
+which shares the \code{code_line} column.
 }
 \seealso{
 \code{\link{rec_buslines}} for bus line reference data

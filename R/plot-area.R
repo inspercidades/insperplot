@@ -4,27 +4,19 @@
 #' Supports both single and grouped/stacked areas.
 #'
 #' @details
-#' ## Smart Stacking Behavior
+#' ## Stacking
 #'
-#' By default (`stacked = NULL`), the function automatically detects whether to
-#' stack areas based on context:
-#' \itemize{
-#'   \item When `fill` is a variable (e.g., `fill = category`): automatically
-#'         creates stacked areas to show part-to-whole relationships
-#'   \item When `fill` is missing or a static color: uses overlapping areas
-#'         (stacking has no effect)
-#' }
-#'
-#' You can override this behavior by explicitly setting `stacked = TRUE` (force
-#' stacking) or `stacked = FALSE` (force overlapping, useful for comparing
-#' distributions of different groups).
+#' Under the default `stacked = NULL`, areas stack when `fill` maps a variable
+#' and overlap when `fill` is missing or a static color, where stacking would
+#' have no effect anyway. Set `stacked = TRUE` or `stacked = FALSE` to choose
+#' directly. Overlapping areas suit comparing group trajectories; stacked areas
+#' suit part-to-whole.
 #'
 #' ## Line Overlay
 #'
-#' By default, a line is drawn on top of each area (`add_line = TRUE`). This
-#' helps emphasize trends and makes the areas more visually distinct. The line
-#' color matches the fill color. Set `add_line = FALSE` for cleaner appearance
-#' when comparing many groups.
+#' A line is drawn on top of each area by default (`add_line = TRUE`), in the
+#' fill color. Set `add_line = FALSE` to drop it, which helps when many groups
+#' are stacked.
 #'
 #' @param data A data frame containing the data to plot
 #' @param x Time variable (numeric, Date, or POSIXct)
@@ -32,12 +24,12 @@
 #' @param fill Fill aesthetic.
 #'   Can be:
 #'   \itemize{
-#'     \item A quoted color name/hex (e.g., `"teal"`, `"#00BFFF"`) for static color
+#'     \item A quoted color name/hex (e.g., `"#3ACC9F"`, `"grey40"`) for static color
 #'     \item A bare column name (e.g., `category`) for discrete grouping
 #'     \item A continuous variable (e.g., `intensity`) for gradient coloring
 #'   }
-#'   If `NULL` (default), uses Insper teal. When a variable is mapped, it applies to
-#'   both area fill and line color (if `add_line = TRUE`).
+#'   If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
+#'   applies to both area fill and line color (if `add_line = TRUE`).
 #' @param palette Character. Color palette name for variable mappings.
 #'   Options: "main", "muted", "turquesa", "vermelho", etc.
 #'   If NULL (default), uses "main". Only applies to variable mappings.
@@ -47,10 +39,11 @@
 #'   overlapping areas even with fill mappings
 #' @param area_alpha Numeric. Transparency of areas (0-1). Default is 0.9
 #' @param fill_color Character. Hex color code for area when not using fill aesthetic.
-#'   Default is Insper teal. (Deprecated: use `fill = "color"` instead)
+#'   Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)
 #' @param add_line Logical. If TRUE, adds line on top of area. Default is TRUE
 #' @param line_color Character. Hex color code for line when not using fill aesthetic.
-#'   Default is darker Insper teal. (Deprecated: use in combination with `fill = "color"`)
+#'   Defaults to `turquesa_2`, a lighter step of the turquesa ramp than the area
+#'   fill. (Deprecated: use in combination with `fill = "color"`)
 #' @param line_width Numeric. Width of line. Default is 0.8
 #' @param line_alpha Numeric. Transparency of line (0-1). Default is 1
 #' @param zero Logical. If TRUE, adds a horizontal line at y = 0. Default is FALSE
@@ -141,7 +134,7 @@ insper_area <- function(
 
   # Build plot based on fill type
   if (fill_type$type == "missing") {
-    # No fill specified - use default Insper teal
+    # No fill specified - use default Insper turquesa
     p <- ggplot2::ggplot(data, ggplot2::aes(x = {{ x }}, y = {{ y }})) +
       ggplot2::geom_area(fill = fill_color, alpha = area_alpha, ...)
 

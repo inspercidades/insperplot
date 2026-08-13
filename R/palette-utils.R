@@ -1,5 +1,21 @@
 # Palette metadata ----
 
+#' Palette catalogue backing show_insper_palettes()
+#'
+#' Four parallel vectors, maintained by hand. A new palette needs a new entry
+#' in all four, in the same position, and the row order here sets the display
+#' order in [show_insper_palettes()]. `n_colors` must match the actual length
+#' of the palette in `insper_palettes` (R/sysdata.rda), which is regenerated
+#' by `data-raw/colors_palettes.R`.
+#'
+#' The integrity tests in `test-colors.R` compare this table against
+#' `insper_palettes` on every run, so a missing entry, a duplicate name, or a
+#' wrong `n_colors` fails the suite rather than drifting quietly. Row order is
+#' not tested, since the tests compare name sets.
+#'
+#' @return Data frame with columns name, type, n_colors, recommended_use.
+#' @keywords internal
+#' @noRd
 palette_metadata <- function() {
   data.frame(
     name = c(
@@ -92,6 +108,16 @@ palette_metadata <- function() {
 
 # Individual colors (internal) ----
 
+#' Look up individual brand colors by name
+#'
+#' Called with no arguments, returns the whole `insper_individual_colors`
+#' vector. Otherwise returns the requested tokens, named, in the order asked
+#' for. Retired names resolve through [deprecate_color_name()], which warns
+#' against the caller's frame so the message points at user code rather than
+#' at the package internals.
+#'
+#' @param ... Character color token names, e.g. "vermelho", "turquesa_3".
+#' @return Named character vector of hex codes.
 #' @keywords internal
 #' @noRd
 get_insper_colors <- function(...) {

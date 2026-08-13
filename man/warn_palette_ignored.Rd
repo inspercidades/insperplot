@@ -17,9 +17,10 @@ warn_palette_ignored(aesthetic_type, palette, param_name)
 NULL (called for side effect of warning)
 }
 \description{
-Educates users when they specify a palette parameter but use a static color
-instead of a variable mapping. The palette parameter only applies to variable
-mappings (discrete or continuous scales), not static colors.
+Warns when a palette is supplied alongside a static color. The palette
+argument applies to variable mappings (discrete or continuous scales) only,
+so it has no effect on a static color and would otherwise be dropped
+silently.
 }
 \examples{
 \dontrun{

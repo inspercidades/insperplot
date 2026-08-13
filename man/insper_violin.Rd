@@ -27,7 +27,7 @@ insper_violin(
 \itemize{
   \item A bare column name for variable mapping (e.g., \code{fill = Species})
   \item A quoted color string for static fill (e.g., \code{fill = "purple"})
-  \item \code{NULL} (default) to use default Insper teal
+  \item \code{NULL} (default) to use default Insper turquesa
 }}
 
 \item{palette}{Character. Color palette for variable mappings. Default is "main".}

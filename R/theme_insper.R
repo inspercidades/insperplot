@@ -1,8 +1,7 @@
 #' Insper Custom ggplot2 Theme
 #'
-#' Creates a custom ggplot2 theme based on Insper's visual identity and branding.
-#' This theme provides a clean, professional appearance with customizable grid
-#' lines and border options, using Insper's color palette and typography.
+#' A ggplot2 theme built on Insper's brand colors and typography, with
+#' arguments for grid lines, borders, and title alignment.
 #'
 #' @param base_size Numeric. Base font size for all text elements in points.
 #'   Default is 12. All other text sizes are calculated relative to this value.
@@ -14,8 +13,8 @@
 #'   (axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
 #'   Insper's official template). Falls back to "Arial" then "sans" if unavailable.
 #' @param grid Logical. Whether to display major grid lines. If TRUE, shows
-#'   dashed grid lines in light gray. If FALSE, removes all grid lines.
-#'   Default is TRUE.
+#'   light gray grid lines. If FALSE, removes all grid lines. Minor grid lines
+#'   are always removed. Default is TRUE.
 #' @param border Character. Type of plot border to display. Must be one of:
 #'   \itemize{
 #'     \item "none" - No border or axis lines (default)
@@ -33,32 +32,17 @@
 #'   \code{+} operator.
 #'
 #' @details
-#' The theme applies Insper's visual identity through:
-#' \itemize{
-#'   \item Off-white background color for both plot and panel
-#'   \item Horizontal legend positioned at the top
-#'   \item Bold legend titles
-#'   \item Custom color scheme using get_insper_colors() function
-#'   \item Consistent spacing and typography hierarchy
-#' }
+#' The theme sets a white plot background, places a horizontal legend at the
+#' top with a bold title, removes minor grid lines, and draws remaining
+#' elements in Insper brand grays.
 #'
 #' **Fonts:**
 #'
-#' The theme uses fonts based on Insper's official template:
-#' \itemize{
-#'   \item Georgia (serif, system font) for titles - falls back to the system
-#'         "serif" family
-#'   \item Inter (sans-serif) for body text - falls back to Arial
-#' }
-#'
-#' Inter is bundled with the package and registered automatically when the
-#' package is loaded. Georgia is a system font available on most operating
-#' systems (the documented substitute for Insper's primary GT Ultra). If any
-#' font is unavailable, the theme falls back to system defaults ("serif" /
-#' "sans").
-#'
-#' The function validates input parameters and will throw an error if invalid
-#' values are provided for \code{grid} or \code{border} arguments.
+#' Titles use Georgia and body text uses Inter, following Insper's official
+#' template. Inter is bundled with the package and registered automatically on
+#' load. Georgia is a system font, and the documented substitute for Insper's
+#' primary GT Ultra. Where either is unavailable, the theme falls back to the
+#' system "serif" and "sans" families.
 #'
 #' @examplesIf has_insper_fonts()
 #' library(ggplot2)

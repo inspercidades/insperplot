@@ -29,7 +29,7 @@ insper_scatterplot(
 \itemize{
   \item A bare column name for variable mapping (e.g., \code{color = Species})
   \item A quoted color string for static color (e.g., \code{color = "blue"})
-  \item \code{NULL} (default) to use default Insper teal
+  \item \code{NULL} (default) to use default Insper turquesa
 }
 When mapping a variable, the appropriate scale is automatically applied.}
 
@@ -58,8 +58,8 @@ A ggplot2 object
 }
 \description{
 Create scatter plots with regression lines and confidence intervals using
-Insper's visual identity. Supports both color and fill aesthetics for
-maximum flexibility with different point shapes.
+Insper's visual identity. Accepts both color and fill aesthetics, so
+outlined point shapes can carry two mappings.
 }
 \details{
 This function supports two types of point shapes:
