@@ -1,51 +1,216 @@
 // Insper brand touches ----
+//
+// Colours split by job. Vermelho marks structure: the rules under the navbar
+// and the page header. Turquesa marks what responds to a click: links, hovers,
+// the active table-of-contents entry. Inline code takes neither.
+//
+// The light-mode turquesas are tuned for screen: same hue as the brand
+// ramp, chroma pushed to the sRGB edge. turquesa_4 (#1D7A5D) loses chroma as
+// it darkens and reads muddy on white. Dark mode uses turquesa_0 as published.
 
-$insper-red: #E50505;
-$insper-dark: #0E171D;
+$insper-red: #E50505;       // vermelho; structural rules
+$insper-dark: #0E171D;      // azul_escuro; navbar
+$turquesa-link: #007858;    // links, light mode (5.5:1 on white)
+$turquesa-hover: #006147;   // link hover, light mode (7.5:1)
+$turquesa-light: #3ACC9F;   // turquesa_0; links, dark mode (7.6:1)
+$turquesa-lighter: #65F2C2; // link hover, dark mode (11:1)
+$turquesa-tint: #EEF7F3;    // hover and active background, light mode
+$neutral-warm: #F4F4F2;     // code background, light mode
+$dark-surface: #2B3035;     // code background, dark mode
 
-// Navbar: white text on azul escuro, in both light and dark modes
-// (pkgdown's light-switch ignores `navbar: bg:`, so set it here)
+// Navbar ----
+// Azul escuro in both modes, with a vermelho rule underneath.
+// pkgdown's light-switch ignores `navbar: bg:`, so it is set here.
+
 .navbar {
   background-color: $insper-dark !important;
+  border-bottom: 3px solid $insper-red;
 
   .navbar-brand,
   .nav-link,
+  .nav-text,
   .navbar-nav .nav-link.active {
     color: #fff !important;
   }
 
+  .nav-text {
+    opacity: 0.6;
+  }
+
   .nav-link:hover,
   .nav-link:focus {
-    color: rgba(255, 255, 255, 0.75) !important;
+    color: $turquesa-light !important;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-item.active .nav-link {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .navbar-toggler-icon {
+    filter: invert(1);
+  }
+
+  input[type="search"] {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: $turquesa-light;
+      box-shadow: 0 0 0 0.2rem rgba($turquesa-light, 0.35);
+    }
   }
 }
 
-// Page titles: serif with a red accent rule, echoing theme_insper()
-.page-header h1,
-main h1 {
+// Links ----
+
+a {
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: $turquesa-hover;
+}
+
+// Sidebar links are navigation, not prose: underline on hover only
+aside a:not(:hover) {
+  text-decoration: none;
+}
+
+// downlit links every call in an example; underline on hover only
+pre a,
+code a {
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+// A code chip in a sentence takes the link colour, not the surrounding one
+:not(pre) > code a:any-link {
+  color: $turquesa-link;
+}
+
+// Headings ----
+
+// The rule sits on the container, not the h1; flow-root makes the container
+// wrap the floated logo so the rule clears it
+.page-header {
+  display: flow-root;
   border-bottom: 3px solid $insper-red;
-  padding-bottom: 0.3rem;
 }
 
 // Sidebar headings: uppercase with letter-spacing, like plot captions
 aside h2,
-#toc > .nav-title {
+#toc > h2 {
   font-family: var(--bs-font-sans-serif);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: $insper-dark;
+  letter-spacing: 0.08em;
+  color: #5B5B5B; // cinza_3
 }
 
-// Inline code in Insper red instead of Bootstrap pink
-code:not(pre code) {
-  color: $insper-red;
+#toc > .nav a.nav-link:hover,
+#toc > .nav a.nav-link:focus {
+  background-color: $turquesa-tint;
 }
+
+#toc > .nav a.nav-link.active {
+  background-color: $turquesa-tint;
+  color: $turquesa-hover;
+  font-weight: 500;
+}
+
+// Code ----
+
+code:not(pre code) {
+  color: #1B252D;
+  background-color: $neutral-warm;
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+}
+
+a > code:not(pre code) {
+  color: inherit;
+}
+
+// Reference index ----
+
+.template-reference-index {
+  main h2 {
+    margin-top: 2.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+
+  dt code {
+    background: transparent;
+    padding: 0;
+    font-weight: 500;
+  }
+
+  dt code a {
+    color: $turquesa-link;
+  }
+}
+
+dt:target,
+dt:target + dd {
+  border-left-color: $turquesa-link;
+}
+
+// Dark mode ----
 
 [data-bs-theme="dark"] {
+  a:hover {
+    color: $turquesa-lighter;
+  }
+
+  :not(pre) > code a:any-link,
+  .template-reference-index dt code a {
+    color: $turquesa-light;
+  }
+
+  dt:target,
+  dt:target + dd {
+    border-left-color: $turquesa-light;
+  }
+
   aside h2,
-  #toc > .nav-title {
-    color: #dcdcdc;
+  #toc > h2 {
+    color: #ABABAB; // cinza_1
+  }
+
+  #toc > .nav a.nav-link:hover,
+  #toc > .nav a.nav-link:focus {
+    background-color: rgba($turquesa-light, 0.15);
+  }
+
+  #toc > .nav a.nav-link.active {
+    background-color: rgba($turquesa-light, 0.2);
+    color: $turquesa-lighter;
+  }
+
+  code:not(pre code) {
+    color: #DEE2E6;
+    background-color: $dark-surface;
+  }
+
+  .template-reference-index dt code {
+    background: transparent;
   }
 }

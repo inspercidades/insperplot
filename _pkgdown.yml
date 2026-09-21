@@ -4,13 +4,17 @@ template:
   bootstrap: 5
   light-switch: true
   bslib:
-    primary: "#0E171D"
+    # Links use screen-tuned turquesas; see pkgdown/extra.scss for the split
+    # between structural (vermelho) and interactive (turquesa) colours.
+    primary: "#007858"
     secondary: "#3ACC9F"
-    base_font: {google: "Inter"}
+    link-color-dark: "#3ACC9F"
+    # bslib bundles only weight 400 unless weights are listed
+    base_font: {google: {family: "Inter", wght: [400, 500, 600, 700]}}
     # Mirrors theme_insper()'s title fallback chain. Playfair Display and EB
     # Garamond were dropped from the package in 0.2.0 — do not re-add them here.
     heading_font: 'Georgia, serif'
-    code_font: {google: "JetBrains Mono"}
+    code_font: {google: {family: "JetBrains Mono", wght: [400, 500]}}
     pkgdown-nav-height: 72px
 
 navbar:
