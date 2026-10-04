@@ -148,6 +148,7 @@ insper_barplot <- function(
   # Determine if we have horizontal bars (numeric x, categorical y)
   # If both are numeric or both are categorical, default to vertical (y is value axis)
   is_horizontal <- x_is_numeric && !y_is_numeric
+  value_quo <- if (is_horizontal) x_quo else y_quo
 
   # Add line at zero if requested (horizontal or vertical depending on orientation)
   if (zero) {
@@ -182,7 +183,7 @@ insper_barplot <- function(
       # Simple text labels (no grouping)
       p <- p +
         ggplot2::geom_text(
-          ggplot2::aes(label = label_formatter({{ y }}, accuracy = 0.1)),
+          ggplot2::aes(label = label_formatter(!!value_quo, accuracy = 0.1)),
           vjust = text_vjust,
           hjust = text_hjust,
           size = text_size,
@@ -199,17 +200,18 @@ insper_barplot <- function(
         "identity" # fallback
       )
 
-      # Determine label formatter for fill position
-      fill_formatter <- label_formatter
-      use_percent <- FALSE
-      if (position == "fill") {
-        # Check if values look like proportions (between 0 and 1)
-        y_range <- range(y_vals, na.rm = TRUE)
-        if (y_range[1] >= 0 && y_range[2] <= 1) {
-          # Likely proportions, use percentage formatter
-          fill_formatter <- scales::percent_format(accuracy = 0.1)
-          use_percent <- TRUE
-        }
+      label_expr <- if (position == "fill" && is_horizontal) {
+        rlang::expr(scales::percent(
+          ggplot2::after_stat(x / stats::ave(x, y, FUN = sum)),
+          accuracy = 0.1
+        ))
+      } else if (position == "fill") {
+        rlang::expr(scales::percent(
+          ggplot2::after_stat(y / stats::ave(y, x, FUN = sum)),
+          accuracy = 0.1
+        ))
+      } else {
+        rlang::expr(label_formatter(!!value_quo, accuracy = 0.1))
       }
 
       # Build geom_text layer based on whether we're using percentage formatting
@@ -236,14 +238,10 @@ insper_barplot <- function(
             fill_levels
           )
 
-          label_mapping <- if (use_percent) {
-            ggplot2::aes(label = fill_formatter({{ y }}), colour = {{ fill }})
-          } else {
-            ggplot2::aes(
-              label = label_formatter({{ y }}, accuracy = 0.1),
-              colour = {{ fill }}
-            )
-          }
+          label_mapping <- ggplot2::aes(
+            label = !!label_expr,
+            colour = {{ fill }}
+          )
 
           p <- p +
             ggplot2::geom_text(
@@ -253,11 +251,7 @@ insper_barplot <- function(
             ) +
             ggplot2::scale_colour_manual(values = contrast_map, guide = "none")
         } else {
-          label_mapping <- if (use_percent) {
-            ggplot2::aes(label = fill_formatter({{ y }}))
-          } else {
-            ggplot2::aes(label = label_formatter({{ y }}, accuracy = 0.1))
-          }
+          label_mapping <- ggplot2::aes(label = !!label_expr)
 
           p <- p +
             ggplot2::geom_text(
@@ -271,7 +265,7 @@ insper_barplot <- function(
         # For dodge/identity, use vjust/hjust
         p <- p +
           ggplot2::geom_text(
-            ggplot2::aes(label = label_formatter({{ y }}, accuracy = 0.1)),
+            ggplot2::aes(label = !!label_expr),
             position = text_position,
             vjust = text_vjust,
             hjust = text_hjust,

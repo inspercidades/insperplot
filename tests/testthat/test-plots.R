@@ -87,6 +87,23 @@ test_that("insper_barplot text parameter adds labels", {
   expect_true(any(sapply(p$layers, function(l) inherits(l$geom, "GeomText"))))
 })
 
+test_that("insper_barplot labels horizontal bars with numeric values", {
+  df <- data.frame(
+    value = c(10, 20),
+    category = c("A", "B")
+  )
+
+  p <- insper_barplot(df, x = value, y = category, text = TRUE)
+  built <- expect_no_error(ggplot2::ggplot_build(p))
+  text_idx <- which(vapply(
+    p$layers,
+    \(layer) inherits(layer$geom, "GeomText"),
+    logical(1)
+  ))
+
+  expect_equal(built$data[[text_idx]]$label, c("10.0", "20.0"))
+})
+
 test_that("insper_barplot text labels work with stacked bars", {
   skip_if_not_installed("ggplot2")
   df <- data.frame(
@@ -133,6 +150,17 @@ test_that("insper_barplot text labels work with filled bars", {
     inherits(l$geom, "GeomText")
   }))[1]]]
   expect_true(inherits(text_layer$position, "PositionFill"))
+
+  built <- ggplot2::ggplot_build(p)
+  text_idx <- which(vapply(
+    p$layers,
+    \(layer) inherits(layer$geom, "GeomText"),
+    logical(1)
+  ))
+  expect_equal(
+    built$data[[text_idx]]$label,
+    c("40.0%", "60.0%", "44.4%", "55.6%")
+  )
 })
 
 # Text color on stacked/filled bars is contrast-aware: each label is colored
@@ -590,12 +618,26 @@ test_that("insper_density creates plot", {
   skip_if_not_installed("ggplot2")
   p <- insper_density(mtcars, x = mpg)
   expect_s3_class(p, "ggplot")
+
+  built <- expect_no_warning(ggplot2::ggplot_build(p))
+  expect_gt(nrow(built$data[[1]]), 0)
 })
 
 test_that("insper_density handles fill aesthetic with variable mapping", {
   skip_if_not_installed("ggplot2")
   p <- insper_density(iris, x = Sepal.Length, fill = Species)
   expect_s3_class(p, "ggplot")
+})
+
+test_that("statistical plots reject continuous fill mappings", {
+  expect_snapshot(
+    error = TRUE,
+    insper_density(iris, x = Sepal.Length, fill = Sepal.Width)
+  )
+  expect_snapshot(
+    error = TRUE,
+    insper_histogram(iris, x = Sepal.Length, fill = Sepal.Width)
+  )
 })
 
 test_that("insper_density validates data frame input", {
@@ -1467,6 +1509,11 @@ test_that("insper_heatmap handles matrix without names", {
   p <- insper_heatmap(mat)
   expect_s3_class(p, "ggplot")
   expect_no_error(ggplot2::ggplot_build(p))
+})
+
+test_that("insper_heatmap uses only functions available in R 4.1", {
+  function_names <- all.names(body(insper_heatmap), functions = TRUE)
+  expect_equal(intersect(function_names, "%||%"), character())
 })
 
 test_that("insper_heatmap handles matrix with custom names", {

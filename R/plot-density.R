@@ -9,8 +9,8 @@
 #'   Can be:
 #'   \itemize{
 #'     \item A quoted color name/hex (e.g., `"purple"`, `"#9148B0"`) for static color
-#'     \item A bare column name (e.g., `factor(cyl)`) for discrete grouping
-#'     \item A continuous variable (e.g., `gear`) for gradient coloring (rare for density)
+#'     \item A bare discrete column or factor expression (e.g., `Species` or
+#'       `factor(gear)`) for grouping
 #'   }
 #'   If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
 #'   applies to both density fill and line color.
@@ -25,7 +25,7 @@
 #' @param alpha Numeric. Transparency of density area (0-1). Default is 0.6
 #' @param bw Numeric or character. Bandwidth for density estimation.
 #'   Can be a numeric value or a bandwidth selector name ("nrd0", "nrd", "ucv", "bcv", "SJ").
-#'   Default is NULL which uses ggplot2's default ("nrd0").
+#'   Default is "nrd0".
 #' @param adjust Numeric. Adjustment multiplier for bandwidth. Default is 1.
 #' @param kernel Character. Kernel for density estimation. Default is "gaussian".
 #' @param ... Additional arguments passed to \code{ggplot2::geom_density()}
@@ -51,7 +51,7 @@ insper_density <- function(
   fill_color = get_insper_colors("turquesa_3"),
   line_color = get_insper_colors("turquesa_2"),
   alpha = 0.6,
-  bw = NULL,
+  bw = "nrd0",
   adjust = 1,
   kernel = "gaussian",
   ...
@@ -73,6 +73,13 @@ insper_density <- function(
     if (palette_supplied) palette else NULL,
     "fill"
   )
+
+  if (isTRUE(fill_type$is_continuous)) {
+    cli::cli_abort(c(
+      "{.arg fill} must be discrete for a density plot.",
+      "i" = "Convert the grouping variable to a factor."
+    ))
+  }
 
   # Use default palette if not specified
   if (is.null(palette)) {
@@ -118,16 +125,9 @@ insper_density <- function(
         ...
       )
 
-    # Apply appropriate scales
-    if (fill_type$is_continuous) {
-      p <- p +
-        scale_fill_insper_c(palette = palette) +
-        scale_color_insper_c(palette = palette)
-    } else {
-      p <- p +
-        scale_fill_insper_d(palette = palette) +
-        scale_color_insper_d(palette = palette)
-    }
+    p <- p +
+      scale_fill_insper_d(palette = palette) +
+      scale_color_insper_d(palette = palette)
   }
 
   # Apply theme and scale

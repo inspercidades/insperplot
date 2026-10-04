@@ -1,3 +1,20 @@
+# insperplot (development version)
+
+## Bug fixes
+
+* Fixed `insper_barplot()` labels for horizontal bars and normalized labels for
+  filled bars (#22, #24).
+
+* Fixed `insper_density()` so its default bandwidth produces a density layer
+  (#23).
+
+* Fixed `insper_heatmap()` on R 4.1 through 4.3 by removing its dependency on
+  base `%||%` (#25).
+
+* Rejected continuous fill mappings in `insper_density()` and
+  `insper_histogram()`, which ggplot2's statistical transformations discard
+  (#26).
+
 # insperplot 0.3.1
 
 A documentation and packaging release. No exported function changed behaviour.
