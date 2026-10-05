@@ -25,8 +25,8 @@ insper_histogram(
 Can be:
 \itemize{
   \item A quoted color name/hex (e.g., `"blue"`, `"#FF0000"`) for static color
-  \item A bare column name (e.g., `factor(cyl)`) for discrete grouping
-  \item A continuous variable (e.g., `hp`) for gradient coloring (rare for histograms)
+  \item A bare discrete column or factor expression (e.g., `Species` or
+    `factor(cyl)`) for grouping
 }
 If `NULL` (default), uses Insper red.}
 

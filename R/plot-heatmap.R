@@ -57,9 +57,19 @@ insper_heatmap <- function(
       data <- as.matrix(data)
     }
 
+    row_names <- rownames(data)
+    if (is.null(row_names)) {
+      row_names <- seq_len(nrow(data))
+    }
+
+    column_names <- colnames(data)
+    if (is.null(column_names)) {
+      column_names <- seq_len(ncol(data))
+    }
+
     melted_data <- expand.grid(
-      Var1 = rownames(data) %||% seq_len(nrow(data)),
-      Var2 = colnames(data) %||% seq_len(ncol(data))
+      Var1 = row_names,
+      Var2 = column_names
     )
     melted_data$value <- as.vector(data)
   } else {

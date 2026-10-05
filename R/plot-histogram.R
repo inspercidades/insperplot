@@ -9,8 +9,8 @@
 #'   Can be:
 #'   \itemize{
 #'     \item A quoted color name/hex (e.g., `"blue"`, `"#FF0000"`) for static color
-#'     \item A bare column name (e.g., `factor(cyl)`) for discrete grouping
-#'     \item A continuous variable (e.g., `hp`) for gradient coloring (rare for histograms)
+#'     \item A bare discrete column or factor expression (e.g., `Species` or
+#'       `factor(cyl)`) for grouping
 #'   }
 #'   If `NULL` (default), uses Insper red.
 #' @param palette Character. Color palette name for variable mappings.
@@ -87,6 +87,13 @@ insper_histogram <- function(
     "fill"
   )
 
+  if (isTRUE(fill_type$is_continuous)) {
+    cli::cli_abort(c(
+      "{.arg fill} must be discrete for a histogram.",
+      "i" = "Convert the grouping variable to a factor."
+    ))
+  }
+
   # Use default palette if not specified
   if (is.null(palette)) {
     palette <- "main"
@@ -141,12 +148,7 @@ insper_histogram <- function(
         ...
       )
 
-    # Apply appropriate scale
-    if (fill_type$is_continuous) {
-      p <- p + scale_fill_insper_c(palette = palette)
-    } else {
-      p <- p + scale_fill_insper_d(palette = palette)
-    }
+    p <- p + scale_fill_insper_d(palette = palette)
   }
 
   # Add line at zero if requested
