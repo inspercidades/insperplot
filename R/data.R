@@ -186,7 +186,6 @@
 #' @seealso \code{\link{insper_area}} for creating area plots with this data
 "fossil_fuel"
 
-
 #' Insper Brand Color Reference Table
 #'
 #' A flat, "one row per swatch" lookup table of every official Insper brand

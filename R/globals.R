@@ -5,5 +5,6 @@ utils::globalVariables(c(
   "value", # insper_heatmap
   "hex",
   "position",
-  "palette" # insper_palette, show_insper_palettes
+  "palette", # insper_palette, show_insper_palettes
+  "PANEL" # insper_barplot after_stat()
 ))
