@@ -11,10 +11,15 @@ template:
     link-color-dark: "#3ACC9F"
     # bslib bundles only weight 400 unless weights are listed
     base_font: {google: {family: "Inter", wght: [400, 500, 600, 700]}}
+    # base_font alone emits `font-family: Inter` with no fallback, so a browser
+    # that skips the web font (seen in Safari) drops to Times. Re-declare the
+    # stack; base_font still loads the font files.
+    font-family-base: 'Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif'
     # Mirrors theme_insper()'s title fallback chain. Playfair Display and EB
     # Garamond were dropped from the package in 0.2.0 — do not re-add them here.
     heading_font: 'Georgia, serif'
     code_font: {google: {family: "JetBrains Mono", wght: [400, 500]}}
+    font-family-monospace: '"JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace'
     pkgdown-nav-height: 72px
 
 navbar:
