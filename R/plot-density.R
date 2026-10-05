@@ -1,35 +1,36 @@
 #' Insper Density Plot
 #'
-#' Create density plots to visualize distributions using Insper's visual identity.
-#' Supports grouped densities with automatic color assignment.
+#' Creates density plots with Insper's visual identity. Supports grouped
+#' densities, with one color per group.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Variable for x-axis (numeric)
-#' @param fill Fill aesthetic.
-#'   Can be:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Numeric variable for
+#'   the x-axis.
+#' @param fill Fill aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A quoted color name/hex (e.g., `"purple"`, `"#9148B0"`) for static color
-#'     \item A bare discrete column or factor expression (e.g., `Species` or
-#'       `factor(gear)`) for grouping
+#'     \item A quoted color string, used as a static color (e.g., `"purple"`,
+#'       `"#9148B0"`).
+#'     \item A bare discrete column or factor expression, used for grouping
+#'       (e.g., `Species` or `factor(gear)`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#'   If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
-#'   applies to both density fill and line color.
-#' @param palette Character. Color palette name for variable mappings.
-#'   Options: "main", "muted", "turquesa", "vermelho", etc.
-#'   If NULL (default), uses "main". Only applies to variable mappings.
-#' @param fill_color Character. Hex color for density area when not using fill aesthetic.
-#'   Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)
-#' @param line_color Character. Color for density line. Defaults to `turquesa_2`,
-#'   a lighter step of the turquesa ramp than the fill.
-#'   (Deprecated: use in combination with `fill = "color"`)
-#' @param alpha Numeric. Transparency of density area (0-1). Default is 0.6
-#' @param bw Numeric or character. Bandwidth for density estimation.
-#'   Can be a numeric value or a bandwidth selector name ("nrd0", "nrd", "ucv", "bcv", "SJ").
-#'   Default is "nrd0".
-#' @param adjust Numeric. Adjustment multiplier for bandwidth. Default is 1.
-#' @param kernel Character. Kernel for density estimation. Default is "gaussian".
-#' @param ... Additional arguments passed to \code{ggplot2::geom_density()}
-#' @return A ggplot2 object
+#'   The fill color also sets the density line color.
+#' @param palette Character. Palette for mapped variables. If `NULL`
+#'   (default), uses `"main"`.
+#' @param fill_color Character. Area color, used only when `fill` is `NULL`.
+#'   Default is `turquesa_3`. Prefer `fill = "<color>"`, which colors both the
+#'   area and the line.
+#' @param line_color Character. Line color, used only when `fill` is `NULL`.
+#'   Default is `turquesa_2`, a lighter step of the turquesa ramp.
+#' @param alpha Numeric. Area opacity, from 0 to 1. Default is 0.6.
+#' @param bw Numeric or character. Bandwidth, either a number or the name of a
+#'   bandwidth selector (`"nrd0"`, `"nrd"`, `"ucv"`, `"bcv"`, `"SJ"`). Default
+#'   is `"nrd0"`.
+#' @param adjust Numeric. Multiplier applied to the bandwidth. Default is 1.
+#' @param kernel Character. Smoothing kernel. Default is `"gaussian"`.
+#' @param ... Additional arguments passed to [ggplot2::geom_density()].
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
 #' # Simple density plot (default turquesa)

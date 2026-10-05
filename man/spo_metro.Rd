@@ -7,11 +7,11 @@
 \format{
 A data frame with 817 rows and 4 variables:
 \describe{
-  \item{date}{Date, monthly observations (YYYY-MM-DD)}
-  \item{year}{Year as numeric}
-  \item{name_station}{Character, name of the metro station. Covers the
-    eleven stations on Line 4, from São Paulo - Morumbi to Luz}
-  \item{value}{Numeric, number of passenger entries at the station on that date}
+\item{date}{Date, monthly observations (YYYY-MM-DD)}
+\item{year}{Year as numeric}
+\item{name_station}{Character, name of the metro station. Covers the
+eleven stations on Line 4, from São Paulo - Morumbi to Luz}
+\item{value}{Numeric, number of passenger entries at the station on that date}
 }
 }
 \source{

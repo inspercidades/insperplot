@@ -16,11 +16,11 @@ detection of continuous vs discrete variables.}
 }
 \value{
 List with:
-  \itemize{
-    \item type: "missing", "static_color", or "variable_mapping"
-    \item value: The static color value (if type = "static_color")
-    \item is_continuous: Logical (if type = "variable_mapping" and data provided)
-  }
+\itemize{
+\item type: "missing", "static_color", or "variable_mapping"
+\item value: The static color value (if type = "static_color")
+\item is_continuous: Logical (if type = "variable_mapping" and data provided)
+}
 }
 \description{
 Determines whether a user-provided aesthetic parameter (color/fill) is a

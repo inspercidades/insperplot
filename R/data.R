@@ -2,7 +2,7 @@
 #'
 #' Monthly macroeconomic indicators from the Brazilian Central Bank (Banco Central
 #' do Brasil), covering economic activity, inflation, industrial production,
-#' services, and oil production.
+#' and oil production from January 2003 onward.
 #'
 #' @format A data frame with 279 rows and 5 variables:
 #' \describe{
@@ -161,13 +161,13 @@
 #' Global Fossil Fuel Consumption
 #'
 #' Primary energy consumption from fossil fuels (coal, oil, and gas) measured
-#' in terawatt-hours (TWh). Data covers global consumption from 1800 to recent years.
+#' in terawatt-hours (TWh), for the world as a whole, from 1800 to 2023.
 #'
 #' @format A data frame with 228 rows and 5 variables:
 #' \describe{
 #'   \item{entity}{Character, name of the country or region (currently "World")}
 #'   \item{code}{Character, country/region code (OWID_WRL for World)}
-#'   \item{year}{Numeric, year of observation (1800-present)}
+#'   \item{year}{Numeric, year of observation (1800-2023)}
 #'   \item{fuel}{Ordered factor with 3 levels: Oil, Gas, Coal.
 #'     Levels are ordered for logical stacking in plots}
 #'   \item{consumption}{Numeric, primary energy consumption in terawatt-hours
@@ -188,9 +188,10 @@
 
 #' Insper Brand Color Reference Table
 #'
-#' A flat, "one row per swatch" lookup table of every official Insper brand
-#' color: primary, secondary (six hue families, five steps each), and the
-#' neutral gray ramp + dark blue used in segment-specific applications.
+#' A lookup table with one row per official Insper brand color. It covers the
+#' primary colors, the six secondary hue families (five steps each), the
+#' neutral gray ramp and dark blue used in segment-specific applications, and
+#' the four Insper Cidades colors.
 #'
 #' @format A data frame with 43 rows and 8 variables:
 #' \describe{
@@ -208,7 +209,7 @@
 #'     rendered as a color-filled cell instead}
 #'   \item{pantone}{Character, Pantone spot color reference, or "-" when the
 #'     brand guide does not specify one (Branco, Preto, and all four Cidades
-#'     colors — the Cidades manual gives CMYK only)}
+#'     colors, since the Cidades manual gives CMYK only)}
 #'   \item{rgb}{Character, "R, G, B" digital color values as printed in the
 #'     brand guide}
 #'   \item{hex}{Character, hexadecimal color code, uppercase with leading "#"}
@@ -224,26 +225,24 @@
 #' Values are transcribed from Insper's 2026 brand guide
 #' (`data-raw/refs/insper-guia-de-marca.pdf`) via
 #' \code{data-raw/colors_palettes.R}, the package's authoritative source for
-#' brand hex codes. The "Neutros" rows (Cinza ramp and Azul) are not part of
-#' the guide's main "2.1 Cores" section — they appear in segment-specific
-#' pages (Pós-Graduação, Educação Executiva) — but are included here for a
-#' complete quick-reference.
+#' brand hex codes. The "Neutros" rows (Cinza ramp and Azul) come from the
+#' guide's segment-specific pages (Pós-Graduação, Educação Executiva) rather
+#' than its main "2.1 Cores" section.
 #'
 #' The "Cidades" rows come from a second document, the Insper Cidades
 #' application manual (`data-raw/refs/Manual de Aplicação - Insper Cidades.pdf`,
 #' June 2026). Those four colors belong to the Centro de Estudos das Cidades /
 #' Laboratório Arq.Futuro sub-brand and are close enough to the institutional
-#' hues that the two families should not be mixed in one chart — see
-#' \code{\link{insper_palette}}.
+#' hues that the two families should not be mixed in one chart. See
+#' [insper_palette()] for details.
 #'
 #' The \code{acessibilidade} column condenses the guide's accessibility and
-#' logo-background pages (white/black text contrast per background). Package
-#' plot functions apply the same idea automatically via an internal
-#' luminance-based helper when overlaying labels on colored bars.
+#' logo-background pages (white/black text contrast per background). Plot
+#' functions that draw labels on colored bars pick the text color from the
+#' fill's luminance instead.
 #'
-#' This dataset is a documentation/reference aid. For programmatic access to
-#' brand colors in plots, use \code{\link{insper_palette}} or the
-#' \code{scale_*_insper_*()} functions instead.
+#' This dataset is a reference aid. To use brand colors in plots, call
+#' [insper_palette()] or the `scale_*_insper_*()` functions.
 #'
 #' @source Insper brand guide (2026) and the Insper Cidades application manual
 #'   (June 2026), via \code{data-raw/create_color_reference_table.R}

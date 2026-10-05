@@ -4,7 +4,7 @@
 \alias{scale_color_insper_c}
 \alias{scale_colour_insper_c}
 \alias{scale_fill_insper_c}
-\title{Insper Continuous Color Scale for ggplot2}
+\title{Insper Continuous Color and Fill Scales}
 \usage{
 scale_color_insper_c(palette = "turquesa", reverse = FALSE, ...)
 
@@ -13,26 +13,39 @@ scale_colour_insper_c(palette = "turquesa", reverse = FALSE, ...)
 scale_fill_insper_c(palette = "turquesa", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Character string indicating palette name}
+\item{palette}{Character. Palette name. Default is \code{"turquesa"}. Sequential
+palettes suit ordered magnitudes, and diverging palettes (such as
+\code{"vermelho_turquesa"}) suit data with a meaningful midpoint. See
+\code{\link[=show_insper_palettes]{show_insper_palettes()}} for all options.}
 
-\item{reverse}{Logical indicating whether to reverse palette}
+\item{reverse}{Logical. If \code{TRUE}, reverses the gradient. Default is
+\code{FALSE}.}
 
-\item{...}{Additional arguments passed to ggplot2::scale_color_gradientn()}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:scale_gradient]{ggplot2::scale_color_gradientn()}}
+or \code{\link[ggplot2:scale_gradient]{ggplot2::scale_fill_gradientn()}}, such as \code{name}, \code{limits}, or
+\code{labels}.}
 }
 \value{
-ggplot2 scale object
+A ggplot2 scale object.
 }
 \description{
-Insper Continuous Color Scale for ggplot2
+Continuous ggplot2 scales that map numeric values to a gradient built from
+an Insper palette. Use them for numeric variables; for categorical
+variables, see \code{\link[=scale_color_insper_d]{scale_color_insper_d()}}.
 }
 \examples{
 library(ggplot2)
 ggplot(mtcars, aes(x = wt, y = mpg, color = hp)) +
   geom_point() +
   scale_color_insper_c(palette = "turquesa")
+
+# Diverging palette for values around a midpoint
+ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
+  geom_raster() +
+  scale_fill_insper_c(palette = "vermelho_turquesa")
 }
 \seealso{
-\code{\link{theme_insper}}, \code{\link{scale_color_insper_d}}
+\code{\link[=insper_palette]{insper_palette()}}, \code{\link[=theme_insper]{theme_insper()}}, \code{\link[=scale_color_insper_d]{scale_color_insper_d()}}
 
 Other scales: 
 \code{\link{scale_color_insper_d}()}

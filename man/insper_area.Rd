@@ -22,81 +22,84 @@ insper_area(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Time variable (numeric, Date, or POSIXct)}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Time variable
+(numeric, \code{Date}, or \code{POSIXct}).}
 
-\item{y}{Value variable}
+\item{y}{<\code{\link[rlang:args_data_masking]{data-masked}}> Value variable.}
 
-\item{fill}{Fill aesthetic.
-Can be:
+\item{fill}{Fill aesthetic. Accepts one of the options below.
 \itemize{
-  \item A quoted color name/hex (e.g., `"#3ACC9F"`, `"grey40"`) for static color
-  \item A bare column name (e.g., `category`) for discrete grouping
-  \item A continuous variable (e.g., `intensity`) for gradient coloring
+\item A quoted color string, used as a static color (e.g., \code{"#3ACC9F"},
+\code{"grey40"}).
+\item A bare discrete column, used for grouping (e.g., \code{category}).
+\item A bare continuous column, mapped to a gradient (e.g.,
+\code{intensity}).
+\item \code{NULL} (default), which uses Insper turquesa.
 }
-If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
-applies to both area fill and line color (if `add_line = TRUE`).}
+The fill color also sets the line color when \code{add_line = TRUE}.}
 
-\item{palette}{Character. Color palette name for variable mappings.
-Options: "main", "muted", "turquesa", "vermelho", etc.
-If NULL (default), uses "main". Only applies to variable mappings.}
+\item{palette}{Character. Palette for mapped variables. If \code{NULL}
+(default), uses \code{"main"}.}
 
-\item{stacked}{Logical. If TRUE and fill is provided, creates stacked areas.
-If NULL (default), automatically detects: stacks when `fill` is a variable
-mapping, otherwise uses overlapping areas. Set explicitly to FALSE to force
-overlapping areas even with fill mappings}
+\item{stacked}{Logical or \code{NULL}. Whether to stack areas. If \code{NULL}
+(default), stacks only when \code{fill} maps a variable. See Details.}
 
-\item{area_alpha}{Numeric. Transparency of areas (0-1). Default is 0.9}
+\item{area_alpha}{Numeric. Area opacity, from 0 to 1. Default is 0.9.}
 
-\item{fill_color}{Character. Hex color code for area when not using fill aesthetic.
-Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)}
+\item{fill_color}{Character. Area color, used only when \code{fill} is \code{NULL}.
+Default is \code{turquesa_3}. Prefer \code{fill = "<color>"}, which colors both the
+area and the line.}
 
-\item{add_line}{Logical. If TRUE, adds line on top of area. Default is TRUE}
+\item{add_line}{Logical. If \code{TRUE} (default), draws a line on top of each
+area.}
 
-\item{line_color}{Character. Hex color code for line when not using fill aesthetic.
-Defaults to `turquesa_2`, a lighter step of the turquesa ramp than the area
-fill. (Deprecated: use in combination with `fill = "color"`)}
+\item{line_color}{Character. Line color, used only when \code{fill} is \code{NULL}.
+Default is \code{turquesa_2}, a lighter step of the turquesa ramp.}
 
-\item{line_width}{Numeric. Width of line. Default is 0.8}
+\item{line_width}{Numeric. Line width. Default is 0.8.}
 
-\item{line_alpha}{Numeric. Transparency of line (0-1). Default is 1}
+\item{line_alpha}{Numeric. Line opacity, from 0 to 1. Default is 1.}
 
-\item{zero}{Logical. If TRUE, adds a horizontal line at y = 0. Default is FALSE}
+\item{zero}{Logical. If \code{TRUE}, draws a horizontal line at y = 0. Default
+is \code{FALSE}.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_area()}}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_ribbon]{ggplot2::geom_area()}}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create area charts for time series data using Insper's visual identity.
-Supports both single and grouped/stacked areas.
+Creates area charts of time series with Insper's visual identity. Supports
+single, stacked, and overlapping areas.
 }
 \details{
-## Stacking
+\subsection{Stacking}{
 
-Under the default `stacked = NULL`, areas stack when `fill` maps a variable
-and overlap when `fill` is missing or a static color, where stacking would
-have no effect anyway. Set `stacked = TRUE` or `stacked = FALSE` to choose
+Under the default \code{stacked = NULL}, areas stack when \code{fill} maps a variable
+and overlap when \code{fill} is missing or a static color, where stacking would
+have no effect anyway. Set \code{stacked = TRUE} or \code{stacked = FALSE} to choose
 directly. Overlapping areas suit comparing group trajectories; stacked areas
 suit part-to-whole.
+}
 
-## Line Overlay
+\subsection{Line overlay}{
 
-A line is drawn on top of each area by default (`add_line = TRUE`), in the
-fill color. Set `add_line = FALSE` to drop it, which helps when many groups
+A line is drawn on top of each area by default (\code{add_line = TRUE}), in the
+fill color. Set \code{add_line = FALSE} to drop it, which helps when many groups
 are stacked.
+}
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 
-# Simple area plot - Coal consumption since 1900
+# Single area: coal consumption since 1900
 coal_data <- subset(fossil_fuel, fuel == "Coal" & year >= 1900)
 insper_area(coal_data, x = year, y = consumption)
 
-# Stacked area chart showing all fuels (automatically stacked when fill is provided)
+# Mapping fill to a variable stacks the areas
 recent_data <- subset(fossil_fuel, year >= 1950)
 recent_data$fuel <- factor(recent_data$fuel, levels = c("Oil", "Gas", "Coal"))
 insper_area(recent_data, x = year, y = consumption, fill = fuel) +
@@ -108,7 +111,7 @@ insper_area(recent_data, x = year, y = consumption, fill = fuel) +
     fill = "Fuel Type"
   )
 
-# Force overlapping areas (comparing distributions)
+# Overlapping areas, to compare trajectories
 insper_area(recent_data, x = year, y = consumption,
             fill = fuel, stacked = FALSE) +
   labs(

@@ -7,68 +7,67 @@
 \format{
 A data frame with 43 rows and 8 variables:
 \describe{
-  \item{hierarquia}{Character, color hierarchy: "Principais" (Vermelho,
-    Branco, Preto), "Secundários" (Turquesa, Verde, Amarelo, Laranja, Rosa,
-    Roxo), "Neutros" (Cinza, Azul), or "Cidades" (the Insper Cidades
-    sub-brand: Folhagem, Solar, Asfalto, Tijolo)}
-  \item{familia}{Character, hue family (e.g. "Vermelho", "Verde", "Cinza")}
-  \item{nome}{Character, lowercase identifier for the specific swatch
-    (e.g. "vermelho", "verde 0"..."verde 4"). Matches the `_N` suffix used
-    internally in \code{data-raw/colors_palettes.R}, where `_0` is the
-    family base and `_1`/`_2` are tints, `_3`/`_4` are shades}
-  \item{amostra}{Character, hex code of the swatch (mirrors `hex`); in the
-    companion \code{data-raw/insper_color_reference.xlsx} this column is
-    rendered as a color-filled cell instead}
-  \item{pantone}{Character, Pantone spot color reference, or "-" when the
-    brand guide does not specify one (Branco, Preto, and all four Cidades
-    colors — the Cidades manual gives CMYK only)}
-  \item{rgb}{Character, "R, G, B" digital color values as printed in the
-    brand guide}
-  \item{hex}{Character, hexadecimal color code, uppercase with leading "#"}
-  \item{acessibilidade}{Character, which text/logo color the brand guide
-    permits on this background: "branco" (white only), "preto" (black
-    only), or "ambos" (both pass). The guide only rules on the family base
-    colors and neutrals; tints/shades are \code{NA}, as are the Cidades
-    colors (that manual has no accessibility page). This column records what
-    a brand guide rules, not what the package computes}
+\item{hierarquia}{Character, color hierarchy: "Principais" (Vermelho,
+Branco, Preto), "Secundários" (Turquesa, Verde, Amarelo, Laranja, Rosa,
+Roxo), "Neutros" (Cinza, Azul), or "Cidades" (the Insper Cidades
+sub-brand: Folhagem, Solar, Asfalto, Tijolo)}
+\item{familia}{Character, hue family (e.g. "Vermelho", "Verde", "Cinza")}
+\item{nome}{Character, lowercase identifier for the specific swatch
+(e.g. "vermelho", "verde 0"..."verde 4"). Matches the \verb{_N} suffix used
+internally in \code{data-raw/colors_palettes.R}, where \verb{_0} is the
+family base and \verb{_1}/\verb{_2} are tints, \verb{_3}/\verb{_4} are shades}
+\item{amostra}{Character, hex code of the swatch (mirrors \code{hex}); in the
+companion \code{data-raw/insper_color_reference.xlsx} this column is
+rendered as a color-filled cell instead}
+\item{pantone}{Character, Pantone spot color reference, or "-" when the
+brand guide does not specify one (Branco, Preto, and all four Cidades
+colors, since the Cidades manual gives CMYK only)}
+\item{rgb}{Character, "R, G, B" digital color values as printed in the
+brand guide}
+\item{hex}{Character, hexadecimal color code, uppercase with leading "#"}
+\item{acessibilidade}{Character, which text/logo color the brand guide
+permits on this background: "branco" (white only), "preto" (black
+only), or "ambos" (both pass). The guide only rules on the family base
+colors and neutrals; tints/shades are \code{NA}, as are the Cidades
+colors (that manual has no accessibility page). This column records what
+a brand guide rules, not what the package computes}
 }
 }
 \source{
 Insper brand guide (2026) and the Insper Cidades application manual
-  (June 2026), via \code{data-raw/create_color_reference_table.R}
+(June 2026), via \code{data-raw/create_color_reference_table.R}
 }
 \usage{
 insper_color_reference
 }
 \description{
-A flat, "one row per swatch" lookup table of every official Insper brand
-color: primary, secondary (six hue families, five steps each), and the
-neutral gray ramp + dark blue used in segment-specific applications.
+A lookup table with one row per official Insper brand color. It covers the
+primary colors, the six secondary hue families (five steps each), the
+neutral gray ramp and dark blue used in segment-specific applications, and
+the four Insper Cidades colors.
 }
 \details{
 Values are transcribed from Insper's 2026 brand guide
-(`data-raw/refs/insper-guia-de-marca.pdf`) via
+(\code{data-raw/refs/insper-guia-de-marca.pdf}) via
 \code{data-raw/colors_palettes.R}, the package's authoritative source for
-brand hex codes. The "Neutros" rows (Cinza ramp and Azul) are not part of
-the guide's main "2.1 Cores" section — they appear in segment-specific
-pages (Pós-Graduação, Educação Executiva) — but are included here for a
-complete quick-reference.
+brand hex codes. The "Neutros" rows (Cinza ramp and Azul) come from the
+guide's segment-specific pages (Pós-Graduação, Educação Executiva) rather
+than its main "2.1 Cores" section.
 
 The "Cidades" rows come from a second document, the Insper Cidades
-application manual (`data-raw/refs/Manual de Aplicação - Insper Cidades.pdf`,
+application manual (\verb{data-raw/refs/Manual de Aplicação - Insper Cidades.pdf},
 June 2026). Those four colors belong to the Centro de Estudos das Cidades /
 Laboratório Arq.Futuro sub-brand and are close enough to the institutional
-hues that the two families should not be mixed in one chart — see
-\code{\link{insper_palette}}.
+hues that the two families should not be mixed in one chart. See
+\code{\link[=insper_palette]{insper_palette()}} for details.
 
 The \code{acessibilidade} column condenses the guide's accessibility and
-logo-background pages (white/black text contrast per background). Package
-plot functions apply the same idea automatically via an internal
-luminance-based helper when overlaying labels on colored bars.
+logo-background pages (white/black text contrast per background). Plot
+functions that draw labels on colored bars pick the text color from the
+fill's luminance instead.
 
-This dataset is a documentation/reference aid. For programmatic access to
-brand colors in plots, use \code{\link{insper_palette}} or the
-\code{scale_*_insper_*()} functions instead.
+This dataset is a reference aid. To use brand colors in plots, call
+\code{\link[=insper_palette]{insper_palette()}} or the \verb{scale_*_insper_*()} functions.
 }
 \examples{
 head(insper_color_reference)
@@ -78,6 +77,6 @@ subset(insper_color_reference, familia == "Verde")
 }
 \seealso{
 \code{\link{insper_palette}} for programmatic palette access;
-  \code{\link{show_insper_palettes}} to preview palettes
+\code{\link{show_insper_palettes}} to preview palettes
 }
 \keyword{datasets}

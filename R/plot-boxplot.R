@@ -1,24 +1,30 @@
 #' Insper Box Plot
 #'
-#' Create box plots with optional jittered points and statistical annotations
-#' using Insper's visual identity.
+#' Creates box plots with Insper's visual identity, with optional jittered
+#' points and notches.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Variable for x-axis (categorical)
-#' @param y Variable for y-axis (numeric)
-#' @param fill Fill aesthetic. Accepts either:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Categorical variable
+#'   for the x-axis.
+#' @param y <[`data-masked`][rlang::args_data_masking]> Numeric variable for
+#'   the y-axis.
+#' @param fill Fill aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A bare column name for variable mapping (e.g., \code{fill = Species})
-#'     \item A quoted color string for static fill (e.g., \code{fill = "lightblue"})
-#'     \item \code{NULL} (default) to use default Insper turquesa
+#'     \item A bare column name, mapped to fill (e.g., `fill = Species`).
+#'     \item A quoted color string, used as a static fill (e.g.,
+#'       `fill = "lightblue"`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "main".
-#' @param add_jitter Logical. If TRUE, adds jittered points. If NULL (default),
-#'   automatically enables jitter when the largest group has <100 observations.
-#' @param add_notch Logical. If TRUE, creates notched boxplot. Default is FALSE
-#' @param box_alpha Numeric. Transparency of boxes (0-1). Default is 0.8
-#' @param ... Additional arguments passed to \code{ggplot2::geom_boxplot()}
-#' @return A ggplot2 object
+#' @param palette Character. Palette for mapped variables. Default is `"main"`.
+#' @param add_jitter Logical or `NULL`. If `TRUE`, adds jittered points. If
+#'   `NULL` (default), adds them only when every group has fewer than 100
+#'   observations.
+#' @param add_notch Logical. If `TRUE`, draws notched boxes. Default is
+#'   `FALSE`.
+#' @param box_alpha Numeric. Box opacity, from 0 to 1. Default is 0.8.
+#' @param ... Additional arguments passed to [ggplot2::geom_boxplot()].
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
 #' # Simple boxplot with default fill

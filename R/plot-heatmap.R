@@ -1,29 +1,33 @@
 #' Insper Heatmap
 #'
-#' Create correlation matrices and heatmaps using Insper's visual identity.
-#' Automatically detects whether data is a matrix or pre-melted long format.
+#' Creates heatmaps, such as correlation matrices, with Insper's visual
+#' identity. Accepts either a matrix or a data frame in long format.
 #'
-#' @param data Data frame (melted with Var1, Var2, value columns) or
-#'   correlation matrix
-#' @param show_values Logical. If TRUE, displays values on tiles. Default is FALSE
-#' @param value_color Character. Color for value text. Default is "white"
-#' @param value_size Numeric. Size of value text. Default is 3
-#' @param palette Character. Palette name for fill scale. Default is "vermelho_turquesa"
-#' @param ... Additional arguments passed to \code{ggplot2::geom_tile()}
-#' @return A ggplot2 object
+#' @param data A matrix (for example, from [cor()]) or a long data frame with
+#'   columns `Var1`, `Var2`, and `value`.
+#' @param show_values Logical. If `TRUE`, prints values on the tiles. Default
+#'   is `FALSE`.
+#' @param value_color Character. Color of the printed values. Default is
+#'   `"white"`.
+#' @param value_size Numeric. Size of the printed values. Default is 3.
+#' @param palette Character. Palette for the continuous fill scale. Default is
+#'   `"vermelho_turquesa"`.
+#' @param ... Additional arguments passed to [ggplot2::geom_tile()].
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
-#' # From correlation matrix
+#' # From a correlation matrix
 #' cor_mat <- cor(mtcars[, 1:4])
 #' insper_heatmap(cor_mat)
 #'
-#' # Hide values
-#' insper_heatmap(cor_mat, show_values = FALSE)
+#' # Print values on the tiles
+#' insper_heatmap(cor_mat, show_values = TRUE)
 #'
-#' # Custom palette
-#' insper_heatmap(cor_mat, palette = "vermelho_turquesa")
+#' # Another diverging palette
+#' insper_heatmap(cor_mat, palette = "roxo_verde")
 #' @family plots
-#' @seealso \code{\link{theme_insper}}, \code{\link{scale_fill_insper_d}}
+#' @seealso \code{\link{theme_insper}}, \code{\link{scale_fill_insper_c}}
 #' @export
 insper_heatmap <- function(
   data,

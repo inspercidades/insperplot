@@ -1,43 +1,47 @@
 #' Insper Scatter Plot
 #'
-#' Create scatter plots with regression lines and confidence intervals using
-#' Insper's visual identity. Accepts both color and fill aesthetics, so
-#' outlined point shapes can carry two mappings.
+#' Creates scatter plots with Insper's visual identity, with an optional
+#' fitted line. Accepts both color and fill aesthetics, so outlined point
+#' shapes can carry two mappings.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Variable for x-axis
-#' @param y Variable for y-axis
-#' @param color Color aesthetic. Accepts either:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Variable for the
+#'   x-axis.
+#' @param y <[`data-masked`][rlang::args_data_masking]> Variable for the
+#'   y-axis.
+#' @param color Color aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A bare column name for variable mapping (e.g., \code{color = Species})
-#'     \item A quoted color string for static color (e.g., \code{color = "blue"})
-#'     \item \code{NULL} (default) to use default Insper turquesa
+#'     \item A bare column name, mapped to color (e.g., `color = Species`).
+#'     \item A quoted color string, used as a static color (e.g.,
+#'       `color = "blue"`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#'   When mapping a variable, the appropriate scale is automatically applied.
-#' @param fill Fill aesthetic (for shapes 21-25 with fill interiors). Accepts either:
+#'   A mapped variable gets a discrete or continuous Insper scale to match its
+#'   type.
+#' @param fill Fill aesthetic, for outlined shapes 21 to 25. Accepts one of the
+#'   options below.
 #'   \itemize{
-#'     \item A bare column name for variable mapping (e.g., \code{fill = Species})
-#'     \item A quoted color string for static fill (e.g., \code{fill = "lightblue"})
-#'     \item \code{NULL} (default) - no fill mapping
+#'     \item A bare column name, mapped to fill (e.g., `fill = Species`).
+#'     \item A quoted color string, used as a static fill (e.g.,
+#'       `fill = "lightblue"`).
+#'     \item `NULL` (default), for no fill.
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "main".
-#' @param add_smooth Logical. If TRUE, adds a regression line. Default is FALSE
-#' @param smooth_method Character. Smoothing method ("lm", "loess", "gam", "glm"). Default is "lm"
-#' @param point_size Numeric. Size of points. Default is 2
-#' @param point_alpha Numeric. Transparency of points (0-1). Default is 1
-#' @param ... Additional arguments passed to \code{ggplot2::geom_point()},
-#'   allowing custom aesthetics like shape, stroke, etc.
-#' @return A ggplot2 object
+#' @param palette Character. Palette for mapped variables. Default is `"main"`.
+#' @param add_smooth Logical. If `TRUE`, adds a fitted line with a confidence
+#'   band. Default is `FALSE`.
+#' @param smooth_method Character. Smoothing method: `"lm"` (default),
+#'   `"loess"`, `"gam"`, or `"glm"`.
+#' @param point_size Numeric. Point size. Default is 2.
+#' @param point_alpha Numeric. Point opacity, from 0 to 1. Default is 1.
+#' @param ... Additional arguments passed to [ggplot2::geom_point()], such as
+#'   `shape` or `stroke`.
+#'
+#' @return A ggplot object.
 #'
 #' @details
-#' This function supports two types of point shapes:
-#' \itemize{
-#'   \item **Solid shapes (16-20)**: Only use \code{color} aesthetic for point color
-#'   \item **Outlined shapes (21-25)**: Use both \code{color} (outline) and \code{fill} (interior)
-#' }
-#'
-#' For outlined shapes, you can map different variables to color and fill, or use
-#' static colors for fine-grained control.
+#' Solid shapes (16 to 20) use only `color`. Outlined shapes (21 to 25) use
+#' `color` for the outline and `fill` for the interior, so you can map a
+#' different variable, or a static color, to each.
 #'
 #' @examplesIf has_insper_fonts()
 #' # Simple scatter plot with default color
@@ -49,7 +53,7 @@
 #' # With smooth line
 #' insper_scatterplot(mtcars, x = wt, y = mpg, add_smooth = TRUE)
 #'
-#' # ... arguments always passed to geom_point()
+#' # Extra arguments go to geom_point()
 #' insper_scatterplot(mtcars, x = wt, y = mpg, size = 3, alpha = 0.5)
 #'
 #' # Shape 21 with static color and mapped fill

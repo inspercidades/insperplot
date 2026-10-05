@@ -17,51 +17,55 @@ insper_histogram(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Variable for x-axis (numeric)}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Numeric variable for
+the x-axis.}
 
-\item{fill}{Fill aesthetic.
-Can be:
+\item{fill}{Fill aesthetic. Accepts one of the options below.
 \itemize{
-  \item A quoted color name/hex (e.g., `"blue"`, `"#FF0000"`) for static color
-  \item A bare discrete column or factor expression (e.g., `Species` or
-    `factor(cyl)`) for grouping
-}
-If `NULL` (default), uses Insper red.}
+\item A quoted color string, used as a static fill (e.g., \code{"blue"},
+\code{"#FF0000"}).
+\item A bare discrete column or factor expression, used for grouping
+(e.g., \code{Species} or \code{factor(cyl)}).
+\item \code{NULL} (default), which uses Insper red.
+}}
 
-\item{palette}{Character. Color palette name for variable mappings.
-Options: "main", "muted", "turquesa", "vermelho", etc.
-If NULL (default), uses "main". Only applies to variable mappings.}
+\item{palette}{Character. Palette for mapped variables. If \code{NULL}
+(default), uses \code{"main"}.}
 
-\item{bins}{Numeric. Number of bins. Only used when bin_method = "manual"}
+\item{bins}{Numeric. Number of bins. Used only when
+\code{bin_method = "manual"}.}
 
-\item{bin_method}{Character. Bin selection method: "sturges", "fd" (Freedman-Diaconis),
-"scott", or "manual". Default is "sturges"}
+\item{bin_method}{Character. Bin selection method: \code{"sturges"} (default),
+\code{"fd"} (Freedman-Diaconis), \code{"scott"}, or \code{"manual"}.}
 
-\item{border_color}{Character. Color for bar borders. Default is "white"}
+\item{border_color}{Character. Color of the bar borders. Default is
+\code{"white"}.}
 
-\item{zero}{Logical. If TRUE, adds a horizontal line at y = 0. Default is TRUE}
+\item{zero}{Logical. If \code{TRUE} (default), draws a horizontal line at
+y = 0.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_histogram()}}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create histograms using Insper's visual identity. Bin width comes from the
-Sturges, Freedman-Diaconis, or Scott rule, or from a bin count you supply.
+Creates histograms with Insper's visual identity. The number of bins comes
+from the Sturges, Freedman-Diaconis, or Scott rule, or from a count you
+supply.
 }
 \details{
 The four bin selection methods are described below.
 \itemize{
-  \item **Sturges**: \eqn{k = \lceil \log_2(n) + 1 \rceil}. Assumes roughly
-    normal data and tends to undersmooth large samples.
-  \item **Freedman-Diaconis**: Derives bin width from the IQR, so outliers
-    move it less than the other two.
-  \item **Scott**: Derives bin width from the standard deviation, assuming
-    roughly normal data.
-  \item **Manual**: Uses the bin count given in `bins`.
+\item \strong{Sturges}: \eqn{k = \lceil \log_2(n) + 1 \rceil}. Assumes roughly
+normal data and tends to undersmooth large samples.
+\item \strong{Freedman-Diaconis}: Derives bin width from the IQR, so outliers
+move it less than the other two.
+\item \strong{Scott}: Derives bin width from the standard deviation, assuming
+roughly normal data.
+\item \strong{Manual}: Uses the bin count given in \code{bins}.
 }
 }
 \examples{

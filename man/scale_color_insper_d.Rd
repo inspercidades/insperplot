@@ -4,7 +4,7 @@
 \alias{scale_color_insper_d}
 \alias{scale_colour_insper_d}
 \alias{scale_fill_insper_d}
-\title{Insper Discrete Color Scale for ggplot2}
+\title{Insper Discrete Color and Fill Scales}
 \usage{
 scale_color_insper_d(palette = "main", reverse = FALSE, ...)
 
@@ -13,26 +13,37 @@ scale_colour_insper_d(palette = "main", reverse = FALSE, ...)
 scale_fill_insper_d(palette = "main", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Character string indicating palette name}
+\item{palette}{Character. Palette name. Default is \code{"main"}. Qualitative
+palettes (\code{"main"}, \code{"muted"}, \code{"colorblind"}, \code{"cidades"}) suit most
+categorical data. See \code{\link[=show_insper_palettes]{show_insper_palettes()}} for all options.}
 
-\item{reverse}{Logical indicating whether to reverse palette}
+\item{reverse}{Logical. If \code{TRUE}, reverses the palette order. Default is
+\code{FALSE}.}
 
-\item{...}{Additional arguments passed to ggplot2::discrete_scale()}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale()}}, such
+as \code{name} or \code{labels}.}
 }
 \value{
-ggplot2 scale object
+A ggplot2 scale object.
 }
 \description{
-Insper Discrete Color Scale for ggplot2
+Discrete ggplot2 scales that map categories to colors from an Insper
+palette. Levels take colors in palette order, so the brand colors appear
+exactly as defined. Use them for categorical variables; for numeric
+variables, see \code{\link[=scale_color_insper_c]{scale_color_insper_c()}}.
 }
 \examples{
 library(ggplot2)
 ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
   geom_point() +
   scale_color_insper_d()
+
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(gear))) +
+  geom_bar() +
+  scale_fill_insper_d(palette = "muted", name = "Gears")
 }
 \seealso{
-\code{\link{theme_insper}}, \code{\link{scale_color_insper_c}}
+\code{\link[=insper_palette]{insper_palette()}}, \code{\link[=theme_insper]{theme_insper()}}, \code{\link[=scale_color_insper_c]{scale_color_insper_c()}}
 
 Other scales: 
 \code{\link{scale_color_insper_c}()}

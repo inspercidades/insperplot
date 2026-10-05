@@ -7,20 +7,20 @@
 \format{
 A data frame with 237,852 rows and 6 variables:
 \describe{
-  \item{abbrev_company}{Character, abbreviated name of the bus company}
-  \item{name_company}{Character, full name of the bus company}
-  \item{code_line}{Character, unique code identifier for the bus line}
-  \item{name_line}{Character, name and route description of the bus line}
-  \item{date}{Date, daily observation date (YYYY-MM-DD), from January 2024
-    to March 2025}
-  \item{passengers}{Numeric, total number of passengers transported on
-    that date for the specific line}
+\item{abbrev_company}{Character, abbreviated name of the bus company}
+\item{name_company}{Character, full name of the bus company}
+\item{code_line}{Character, unique code identifier for the bus line}
+\item{name_line}{Character, name and route description of the bus line}
+\item{date}{Date, daily observation date (YYYY-MM-DD), from January 2024
+to March 2025}
+\item{passengers}{Numeric, total number of passengers transported on
+that date for the specific line}
 }
 }
 \source{
 Insper - Observatório Nacional de Mobilidade Sustentável
-  \url{https://dataverse.datascience.insper.edu.br}
-  DOI: 10.60873/FK2/JEYM0J
+\url{https://dataverse.datascience.insper.edu.br}
+DOI: 10.60873/FK2/JEYM0J
 }
 \usage{
 rec_passengers

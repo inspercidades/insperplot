@@ -16,36 +16,41 @@ insper_timeseries(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Time variable (numeric, Date, or POSIXct)}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Time variable
+(numeric, \code{Date}, or \code{POSIXct}).}
 
-\item{y}{Value variable}
+\item{y}{<\code{\link[rlang:args_data_masking]{data-masked}}> Value variable.}
 
-\item{color}{Color aesthetic for multiple lines. Accepts either:
+\item{color}{Color aesthetic. Accepts one of the options below.
 \itemize{
-  \item A bare column name for variable mapping (e.g., \code{color = category})
-  \item A quoted color string for static color (e.g., \code{color = "blue"})
-  \item \code{NULL} (default) to use default Insper turquesa
+\item A bare column name, mapped to color, one line per group (e.g.,
+\code{color = category}).
+\item A quoted color string, used as a static color (e.g.,
+\code{color = "blue"}).
+\item \code{NULL} (default), which uses Insper turquesa.
 }
-When mapping a variable, the appropriate scale is automatically applied.}
+A mapped variable gets a discrete or continuous Insper scale to match its
+type.}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "main".}
+\item{palette}{Character. Palette for mapped variables. Default is \code{"main"}.}
 
-\item{line_width}{Numeric. Width of lines. Default is 0.8}
+\item{line_width}{Numeric. Line width. Default is 0.8.}
 
-\item{add_points}{Logical. If TRUE, adds points to lines. Default is FALSE}
+\item{add_points}{Logical. If \code{TRUE}, adds points on the lines. Default is
+\code{FALSE}.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_line()},
-allowing custom aesthetics like linetype, alpha, etc.}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_path]{ggplot2::geom_line()}}, such as
+\code{linetype} or \code{alpha}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create time series plots optimized for economic/business data using Insper's
-visual identity. Automatically handles Date and POSIXct x-axis variables and
-supports both discrete and continuous color mappings.
+Creates line plots of time series with Insper's visual identity. Handles
+\code{Date} and \code{POSIXct} x-axes and both discrete and continuous color
+mappings.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
@@ -54,7 +59,7 @@ library(ggplot2)
 # Plot inflation over time
 insper_timeseries(macro_series, x = date, y = ipca)
 
-# The color argument automatically detects the type of variable
+# A quoted color string sets a static line color
 insper_timeseries(macro_series, x = date, y = ipca, color = "#3ACC9F")
 
 # Grouped time series (discrete variable)

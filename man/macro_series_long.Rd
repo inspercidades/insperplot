@@ -7,15 +7,15 @@
 \format{
 A data frame with 1,116 rows and 3 variables:
 \describe{
-  \item{date}{Date, first day of the month (YYYY-MM-DD)}
-  \item{name_series}{Character, name of the macroeconomic indicator.
-    Values: "ibcbr_dessaz", "ipca", "ipi", "oil"}
-  \item{value}{Numeric, value of the indicator on that date}
+\item{date}{Date, first day of the month (YYYY-MM-DD)}
+\item{name_series}{Character, name of the macroeconomic indicator.
+Values: "ibcbr_dessaz", "ipca", "ipi", "oil"}
+\item{value}{Numeric, value of the indicator on that date}
 }
 }
 \source{
 Brazilian Central Bank (Banco Central do Brasil)
-  \url{https://www3.bcb.gov.br/sgspub/}
+\url{https://www3.bcb.gov.br/sgspub/}
 }
 \usage{
 macro_series_long

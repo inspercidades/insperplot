@@ -3,46 +3,44 @@
 #' A ggplot2 theme built on Insper's brand colors and typography, with
 #' arguments for grid lines, borders, and title alignment.
 #'
-#' @param base_size Numeric. Base font size for all text elements in points.
-#'   Default is 12. All other text sizes are calculated relative to this value.
-#' @param font_title Character. Font family to use for plot titles and subtitles.
-#'   Default is "Georgia" (serif, the documented substitute for Insper's primary
-#'   GT Ultra). The theme automatically detects font availability and falls back
-#'   to the system "serif" family if Georgia is unavailable.
-#' @param font_text Character. Font family to use for all other text elements
-#'   (axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
-#'   Insper's official template). Falls back to "Arial" then "sans" if unavailable.
-#' @param grid Logical. Whether to display major grid lines. If TRUE, shows
-#'   light gray grid lines. If FALSE, removes all grid lines. Minor grid lines
-#'   are always removed. Default is TRUE.
-#' @param border Character. Type of plot border to display. Must be one of:
+#' @param base_size Numeric. Base font size in points. Default is 12. All
+#'   other text sizes are relative to this value.
+#' @param font_title Character. Font family for the plot title. Default is
+#'   `"Georgia"`, the substitute for Insper's proprietary GT Ultra. Falls back
+#'   to the system `"serif"` family if Georgia is unavailable.
+#' @param font_text Character. Font family for all other text (subtitle, axis
+#'   labels, legend, caption). Default is `"Inter"`, which ships with the
+#'   package. Falls back to `"Arial"`, then to the system `"sans"` family.
+#' @param grid Logical. If `TRUE` (default), draws light gray major grid lines.
+#'   If `FALSE`, removes all grid lines. Minor grid lines are always removed.
+#' @param border Character. Plot border style, one of the options below.
 #'   \itemize{
-#'     \item "none" - No border or axis lines (default)
-#'     \item "half" - Shows axis lines with ticks but no full border
-#'     \item "closed" - Shows a complete rectangular border around the plot area
+#'     \item `"none"` (default): no border or axis lines.
+#'     \item `"half"`: axis lines with ticks, but no full border.
+#'     \item `"closed"`: a full rectangle around the panel.
 #'   }
-#' @param align Character. Alignment of title and caption. Must be one of:
+#' @param align Character. Alignment of the title, subtitle, and caption, one
+#'   of the options below.
 #'   \itemize{
-#'     \item "panel" - Align to the plot panel area (default)
-#'     \item "plot" - Align to the entire plot area including margins
+#'     \item `"panel"` (default): align to the plot panel.
+#'     \item `"plot"`: align to the whole plot, including margins.
 #'   }
-#' @param ... Additional arguments passed to \code{theme_minimal()}.
+#' @param ... Additional arguments passed to [ggplot2::theme_minimal()].
 #'
-#' @return A ggplot2 theme object that can be added to ggplot objects using the
-#'   \code{+} operator.
+#' @return A ggplot2 theme object, added to a plot with `+`.
 #'
 #' @details
 #' The theme sets a white plot background, places a horizontal legend at the
 #' top with a bold title, removes minor grid lines, and draws remaining
 #' elements in Insper brand grays.
 #'
-#' **Fonts:**
+#' ## Fonts
 #'
-#' Titles use Georgia and body text uses Inter, following Insper's official
-#' template. Inter is bundled with the package and registered automatically on
-#' load. Georgia is a system font, and the documented substitute for Insper's
-#' primary GT Ultra. Where either is unavailable, the theme falls back to the
-#' system "serif" and "sans" families.
+#' Titles use Georgia and all other text uses Inter. Inter is bundled with the
+#' package and registered automatically on load. Georgia is a system font that
+#' stands in for Insper's proprietary GT Ultra. If Georgia is missing, titles
+#' fall back to the system `"serif"` family; if Inter is missing, text falls
+#' back to Arial and then to the system `"sans"` family.
 #'
 #' @examplesIf has_insper_fonts()
 #' library(ggplot2)
@@ -52,23 +50,23 @@
 #'   geom_point() +
 #'   theme_insper()
 #'
-#' # Minimal — no grid, clean background
+#' # No grid lines
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
 #'   geom_point() +
 #'   theme_insper(grid = FALSE)
 #'
-#' # Presentation — larger text for slides
+#' # Larger text for slides
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
 #'   geom_point() +
 #'   theme_insper(base_size = 16, grid = FALSE)
 #'
-#' # Print / PDF — closed border, smaller text
+#' # Closed border and smaller text for print
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
 #'   geom_point() +
 #'   theme_insper(base_size = 11, border = "closed")
 #'
 #' @family themes
-#' @seealso \code{\link[ggplot2]{theme_minimal}}, \code{\link[ggplot2]{theme}}
+#' @seealso [ggplot2::theme_minimal()], [ggplot2::theme()]
 #' @importFrom ggplot2 element_blank element_line element_rect element_text unit theme theme_minimal rel margin %+replace% theme_sub_axis theme_sub_legend theme_sub_panel theme_sub_plot theme_sub_strip
 #' @export
 theme_insper <- function(
@@ -201,18 +199,16 @@ theme_insper <- function(
 #'
 #' A variant of [theme_insper()] with smaller text, sized for figures inserted
 #' into Word documents and other print reports. A typical document figure is
-#' about 15 cm (6 in) wide — at that size the default 12 pt base of
-#' [theme_insper()] renders noticeably larger than the surrounding body text,
-#' so this variant lowers the base to 10 pt.
+#' about 15 cm (6 in) wide. At that size, the default 12 pt base of
+#' [theme_insper()] renders larger than the surrounding body text, so this
+#' variant lowers the base to 10 pt.
 #'
-#' @param base_size Numeric. Base font size in points. Default is 10, sized
-#'   for figures placed in text documents. All other text sizes are calculated
-#'   relative to this value.
-#' @param ... Additional arguments passed to [theme_insper()], such as
-#'   \code{grid}, \code{border}, or \code{align}.
+#' @param base_size Numeric. Base font size in points. Default is 10. All
+#'   other text sizes are relative to this value.
+#' @param ... Additional arguments passed to [theme_insper()], such as `grid`,
+#'   `border`, or `align`.
 #'
-#' @return A ggplot2 theme object that can be added to ggplot objects using
-#'   the \code{+} operator.
+#' @return A ggplot2 theme object, added to a plot with `+`.
 #'
 #' @examplesIf has_insper_fonts()
 #' library(ggplot2)
@@ -251,7 +247,7 @@ theme_insper_doc <- function(base_size = 10, ...) {
 #' family where `name` appears as a whole token (at the start or after a
 #' separator, and at the end or before a separator), so "Inter" matches
 #' "Inter 18pt" but deliberately not "Interstate", "International", or
-#' "SignPainter" — false positives the old naive substring match accepted.
+#' "SignPainter" (false positives the old naive substring match accepted).
 #'
 #' @param name Character. Requested font family.
 #' @param available_fonts Character vector of available family names.

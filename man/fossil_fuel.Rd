@@ -7,26 +7,26 @@
 \format{
 A data frame with 228 rows and 5 variables:
 \describe{
-  \item{entity}{Character, name of the country or region (currently "World")}
-  \item{code}{Character, country/region code (OWID_WRL for World)}
-  \item{year}{Numeric, year of observation (1800-present)}
-  \item{fuel}{Ordered factor with 3 levels: Oil, Gas, Coal.
-    Levels are ordered for logical stacking in plots}
-  \item{consumption}{Numeric, primary energy consumption in terawatt-hours
-    (TWh)}
+\item{entity}{Character, name of the country or region (currently "World")}
+\item{code}{Character, country/region code (OWID_WRL for World)}
+\item{year}{Numeric, year of observation (1800-2023)}
+\item{fuel}{Ordered factor with 3 levels: Oil, Gas, Coal.
+Levels are ordered for logical stacking in plots}
+\item{consumption}{Numeric, primary energy consumption in terawatt-hours
+(TWh)}
 }
 }
 \source{
 Our World in Data (OWID)
-  \url{https://ourworldindata.org/grapher/global-fossil-fuel-consumption}
-  License: CC BY 4.0
+\url{https://ourworldindata.org/grapher/global-fossil-fuel-consumption}
+License: CC BY 4.0
 }
 \usage{
 fossil_fuel
 }
 \description{
 Primary energy consumption from fossil fuels (coal, oil, and gas) measured
-in terawatt-hours (TWh). Data covers global consumption from 1800 to recent years.
+in terawatt-hours (TWh), for the world as a whole, from 1800 to 2023.
 }
 \details{
 Global fossil fuel consumption since the Industrial Revolution, split by

@@ -19,49 +19,49 @@ insper_density(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Variable for x-axis (numeric)}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Numeric variable for
+the x-axis.}
 
-\item{fill}{Fill aesthetic.
-Can be:
+\item{fill}{Fill aesthetic. Accepts one of the options below.
 \itemize{
-  \item A quoted color name/hex (e.g., `"purple"`, `"#9148B0"`) for static color
-  \item A bare discrete column or factor expression (e.g., `Species` or
-    `factor(gear)`) for grouping
+\item A quoted color string, used as a static color (e.g., \code{"purple"},
+\code{"#9148B0"}).
+\item A bare discrete column or factor expression, used for grouping
+(e.g., \code{Species} or \code{factor(gear)}).
+\item \code{NULL} (default), which uses Insper turquesa.
 }
-If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
-applies to both density fill and line color.}
+The fill color also sets the density line color.}
 
-\item{palette}{Character. Color palette name for variable mappings.
-Options: "main", "muted", "turquesa", "vermelho", etc.
-If NULL (default), uses "main". Only applies to variable mappings.}
+\item{palette}{Character. Palette for mapped variables. If \code{NULL}
+(default), uses \code{"main"}.}
 
-\item{fill_color}{Character. Hex color for density area when not using fill aesthetic.
-Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)}
+\item{fill_color}{Character. Area color, used only when \code{fill} is \code{NULL}.
+Default is \code{turquesa_3}. Prefer \code{fill = "<color>"}, which colors both the
+area and the line.}
 
-\item{line_color}{Character. Color for density line. Defaults to `turquesa_2`,
-a lighter step of the turquesa ramp than the fill.
-(Deprecated: use in combination with `fill = "color"`)}
+\item{line_color}{Character. Line color, used only when \code{fill} is \code{NULL}.
+Default is \code{turquesa_2}, a lighter step of the turquesa ramp.}
 
-\item{alpha}{Numeric. Transparency of density area (0-1). Default is 0.6}
+\item{alpha}{Numeric. Area opacity, from 0 to 1. Default is 0.6.}
 
-\item{bw}{Numeric or character. Bandwidth for density estimation.
-Can be a numeric value or a bandwidth selector name ("nrd0", "nrd", "ucv", "bcv", "SJ").
-Default is "nrd0".}
+\item{bw}{Numeric or character. Bandwidth, either a number or the name of a
+bandwidth selector (\code{"nrd0"}, \code{"nrd"}, \code{"ucv"}, \code{"bcv"}, \code{"SJ"}). Default
+is \code{"nrd0"}.}
 
-\item{adjust}{Numeric. Adjustment multiplier for bandwidth. Default is 1.}
+\item{adjust}{Numeric. Multiplier applied to the bandwidth. Default is 1.}
 
-\item{kernel}{Character. Kernel for density estimation. Default is "gaussian".}
+\item{kernel}{Character. Smoothing kernel. Default is \code{"gaussian"}.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_density()}}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_density]{ggplot2::geom_density()}}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create density plots to visualize distributions using Insper's visual identity.
-Supports grouped densities with automatic color assignment.
+Creates density plots with Insper's visual identity. Supports grouped
+densities, with one color per group.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}

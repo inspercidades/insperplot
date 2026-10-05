@@ -7,22 +7,22 @@
 format_num_br(x, digits = 0, percent = FALSE, currency = FALSE, ...)
 }
 \arguments{
-\item{x}{Numeric vector}
+\item{x}{Numeric vector.}
 
-\item{digits}{Number of decimal places (default 0)}
+\item{digits}{Number of decimal places. Default is 0.}
 
-\item{percent}{Logical. If TRUE, formats as percentage (multiplies by 100, adds \% suffix)}
+\item{percent}{Logical. If \code{TRUE}, multiplies by 100 and adds a percent sign.}
 
-\item{currency}{Logical. If TRUE, formats as Brazilian Real currency}
+\item{currency}{Logical. If \code{TRUE}, formats as Brazilian reais (R$).}
 
-\item{...}{Additional arguments passed to \code{\link[scales]{number}}}
+\item{...}{Additional arguments passed to \code{\link[scales:number]{scales::number()}}.}
 }
 \value{
-Formatted character vector
+Formatted character vector.
 }
 \description{
-Format numbers in Brazilian style with decimal comma and thousand separator.
-Supports currency and percentage formatting.
+Formats numbers in Brazilian style, with a decimal comma and a period as
+the thousands separator. Also formats currency and percentages.
 }
 \examples{
 # Basic number formatting

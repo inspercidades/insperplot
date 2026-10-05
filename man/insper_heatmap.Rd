@@ -14,41 +14,44 @@ insper_heatmap(
 )
 }
 \arguments{
-\item{data}{Data frame (melted with Var1, Var2, value columns) or
-correlation matrix}
+\item{data}{A matrix (for example, from \code{\link[=cor]{cor()}}) or a long data frame with
+columns \code{Var1}, \code{Var2}, and \code{value}.}
 
-\item{show_values}{Logical. If TRUE, displays values on tiles. Default is FALSE}
+\item{show_values}{Logical. If \code{TRUE}, prints values on the tiles. Default
+is \code{FALSE}.}
 
-\item{value_color}{Character. Color for value text. Default is "white"}
+\item{value_color}{Character. Color of the printed values. Default is
+\code{"white"}.}
 
-\item{value_size}{Numeric. Size of value text. Default is 3}
+\item{value_size}{Numeric. Size of the printed values. Default is 3.}
 
-\item{palette}{Character. Palette name for fill scale. Default is "vermelho_turquesa"}
+\item{palette}{Character. Palette for the continuous fill scale. Default is
+\code{"vermelho_turquesa"}.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_tile()}}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_tile]{ggplot2::geom_tile()}}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create correlation matrices and heatmaps using Insper's visual identity.
-Automatically detects whether data is a matrix or pre-melted long format.
+Creates heatmaps, such as correlation matrices, with Insper's visual
+identity. Accepts either a matrix or a data frame in long format.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
-# From correlation matrix
+# From a correlation matrix
 cor_mat <- cor(mtcars[, 1:4])
 insper_heatmap(cor_mat)
 
-# Hide values
-insper_heatmap(cor_mat, show_values = FALSE)
+# Print values on the tiles
+insper_heatmap(cor_mat, show_values = TRUE)
 
-# Custom palette
-insper_heatmap(cor_mat, palette = "vermelho_turquesa")
+# Another diverging palette
+insper_heatmap(cor_mat, palette = "roxo_verde")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link{theme_insper}}, \code{\link{scale_fill_insper_d}}
+\code{\link{theme_insper}}, \code{\link{scale_fill_insper_c}}
 
 Other plots: 
 \code{\link{insper_area}()},
