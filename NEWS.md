@@ -3,7 +3,9 @@
 ## Bug fixes
 
 * Fixed `insper_barplot()` labels for horizontal bars and normalized labels for
-  filled bars (#22, #24).
+  filled bars. Filled-bar percentages now follow `position_fill()`: they are
+  computed per facet panel, stack positive and negative values separately, and
+  skip missing values and zero totals (#22, #24).
 
 * Fixed `insper_density()` so its default bandwidth produces a density layer
   (#23).

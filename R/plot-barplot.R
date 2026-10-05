@@ -202,12 +202,12 @@ insper_barplot <- function(
 
       label_expr <- if (position == "fill" && is_horizontal) {
         rlang::expr(scales::percent(
-          ggplot2::after_stat(x / stats::ave(x, y, FUN = sum)),
+          ggplot2::after_stat(fill_share(x, PANEL, y)),
           accuracy = 0.1
         ))
       } else if (position == "fill") {
         rlang::expr(scales::percent(
-          ggplot2::after_stat(y / stats::ave(y, x, FUN = sum)),
+          ggplot2::after_stat(fill_share(y, PANEL, x)),
           accuracy = 0.1
         ))
       } else {
@@ -298,4 +298,20 @@ insper_barplot <- function(
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
 
   return(p)
+}
+
+# Share of each bar segment, matching position_fill(): totals are computed per
+# panel and bar, with positive and negative values stacked separately.
+fill_share <- function(value, panel, bar) {
+  negative <- !is.na(value) & value < 0
+  total <- stats::ave(
+    value,
+    panel,
+    bar,
+    negative,
+    FUN = function(v) sum(abs(v), na.rm = TRUE)
+  )
+  share <- value / total
+  share[!is.finite(share)] <- NA
+  share
 }

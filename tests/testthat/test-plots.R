@@ -163,6 +163,104 @@ test_that("insper_barplot text labels work with filled bars", {
   )
 })
 
+fill_labels <- function(p) {
+  built <- ggplot2::ggplot_build(p)
+  text_idx <- which(vapply(
+    p$layers,
+    \(layer) inherits(layer$geom, "GeomText"),
+    logical(1)
+  ))
+  built$data[[text_idx]]
+}
+
+test_that("insper_barplot filled labels normalize within each facet panel", {
+  df <- data.frame(
+    panel = rep(c("P1", "P2"), each = 2),
+    category = "A",
+    grp = rep(c("X", "Y"), 2),
+    value = c(1, 3, 30, 10)
+  )
+
+  vertical <- insper_barplot(
+    df,
+    x = category,
+    y = value,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  ) +
+    ggplot2::facet_wrap(ggplot2::vars(panel))
+  labels <- fill_labels(vertical)
+  expect_equal(
+    labels$label[order(labels$PANEL, labels$group)],
+    c("25.0%", "75.0%", "75.0%", "25.0%")
+  )
+
+  horizontal <- insper_barplot(
+    df,
+    x = value,
+    y = category,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  ) +
+    ggplot2::facet_wrap(ggplot2::vars(panel))
+  labels <- fill_labels(horizontal)
+  expect_equal(
+    labels$label[order(labels$PANEL, labels$group)],
+    c("25.0%", "75.0%", "75.0%", "25.0%")
+  )
+})
+
+test_that("insper_barplot filled labels follow position_fill() semantics", {
+  # Missing values drop only their own bar segment.
+  missing_df <- data.frame(
+    category = "A",
+    grp = c("X", "Y", "Z"),
+    value = c(1, NA, 3)
+  )
+  p <- insper_barplot(
+    missing_df,
+    x = category,
+    y = value,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
+  labels <- suppressWarnings(fill_labels(p))
+  expect_equal(labels$label, c("25.0%", NA, "75.0%"))
+
+  # Positive and negative values are stacked and normalized separately.
+  signed_df <- data.frame(
+    category = "A",
+    grp = c("W", "X", "Y", "Z"),
+    value = c(1, 3, -2, -2)
+  )
+  p <- insper_barplot(
+    signed_df,
+    x = category,
+    y = value,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
+  labels <- fill_labels(p)
+  expect_equal(labels$label, c("25.0%", "75.0%", "-50.0%", "-50.0%"))
+
+  # Zero totals have no defined share.
+  zero_df <- data.frame(category = "A", grp = c("X", "Y"), value = 0)
+  p <- insper_barplot(
+    zero_df,
+    x = category,
+    y = value,
+    fill = grp,
+    position = "fill",
+    text = TRUE
+  )
+  labels <- suppressWarnings(fill_labels(p))
+  expect_false(any(grepl("Inf|NaN", labels$label)))
+})
+
 # Text color on stacked/filled bars is contrast-aware: each label is colored
 # from the luminance of the bar segment behind it. For the default
 # "muted" palette every color is dark, so the effective text is white.
@@ -630,13 +728,13 @@ test_that("insper_density handles fill aesthetic with variable mapping", {
 })
 
 test_that("statistical plots reject continuous fill mappings", {
-  expect_snapshot(
-    error = TRUE,
-    insper_density(iris, x = Sepal.Length, fill = Sepal.Width)
+  expect_error(
+    insper_density(iris, x = Sepal.Length, fill = Sepal.Width),
+    "must be discrete for a density plot"
   )
-  expect_snapshot(
-    error = TRUE,
-    insper_histogram(iris, x = Sepal.Length, fill = Sepal.Width)
+  expect_error(
+    insper_histogram(iris, x = Sepal.Length, fill = Sepal.Width),
+    "must be discrete for a histogram"
   )
 })
 
