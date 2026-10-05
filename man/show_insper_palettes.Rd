@@ -13,7 +13,7 @@ Default \code{"all"}.}
 }
 \value{
 Invisibly returns a data frame with columns \code{name},
-  \code{type}, \code{n_colors}, and \code{recommended_use}.
+\code{type}, \code{n_colors}, and \code{recommended_use}.
 }
 \description{
 Displays all Insper palettes as a stacked swatch grid, optionally filtered

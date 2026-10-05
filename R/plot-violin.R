@@ -1,23 +1,29 @@
 #' Insper Violin Plot
 #'
-#' Create violin plots to visualize distributions using Insper's visual identity.
-#' Optionally overlay boxplots and/or jittered points.
+#' Creates violin plots with Insper's visual identity, with optional boxplot
+#' and jittered-point overlays.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Variable for x-axis (categorical)
-#' @param y Variable for y-axis (numeric)
-#' @param fill Fill aesthetic. Accepts either:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Categorical variable
+#'   for the x-axis.
+#' @param y <[`data-masked`][rlang::args_data_masking]> Numeric variable for
+#'   the y-axis.
+#' @param fill Fill aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A bare column name for variable mapping (e.g., \code{fill = Species})
-#'     \item A quoted color string for static fill (e.g., \code{fill = "purple"})
-#'     \item \code{NULL} (default) to use default Insper turquesa
+#'     \item A bare column name, mapped to fill (e.g., `fill = Species`).
+#'     \item A quoted color string, used as a static fill (e.g.,
+#'       `fill = "purple"`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#' @param palette Character. Color palette for variable mappings. Default is "main".
-#' @param show_boxplot Logical. If TRUE, overlays a boxplot. Default is FALSE
-#' @param show_points Logical. If TRUE, adds jittered points. Default is FALSE
-#' @param violin_alpha Numeric. Transparency of violins (0-1). Default is 0.7
-#' @param ... Additional arguments passed to \code{ggplot2::geom_violin()}
-#' @return A ggplot2 object
+#' @param palette Character. Palette for mapped variables. Default is `"main"`.
+#' @param show_boxplot Logical. If `TRUE`, overlays a boxplot. Default is
+#'   `FALSE`.
+#' @param show_points Logical. If `TRUE`, adds jittered points. Default is
+#'   `FALSE`.
+#' @param violin_alpha Numeric. Violin opacity, from 0 to 1. Default is 0.7.
+#' @param ... Additional arguments passed to [ggplot2::geom_violin()].
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
 #' # Simple violin plot with default fill
@@ -29,8 +35,8 @@
 #' # Variable fill mapping
 #' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species)
 #'
-#' # Custom palette
-#' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "main")
+#' # Another palette
+#' insper_violin(iris, x = Species, y = Sepal.Length, fill = Species, palette = "muted")
 #'
 #' # With boxplot overlay and points
 #' insper_violin(iris, x = Species, y = Sepal.Length,

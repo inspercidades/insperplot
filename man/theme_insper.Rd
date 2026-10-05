@@ -15,40 +15,38 @@ theme_insper(
 )
 }
 \arguments{
-\item{base_size}{Numeric. Base font size for all text elements in points.
-Default is 12. All other text sizes are calculated relative to this value.}
+\item{base_size}{Numeric. Base font size in points. Default is 12. All
+other text sizes are relative to this value.}
 
-\item{font_title}{Character. Font family to use for plot titles and subtitles.
-Default is "Georgia" (serif, the documented substitute for Insper's primary
-GT Ultra). The theme automatically detects font availability and falls back
-to the system "serif" family if Georgia is unavailable.}
+\item{font_title}{Character. Font family for the plot title. Default is
+\code{"Georgia"}, the substitute for Insper's proprietary GT Ultra. Falls back
+to the system \code{"serif"} family if Georgia is unavailable.}
 
-\item{font_text}{Character. Font family to use for all other text elements
-(axis labels, legend text, etc.). Default is "Inter" (sans-serif, from
-Insper's official template). Falls back to "Arial" then "sans" if unavailable.}
+\item{font_text}{Character. Font family for all other text (subtitle, axis
+labels, legend, caption). Default is \code{"Inter"}, which ships with the
+package. Falls back to \code{"Arial"}, then to the system \code{"sans"} family.}
 
-\item{grid}{Logical. Whether to display major grid lines. If TRUE, shows
-light gray grid lines. If FALSE, removes all grid lines. Minor grid lines
-are always removed. Default is TRUE.}
+\item{grid}{Logical. If \code{TRUE} (default), draws light gray major grid lines.
+If \code{FALSE}, removes all grid lines. Minor grid lines are always removed.}
 
-\item{border}{Character. Type of plot border to display. Must be one of:
+\item{border}{Character. Plot border style, one of the options below.
 \itemize{
-  \item "none" - No border or axis lines (default)
-  \item "half" - Shows axis lines with ticks but no full border
-  \item "closed" - Shows a complete rectangular border around the plot area
+\item \code{"none"} (default): no border or axis lines.
+\item \code{"half"}: axis lines with ticks, but no full border.
+\item \code{"closed"}: a full rectangle around the panel.
 }}
 
-\item{align}{Character. Alignment of title and caption. Must be one of:
+\item{align}{Character. Alignment of the title, subtitle, and caption, one
+of the options below.
 \itemize{
-  \item "panel" - Align to the plot panel area (default)
-  \item "plot" - Align to the entire plot area including margins
+\item \code{"panel"} (default): align to the plot panel.
+\item \code{"plot"}: align to the whole plot, including margins.
 }}
 
-\item{...}{Additional arguments passed to \code{theme_minimal()}.}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:ggtheme]{ggplot2::theme_minimal()}}.}
 }
 \value{
-A ggplot2 theme object that can be added to ggplot objects using the
-  \code{+} operator.
+A ggplot2 theme object, added to a plot with \code{+}.
 }
 \description{
 A ggplot2 theme built on Insper's brand colors and typography, with
@@ -58,14 +56,14 @@ arguments for grid lines, borders, and title alignment.
 The theme sets a white plot background, places a horizontal legend at the
 top with a bold title, removes minor grid lines, and draws remaining
 elements in Insper brand grays.
+\subsection{Fonts}{
 
-**Fonts:**
-
-Titles use Georgia and body text uses Inter, following Insper's official
-template. Inter is bundled with the package and registered automatically on
-load. Georgia is a system font, and the documented substitute for Insper's
-primary GT Ultra. Where either is unavailable, the theme falls back to the
-system "serif" and "sans" families.
+Titles use Georgia and all other text uses Inter. Inter is bundled with the
+package and registered automatically on load. Georgia is a system font that
+stands in for Insper's proprietary GT Ultra. If Georgia is missing, titles
+fall back to the system \code{"serif"} family; if Inter is missing, text falls
+back to Arial and then to the system \code{"sans"} family.
+}
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
@@ -76,24 +74,24 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   theme_insper()
 
-# Minimal — no grid, clean background
+# No grid lines
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   theme_insper(grid = FALSE)
 
-# Presentation — larger text for slides
+# Larger text for slides
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   theme_insper(base_size = 16, grid = FALSE)
 
-# Print / PDF — closed border, smaller text
+# Closed border and smaller text for print
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   theme_insper(base_size = 11, border = "closed")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[ggplot2]{theme_minimal}}, \code{\link[ggplot2]{theme}}
+\code{\link[ggplot2:ggtheme]{ggplot2::theme_minimal()}}, \code{\link[ggplot2:theme]{ggplot2::theme()}}
 
 Other themes: 
 \code{\link{theme_insper_doc}()}

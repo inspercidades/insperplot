@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-barplot.R
 \name{insper_barplot}
 \alias{insper_barplot}
-\title{Create a Bar Plot with Insper Styling}
+\title{Insper Bar Plot}
 \usage{
 insper_barplot(
   data,
@@ -21,59 +21,61 @@ insper_barplot(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Column name for x-axis}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Variable for the
+x-axis.}
 
-\item{y}{Column name for y-axis}
+\item{y}{<\code{\link[rlang:args_data_masking]{data-masked}}> Variable for the
+y-axis.}
 
-\item{fill}{Fill aesthetic. Accepts either:
+\item{fill}{Fill aesthetic. Accepts one of the options below.
 \itemize{
-  \item A bare column name for variable mapping (e.g., \code{fill = gear})
-  \item A quoted color string for static fill (e.g., \code{fill = "blue"})
-  \item \code{NULL} (default) to use default Insper red
+\item A bare column name, mapped to fill (e.g., \code{fill = gear}).
+\item A quoted color string, used as a static fill (e.g.,
+\code{fill = "blue"}).
+\item \code{NULL} (default), which uses Insper red.
 }
-When mapping a variable, creates grouped or stacked bars based on \code{position}.}
+A mapped variable produces grouped, stacked, or filled bars, depending on
+\code{position}.}
 
-\item{position}{Position adjustment for bars. Options: "dodge", "stack",
-"fill", "identity". Default is "dodge"}
+\item{position}{Character. Position adjustment for bars: \code{"dodge"}
+(default), \code{"stack"}, \code{"fill"}, or \code{"identity"}.}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "main".}
+\item{palette}{Character. Palette for mapped variables. Default is \code{"main"}.}
 
-\item{zero}{Logical. If TRUE, adds a horizontal line at y = 0. Default is TRUE}
+\item{zero}{Logical. If \code{TRUE} (default), draws a reference line at zero.}
 
-\item{text}{Logical. If TRUE, adds value labels on bars. Default is FALSE}
+\item{text}{Logical. If \code{TRUE}, adds value labels to the bars. Default is
+\code{FALSE}.}
 
-\item{text_size}{Numeric. Size of text labels. Default is 4}
+\item{text_size}{Numeric. Size of the value labels. Default is 4.}
 
-\item{text_color}{Character. Color of text labels. Default is "black".
-For position = "fill", automatic contrast-based colors are used if not specified.}
+\item{text_color}{Character. Color of the value labels. Default is
+\code{"black"}. On stacked and filled bars, the default picks white or dark
+text for each segment based on its fill; any other value is used as is.}
 
-\item{stack_vjust}{Numeric. Vertical adjustment for text labels in stacked/filled bars.
-Range: 0 (bottom) to 1 (top). Default is 0.5 (center). Only applies when
-position = "stack" or "fill"}
+\item{stack_vjust}{Numeric. Vertical position of labels within stacked and
+filled segments, from 0 (bottom) to 1 (top). Default is 0.5 (center).}
 
-\item{label_formatter}{Function. Formatter for text labels. Default is scales::comma.
-For position = "fill", percentages are automatically formatted if values are proportions}
+\item{label_formatter}{Function used to format value labels. Default is
+\code{\link[scales:comma]{scales::comma()}}. It must accept an \code{accuracy} argument. Filled bars
+ignore it and always show percentages.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_col()},
-allowing custom aesthetics like width, alpha, etc.}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_bar]{ggplot2::geom_col()}}, such as
+\code{width} or \code{alpha}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create bar plots using Insper's visual identity, with grouped and stacked
-bars, value labels, and orientation detected from the variable types.
+Creates bar plots with Insper's visual identity. Supports grouped, stacked,
+and filled bars, value labels, and horizontal or vertical orientation.
 }
 \details{
-The function automatically detects bar orientation based on variable types:
-\itemize{
-  \item **Vertical bars**: When x is categorical and y is numeric (default)
-  \item **Horizontal bars**: When x is numeric and y is categorical
-}
-
-Text labels and zero lines automatically adjust to the detected orientation.
+Orientation follows the variable types. A categorical \code{x} with a numeric
+\code{y} gives vertical bars; a numeric \code{x} with a categorical \code{y} gives
+horizontal bars. Value labels and the zero line follow the orientation.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}

@@ -7,22 +7,22 @@
 \format{
 A data frame with 279 rows and 5 variables:
 \describe{
-  \item{date}{Date, first day of the month (YYYY-MM-DD)}
-  \item{ibcbr_dessaz}{IBC-Br dessazonalizado (Seasonally adjusted Central Bank
-    Economic Activity Index). Monthly economic activity indicator that serves
-    as a proxy for GDP, base 2002 = 100}
-  \item{ipca}{IPCA - Índice de Preços ao Consumidor Amplo (Broad Consumer
-    Price Index). Monthly inflation rate in percent, official inflation measure
-    used for monetary policy targeting}
-  \item{ipi}{IPI - Índice de Produção Industrial (Industrial Production Index).
-    Measures monthly industrial production, base 2012 = 100}
-  \item{oil}{Produção de petróleo bruto (Crude oil production). Monthly crude
-    oil production in thousands of barrels per day}
+\item{date}{Date, first day of the month (YYYY-MM-DD)}
+\item{ibcbr_dessaz}{IBC-Br dessazonalizado (Seasonally adjusted Central Bank
+Economic Activity Index). Monthly economic activity indicator that serves
+as a proxy for GDP, base 2002 = 100}
+\item{ipca}{IPCA - Índice de Preços ao Consumidor Amplo (Broad Consumer
+Price Index). Monthly inflation rate in percent, official inflation measure
+used for monetary policy targeting}
+\item{ipi}{IPI - Índice de Produção Industrial (Industrial Production Index).
+Measures monthly industrial production, base 2012 = 100}
+\item{oil}{Produção de petróleo bruto (Crude oil production). Monthly crude
+oil production in thousands of barrels per day}
 }
 }
 \source{
 Brazilian Central Bank (Banco Central do Brasil)
-  \url{https://www3.bcb.gov.br/sgspub/}
+\url{https://www3.bcb.gov.br/sgspub/}
 }
 \usage{
 macro_series
@@ -30,17 +30,17 @@ macro_series
 \description{
 Monthly macroeconomic indicators from the Brazilian Central Bank (Banco Central
 do Brasil), covering economic activity, inflation, industrial production,
-services, and oil production.
+and oil production from January 2003 onward.
 }
 \details{
 The Brazilian Central Bank publishes these indicators through its Time
 Series Management System (SGS), under the codes below.
 
 \itemize{
-  \item IPCA: 433
-  \item IPI: 21859
-  \item Oil production: 1389
-  \item IBC-Br (seasonally adjusted): 24364
+\item IPCA: 433
+\item IPI: 21859
+\item Oil production: 1389
+\item IBC-Br (seasonally adjusted): 24364
 }
 }
 \examples{

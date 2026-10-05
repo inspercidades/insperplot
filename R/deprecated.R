@@ -48,12 +48,12 @@ deprecated_palettes_details <- c(
   ),
   categorical_tab = paste(
     "Removed: Tableau 10 is not an Insper palette and, despite how it was",
-    'labelled, is not colorblind-safe. Use "colorblind" if you need an',
+    'labeled, is not colorblind-safe. Use "colorblind" if you need an',
     "accessible categorical set."
   ),
   categorical_set = paste(
     "Removed: ColorBrewer Set1 is not an Insper palette and, despite how it",
-    "was labelled, is not colorblind-safe (its red and green are hard to tell",
+    "was labeled, is not colorblind-safe (its red and green are hard to tell",
     'apart under deuteranopia). Use "colorblind" if you need an accessible',
     "categorical set."
   )

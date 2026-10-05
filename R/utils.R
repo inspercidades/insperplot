@@ -1,26 +1,26 @@
 #' Save Insper Plot
 #'
-#' Wraps \code{\link[ggplot2]{ggsave}} with defaults for Insper-branded output:
+#' Wraps [ggplot2::ggsave()] with defaults for Insper-branded output:
 #' dimensions in centimeters, a golden-ratio aspect, and the ragg device for
 #' PNG files.
 #'
-#' @param plot ggplot object
-#' @param filename File name
-#' @param width Plot width, in \code{unit}. Derived from \code{height} and
-#'   \code{asp_ratio} when not supplied.
-#' @param height Plot height, in \code{unit}. Default is 8.
-#' @param dpi Resolution
-#' @param asp_ratio Aspect ratio (width / height). Default is the golden ratio (1.618).
-#'   Used only when \code{width} is not supplied directly.
-#' @param unit Units for \code{width} and \code{height}. Default \code{"cm"}.
-#'   Passed to \code{\link[ggplot2]{ggsave}}.
-#' @param device Graphics device to use. If NULL (default), uses
-#'   \code{ragg::agg_png()} for PNG files when ragg is installed, otherwise the
-#'   ggplot2 default. Pass a device function to override.
-#' @param ... Additional arguments passed to ggsave
+#' @param plot A ggplot object.
+#' @param filename File name.
+#' @param width Plot width, in `unit`. Derived from `height` and `asp_ratio`
+#'   when not supplied.
+#' @param height Plot height, in `unit`. Default is 8.
+#' @param dpi Resolution in dots per inch. Default is 300.
+#' @param asp_ratio Aspect ratio (width / height). Default is the golden ratio
+#'   (1.618). Used only when `width` is not supplied.
+#' @param unit Units for `width` and `height`, passed to [ggplot2::ggsave()].
+#'   Default is `"cm"`.
+#' @param device Graphics device. If `NULL` (default), uses `ragg::agg_png()`
+#'   for PNG files when ragg is installed, and the ggplot2 default otherwise.
+#'   Pass a device function to override.
+#' @param ... Additional arguments passed to [ggplot2::ggsave()].
 #'
 #' @return The file path of the saved plot (invisibly), as returned by
-#'   \code{\link[ggplot2]{ggsave}}.
+#'   [ggplot2::ggsave()].
 #'
 #' @examples
 #' \dontrun{
@@ -31,7 +31,7 @@
 #' }
 #'
 #' @family utilities
-#' @seealso \code{\link[ggplot2]{ggsave}}
+#' @seealso [ggplot2::ggsave()]
 #' @export
 save_insper_plot <- function(
   plot,
@@ -80,15 +80,15 @@ save_insper_plot <- function(
 
 #' Format Brazilian Numbers
 #'
-#' Format numbers in Brazilian style with decimal comma and thousand separator.
-#' Supports currency and percentage formatting.
+#' Formats numbers in Brazilian style, with a decimal comma and a period as
+#' the thousands separator. Also formats currency and percentages.
 #'
-#' @param x Numeric vector
-#' @param digits Number of decimal places (default 0)
-#' @param percent Logical. If TRUE, formats as percentage (multiplies by 100, adds \% suffix)
-#' @param currency Logical. If TRUE, formats as Brazilian Real currency
-#' @param ... Additional arguments passed to \code{\link[scales]{number}}
-#' @return Formatted character vector
+#' @param x Numeric vector.
+#' @param digits Number of decimal places. Default is 0.
+#' @param percent Logical. If `TRUE`, multiplies by 100 and adds a percent sign.
+#' @param currency Logical. If `TRUE`, formats as Brazilian reais (R$).
+#' @param ... Additional arguments passed to [scales::number()].
+#' @return Formatted character vector.
 #' @family utilities
 #' @export
 #' @examples
@@ -331,7 +331,7 @@ has_insper_fonts <- function() {
 #'
 #' Implements the WCAG 2.x relative luminance formula: linearize each sRGB
 #' channel, then weight by the BT.709 coefficients. Contrast ratios computed
-#' from this feed [get_contrast_text_color()].
+#' from this feed `get_contrast_text_color()`.
 #'
 #' @param hex_color Character. Hex color code (e.g., "#E50505")
 #' @return Numeric. Relative luminance value between 0 (black) and 1 (white)

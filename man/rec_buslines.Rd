@@ -7,19 +7,19 @@
 \format{
 A data frame with 694 rows and 4 variables:
 \describe{
-  \item{abbrev_company}{Character, abbreviated name of the bus company
-    (e.g., "BOA" for Borborema Imperial Transportes)}
-  \item{code_line}{Character, unique code identifier for the bus line}
-  \item{name_company}{Character, full name of the bus company operating
-    the line}
-  \item{name_line}{Character, name and route description of the bus line,
-    typically showing origin and destination points}
+\item{abbrev_company}{Character, abbreviated name of the bus company
+(e.g., "BOA" for Borborema Imperial Transportes)}
+\item{code_line}{Character, unique code identifier for the bus line}
+\item{name_company}{Character, full name of the bus company operating
+the line}
+\item{name_line}{Character, name and route description of the bus line,
+typically showing origin and destination points}
 }
 }
 \source{
 Insper - Observatório Nacional de Mobilidade Sustentável
-  \url{https://dataverse.datascience.insper.edu.br}
-  DOI: 10.60873/FK2/TLFP8L
+\url{https://dataverse.datascience.insper.edu.br}
+DOI: 10.60873/FK2/TLFP8L
 }
 \usage{
 rec_buslines

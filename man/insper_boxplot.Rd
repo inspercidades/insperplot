@@ -17,36 +17,41 @@ insper_boxplot(
 )
 }
 \arguments{
-\item{data}{A data frame containing the data to plot}
+\item{data}{A data frame.}
 
-\item{x}{Variable for x-axis (categorical)}
+\item{x}{<\code{\link[rlang:args_data_masking]{data-masked}}> Categorical variable
+for the x-axis.}
 
-\item{y}{Variable for y-axis (numeric)}
+\item{y}{<\code{\link[rlang:args_data_masking]{data-masked}}> Numeric variable for
+the y-axis.}
 
-\item{fill}{Fill aesthetic. Accepts either:
+\item{fill}{Fill aesthetic. Accepts one of the options below.
 \itemize{
-  \item A bare column name for variable mapping (e.g., \code{fill = Species})
-  \item A quoted color string for static fill (e.g., \code{fill = "lightblue"})
-  \item \code{NULL} (default) to use default Insper turquesa
+\item A bare column name, mapped to fill (e.g., \code{fill = Species}).
+\item A quoted color string, used as a static fill (e.g.,
+\code{fill = "lightblue"}).
+\item \code{NULL} (default), which uses Insper turquesa.
 }}
 
-\item{palette}{Character. Color palette for variable mappings. Default is "main".}
+\item{palette}{Character. Palette for mapped variables. Default is \code{"main"}.}
 
-\item{add_jitter}{Logical. If TRUE, adds jittered points. If NULL (default),
-automatically enables jitter when the largest group has <100 observations.}
+\item{add_jitter}{Logical or \code{NULL}. If \code{TRUE}, adds jittered points. If
+\code{NULL} (default), adds them only when every group has fewer than 100
+observations.}
 
-\item{add_notch}{Logical. If TRUE, creates notched boxplot. Default is FALSE}
+\item{add_notch}{Logical. If \code{TRUE}, draws notched boxes. Default is
+\code{FALSE}.}
 
-\item{box_alpha}{Numeric. Transparency of boxes (0-1). Default is 0.8}
+\item{box_alpha}{Numeric. Box opacity, from 0 to 1. Default is 0.8.}
 
-\item{...}{Additional arguments passed to \code{ggplot2::geom_boxplot()}}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_boxplot]{ggplot2::geom_boxplot()}}.}
 }
 \value{
-A ggplot2 object
+A ggplot object.
 }
 \description{
-Create box plots with optional jittered points and statistical annotations
-using Insper's visual identity.
+Creates box plots with Insper's visual identity, with optional jittered
+points and notches.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}

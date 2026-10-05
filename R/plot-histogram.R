@@ -1,28 +1,33 @@
 #' Insper Histogram
 #'
-#' Create histograms using Insper's visual identity. Bin width comes from the
-#' Sturges, Freedman-Diaconis, or Scott rule, or from a bin count you supply.
+#' Creates histograms with Insper's visual identity. The number of bins comes
+#' from the Sturges, Freedman-Diaconis, or Scott rule, or from a count you
+#' supply.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Variable for x-axis (numeric)
-#' @param fill Fill aesthetic.
-#'   Can be:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Numeric variable for
+#'   the x-axis.
+#' @param fill Fill aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A quoted color name/hex (e.g., `"blue"`, `"#FF0000"`) for static color
-#'     \item A bare discrete column or factor expression (e.g., `Species` or
-#'       `factor(cyl)`) for grouping
+#'     \item A quoted color string, used as a static fill (e.g., `"blue"`,
+#'       `"#FF0000"`).
+#'     \item A bare discrete column or factor expression, used for grouping
+#'       (e.g., `Species` or `factor(cyl)`).
+#'     \item `NULL` (default), which uses Insper red.
 #'   }
-#'   If `NULL` (default), uses Insper red.
-#' @param palette Character. Color palette name for variable mappings.
-#'   Options: "main", "muted", "turquesa", "vermelho", etc.
-#'   If NULL (default), uses "main". Only applies to variable mappings.
-#' @param bins Numeric. Number of bins. Only used when bin_method = "manual"
-#' @param bin_method Character. Bin selection method: "sturges", "fd" (Freedman-Diaconis),
-#'   "scott", or "manual". Default is "sturges"
-#' @param border_color Character. Color for bar borders. Default is "white"
-#' @param zero Logical. If TRUE, adds a horizontal line at y = 0. Default is TRUE
-#' @param ... Additional arguments passed to \code{ggplot2::geom_histogram()}
-#' @return A ggplot2 object
+#' @param palette Character. Palette for mapped variables. If `NULL`
+#'   (default), uses `"main"`.
+#' @param bins Numeric. Number of bins. Used only when
+#'   `bin_method = "manual"`.
+#' @param bin_method Character. Bin selection method: `"sturges"` (default),
+#'   `"fd"` (Freedman-Diaconis), `"scott"`, or `"manual"`.
+#' @param border_color Character. Color of the bar borders. Default is
+#'   `"white"`.
+#' @param zero Logical. If `TRUE` (default), draws a horizontal line at
+#'   y = 0.
+#' @param ... Additional arguments passed to [ggplot2::geom_histogram()].
+#'
+#' @return A ggplot object.
 #'
 #' @details
 #' The four bin selection methods are described below.

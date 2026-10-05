@@ -112,7 +112,7 @@ palette_metadata <- function() {
 #'
 #' Called with no arguments, returns the whole `insper_individual_colors`
 #' vector. Otherwise returns the requested tokens, named, in the order asked
-#' for. Retired names resolve through [deprecate_color_name()], which warns
+#' for. Retired names resolve through `deprecate_color_name()`, which warns
 #' against the caller's frame so the message points at user code rather than
 #' at the package internals.
 #'
@@ -182,26 +182,26 @@ get_insper_colors <- function(...) {
 #' opt-in: nothing in the package defaults to them.
 #'
 #' \strong{Do not mix them with the institutional palettes in one chart.} The two
-#' families sit close together in CIELAB — \code{asfalto} is only 6.6 dE from
-#' \code{roxo}, and \code{solar} 8.8 dE from \code{laranja} — close enough that a
-#' chart drawing from both reads as a rendering error rather than a design
-#' choice. Pick one family per chart.
+#' families sit close together in CIELAB: \code{asfalto} is only 6.6 dE from
+#' \code{roxo}, and \code{solar} 8.8 dE from \code{laranja}. A chart drawing
+#' from both reads as a rendering error rather than a design choice, so pick
+#' one family per chart.
 #'
 #' The Cidades manual ships no tints or shades, so the four \code{cidades_*}
 #' sequential ramps are derived: seven steps each, with the official color pinned
 #' at position 4. For diverging data prefer \code{cidades_folhagem_asfalto},
 #' which has the widest colorblind separation of any diverging palette in the
 #' package; \code{cidades_folhagem_tijolo} is more symmetric in lightness (so it
-#' reads better in greyscale) but pairs green against orange-red, which is hard
+#' reads better in grayscale) but pairs green against orange-red, which is hard
 #' under red-green color vision deficiency.
 #'
 #' All palettes are built from the 2026 Insper brand kit except
 #' \code{"colorblind"}, which is the Okabe-Ito set
 #' (\url{https://jfly.uni-koeln.de/color/}) and contains no Insper tokens. It is
-#' bundled as an accessibility fallback for when the brand hues in \code{"main"}
-#' cannot be told apart by colorblind readers — \code{"main"} mixes red, green,
-#' orange and yellow, which is a difficult combination under the common forms of
-#' color vision deficiency. Use \code{"main"} for on-brand work and reach for
+#' bundled as an accessibility fallback for when colorblind readers cannot tell
+#' the brand hues in \code{"main"} apart. \code{"main"} mixes red, green,
+#' orange and yellow, a difficult combination under the common forms of color
+#' vision deficiency. Use \code{"main"} for on-brand work and reach for
 #' \code{"colorblind"} when distinguishability matters more than brand fidelity.
 #'
 #' @family colors

@@ -1,25 +1,31 @@
 #' Insper Time Series Plot
 #'
-#' Create time series plots optimized for economic/business data using Insper's
-#' visual identity. Automatically handles Date and POSIXct x-axis variables and
-#' supports both discrete and continuous color mappings.
+#' Creates line plots of time series with Insper's visual identity. Handles
+#' `Date` and `POSIXct` x-axes and both discrete and continuous color
+#' mappings.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Time variable (numeric, Date, or POSIXct)
-#' @param y Value variable
-#' @param color Color aesthetic for multiple lines. Accepts either:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Time variable
+#'   (numeric, `Date`, or `POSIXct`).
+#' @param y <[`data-masked`][rlang::args_data_masking]> Value variable.
+#' @param color Color aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A bare column name for variable mapping (e.g., \code{color = category})
-#'     \item A quoted color string for static color (e.g., \code{color = "blue"})
-#'     \item \code{NULL} (default) to use default Insper turquesa
+#'     \item A bare column name, mapped to color, one line per group (e.g.,
+#'       `color = category`).
+#'     \item A quoted color string, used as a static color (e.g.,
+#'       `color = "blue"`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#'   When mapping a variable, the appropriate scale is automatically applied.
-#' @param palette Character. Color palette for variable mappings. Default is "main".
-#' @param line_width Numeric. Width of lines. Default is 0.8
-#' @param add_points Logical. If TRUE, adds points to lines. Default is FALSE
-#' @param ... Additional arguments passed to \code{ggplot2::geom_line()},
-#'   allowing custom aesthetics like linetype, alpha, etc.
-#' @return A ggplot2 object
+#'   A mapped variable gets a discrete or continuous Insper scale to match its
+#'   type.
+#' @param palette Character. Palette for mapped variables. Default is `"main"`.
+#' @param line_width Numeric. Line width. Default is 0.8.
+#' @param add_points Logical. If `TRUE`, adds points on the lines. Default is
+#'   `FALSE`.
+#' @param ... Additional arguments passed to [ggplot2::geom_line()], such as
+#'   `linetype` or `alpha`.
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
 #' library(ggplot2)
@@ -27,7 +33,7 @@
 #' # Plot inflation over time
 #' insper_timeseries(macro_series, x = date, y = ipca)
 #'
-#' # The color argument automatically detects the type of variable
+#' # A quoted color string sets a static line color
 #' insper_timeseries(macro_series, x = date, y = ipca, color = "#3ACC9F")
 #'
 #' # Grouped time series (discrete variable)

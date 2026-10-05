@@ -7,23 +7,21 @@
 theme_insper_doc(base_size = 10, ...)
 }
 \arguments{
-\item{base_size}{Numeric. Base font size in points. Default is 10, sized
-for figures placed in text documents. All other text sizes are calculated
-relative to this value.}
+\item{base_size}{Numeric. Base font size in points. Default is 10. All
+other text sizes are relative to this value.}
 
-\item{...}{Additional arguments passed to [theme_insper()], such as
-\code{grid}, \code{border}, or \code{align}.}
+\item{...}{Additional arguments passed to \code{\link[=theme_insper]{theme_insper()}}, such as \code{grid},
+\code{border}, or \code{align}.}
 }
 \value{
-A ggplot2 theme object that can be added to ggplot objects using
-  the \code{+} operator.
+A ggplot2 theme object, added to a plot with \code{+}.
 }
 \description{
-A variant of [theme_insper()] with smaller text, sized for figures inserted
+A variant of \code{\link[=theme_insper]{theme_insper()}} with smaller text, sized for figures inserted
 into Word documents and other print reports. A typical document figure is
-about 15 cm (6 in) wide — at that size the default 12 pt base of
-[theme_insper()] renders noticeably larger than the surrounding body text,
-so this variant lowers the base to 10 pt.
+about 15 cm (6 in) wide. At that size, the default 12 pt base of
+\code{\link[=theme_insper]{theme_insper()}} renders larger than the surrounding body text, so this
+variant lowers the base to 10 pt.
 }
 \examples{
 \dontshow{if (has_insper_fonts()) withAutoprint(\{ # examplesIf}
@@ -43,7 +41,7 @@ save_insper_plot(p + theme_insper_doc(), "figure.png", width = 15)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[theme_insper()]
+\code{\link[=theme_insper]{theme_insper()}}
 
 Other themes: 
 \code{\link{theme_insper}()}

@@ -1,7 +1,7 @@
 #' Insper Area Plot
 #'
-#' Create area charts for time series data using Insper's visual identity.
-#' Supports both single and grouped/stacked areas.
+#' Creates area charts of time series with Insper's visual identity. Supports
+#' single, stacked, and overlapping areas.
 #'
 #' @details
 #' ## Stacking
@@ -12,52 +12,54 @@
 #' directly. Overlapping areas suit comparing group trajectories; stacked areas
 #' suit part-to-whole.
 #'
-#' ## Line Overlay
+#' ## Line overlay
 #'
 #' A line is drawn on top of each area by default (`add_line = TRUE`), in the
 #' fill color. Set `add_line = FALSE` to drop it, which helps when many groups
 #' are stacked.
 #'
-#' @param data A data frame containing the data to plot
-#' @param x Time variable (numeric, Date, or POSIXct)
-#' @param y Value variable
-#' @param fill Fill aesthetic.
-#'   Can be:
+#' @param data A data frame.
+#' @param x <[`data-masked`][rlang::args_data_masking]> Time variable
+#'   (numeric, `Date`, or `POSIXct`).
+#' @param y <[`data-masked`][rlang::args_data_masking]> Value variable.
+#' @param fill Fill aesthetic. Accepts one of the options below.
 #'   \itemize{
-#'     \item A quoted color name/hex (e.g., `"#3ACC9F"`, `"grey40"`) for static color
-#'     \item A bare column name (e.g., `category`) for discrete grouping
-#'     \item A continuous variable (e.g., `intensity`) for gradient coloring
+#'     \item A quoted color string, used as a static color (e.g., `"#3ACC9F"`,
+#'       `"grey40"`).
+#'     \item A bare discrete column, used for grouping (e.g., `category`).
+#'     \item A bare continuous column, mapped to a gradient (e.g.,
+#'       `intensity`).
+#'     \item `NULL` (default), which uses Insper turquesa.
 #'   }
-#'   If `NULL` (default), uses Insper turquesa. When a variable is mapped, it
-#'   applies to both area fill and line color (if `add_line = TRUE`).
-#' @param palette Character. Color palette name for variable mappings.
-#'   Options: "main", "muted", "turquesa", "vermelho", etc.
-#'   If NULL (default), uses "main". Only applies to variable mappings.
-#' @param stacked Logical. If TRUE and fill is provided, creates stacked areas.
-#'   If NULL (default), automatically detects: stacks when `fill` is a variable
-#'   mapping, otherwise uses overlapping areas. Set explicitly to FALSE to force
-#'   overlapping areas even with fill mappings
-#' @param area_alpha Numeric. Transparency of areas (0-1). Default is 0.9
-#' @param fill_color Character. Hex color code for area when not using fill aesthetic.
-#'   Defaults to `turquesa_3`. (Deprecated: use `fill = "color"` instead)
-#' @param add_line Logical. If TRUE, adds line on top of area. Default is TRUE
-#' @param line_color Character. Hex color code for line when not using fill aesthetic.
-#'   Defaults to `turquesa_2`, a lighter step of the turquesa ramp than the area
-#'   fill. (Deprecated: use in combination with `fill = "color"`)
-#' @param line_width Numeric. Width of line. Default is 0.8
-#' @param line_alpha Numeric. Transparency of line (0-1). Default is 1
-#' @param zero Logical. If TRUE, adds a horizontal line at y = 0. Default is FALSE
-#' @param ... Additional arguments passed to \code{ggplot2::geom_area()}
-#' @return A ggplot2 object
+#'   The fill color also sets the line color when `add_line = TRUE`.
+#' @param palette Character. Palette for mapped variables. If `NULL`
+#'   (default), uses `"main"`.
+#' @param stacked Logical or `NULL`. Whether to stack areas. If `NULL`
+#'   (default), stacks only when `fill` maps a variable. See Details.
+#' @param area_alpha Numeric. Area opacity, from 0 to 1. Default is 0.9.
+#' @param fill_color Character. Area color, used only when `fill` is `NULL`.
+#'   Default is `turquesa_3`. Prefer `fill = "<color>"`, which colors both the
+#'   area and the line.
+#' @param add_line Logical. If `TRUE` (default), draws a line on top of each
+#'   area.
+#' @param line_color Character. Line color, used only when `fill` is `NULL`.
+#'   Default is `turquesa_2`, a lighter step of the turquesa ramp.
+#' @param line_width Numeric. Line width. Default is 0.8.
+#' @param line_alpha Numeric. Line opacity, from 0 to 1. Default is 1.
+#' @param zero Logical. If `TRUE`, draws a horizontal line at y = 0. Default
+#'   is `FALSE`.
+#' @param ... Additional arguments passed to [ggplot2::geom_area()].
+#'
+#' @return A ggplot object.
 #'
 #' @examplesIf has_insper_fonts()
 #' library(ggplot2)
 #'
-#' # Simple area plot - Coal consumption since 1900
+#' # Single area: coal consumption since 1900
 #' coal_data <- subset(fossil_fuel, fuel == "Coal" & year >= 1900)
 #' insper_area(coal_data, x = year, y = consumption)
 #'
-#' # Stacked area chart showing all fuels (automatically stacked when fill is provided)
+#' # Mapping fill to a variable stacks the areas
 #' recent_data <- subset(fossil_fuel, year >= 1950)
 #' recent_data$fuel <- factor(recent_data$fuel, levels = c("Oil", "Gas", "Coal"))
 #' insper_area(recent_data, x = year, y = consumption, fill = fuel) +
@@ -69,7 +71,7 @@
 #'     fill = "Fuel Type"
 #'   )
 #'
-#' # Force overlapping areas (comparing distributions)
+#' # Overlapping areas, to compare trajectories
 #' insper_area(recent_data, x = year, y = consumption,
 #'             fill = fuel, stacked = FALSE) +
 #'   labs(

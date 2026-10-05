@@ -17,35 +17,35 @@ save_insper_plot(
 )
 }
 \arguments{
-\item{plot}{ggplot object}
+\item{plot}{A ggplot object.}
 
-\item{filename}{File name}
+\item{filename}{File name.}
 
-\item{asp_ratio}{Aspect ratio (width / height). Default is the golden ratio (1.618).
-Used only when \code{width} is not supplied directly.}
+\item{asp_ratio}{Aspect ratio (width / height). Default is the golden ratio
+(1.618). Used only when \code{width} is not supplied.}
 
-\item{width}{Plot width, in \code{unit}. Derived from \code{height} and
-\code{asp_ratio} when not supplied.}
+\item{width}{Plot width, in \code{unit}. Derived from \code{height} and \code{asp_ratio}
+when not supplied.}
 
 \item{height}{Plot height, in \code{unit}. Default is 8.}
 
-\item{dpi}{Resolution}
+\item{dpi}{Resolution in dots per inch. Default is 300.}
 
-\item{device}{Graphics device to use. If NULL (default), uses
-\code{ragg::agg_png()} for PNG files when ragg is installed, otherwise the
-ggplot2 default. Pass a device function to override.}
+\item{device}{Graphics device. If \code{NULL} (default), uses \code{ragg::agg_png()}
+for PNG files when ragg is installed, and the ggplot2 default otherwise.
+Pass a device function to override.}
 
-\item{unit}{Units for \code{width} and \code{height}. Default \code{"cm"}.
-Passed to \code{\link[ggplot2]{ggsave}}.}
+\item{unit}{Units for \code{width} and \code{height}, passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.
+Default is \code{"cm"}.}
 
-\item{...}{Additional arguments passed to ggsave}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.}
 }
 \value{
 The file path of the saved plot (invisibly), as returned by
-  \code{\link[ggplot2]{ggsave}}.
+\code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}.
 }
 \description{
-Wraps \code{\link[ggplot2]{ggsave}} with defaults for Insper-branded output:
+Wraps \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} with defaults for Insper-branded output:
 dimensions in centimeters, a golden-ratio aspect, and the ragg device for
 PNG files.
 }
@@ -59,7 +59,7 @@ save_insper_plot(p, tempfile(fileext = ".png"))
 
 }
 \seealso{
-\code{\link[ggplot2]{ggsave}}
+\code{\link[ggplot2:ggsave]{ggplot2::ggsave()}}
 
 Other utilities: 
 \code{\link{format_num_br}()},
