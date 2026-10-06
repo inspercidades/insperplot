@@ -5,7 +5,7 @@ Version: 0.3.1
 Authors@R: c(
     person(
       "Vinicius", "Oike",
-      email = "viniciusor@insper.edu.br",
+      email = "viniciusoike@gmail.com",
       role = c("aut", "cre"),
       comment = c(ORCID = "0009-0005-8015-9189")
     ),
