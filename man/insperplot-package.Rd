@@ -35,7 +35,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Vinicius Oike \email{viniciusor@insper.edu.br} (\href{https://orcid.org/0009-0005-8015-9189}{ORCID})
+\strong{Maintainer}: Vinicius Oike \email{viniciusoike@gmail.com} (\href{https://orcid.org/0009-0005-8015-9189}{ORCID})
 
 Other contributors:
 \itemize{
