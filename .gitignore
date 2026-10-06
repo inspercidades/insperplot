@@ -81,6 +81,5 @@ data-raw/global-fossil-fuel-consumption/
 # Large brand reference binaries (kept locally, not in git)
 Rplots.pdf
 data-raw/refs/*.pdf
-docs
 
 /.playwright-mcp
