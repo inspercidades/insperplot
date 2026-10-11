@@ -25,3 +25,4 @@
 ^\.playwright-mcp$
 ^\.omx$
 ^CRAN-SUBMISSION$
+^tools$
