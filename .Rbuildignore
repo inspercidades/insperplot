@@ -24,4 +24,5 @@
 ^vignettes/articles$
 ^\.playwright-mcp$
 ^\.omx$
-^PONYTAIL-REVIEW\.md$
+^CRAN-SUBMISSION$
+^tools$

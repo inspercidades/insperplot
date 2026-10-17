@@ -1,4 +1,13 @@
-# insperplot (development version)
+# insperplot 0.3.1
+
+A bug-fix, documentation, and packaging release.
+
+## Installation
+
+* insperplot is now published on the Insper Cidades
+  [r-universe](https://inspercidades.r-universe.dev), which builds binaries for
+  Windows, macOS, and Linux. Both the README and the *Getting started* vignette
+  lead with that route; installing from GitHub still works.
 
 ## Bug fixes
 
@@ -16,19 +25,6 @@
 * Rejected continuous fill mappings in `insper_density()` and
   `insper_histogram()`, which ggplot2's statistical transformations discard
   (#26).
-
-# insperplot 0.3.1
-
-A documentation and packaging release. No exported function changed behaviour.
-
-## Installation
-
-* insperplot is now published on the Insper Cidades
-  [r-universe](https://inspercidades.r-universe.dev), which builds binaries for
-  Windows, macOS, and Linux. Both the README and the *Getting started* vignette
-  lead with that route; installing from GitHub still works.
-
-## Bug fixes
 
 * Fixed the chunk option in the design-guide vignette, which read `device`
   where knitr expects `dev`. Its figures were rendering on the default device

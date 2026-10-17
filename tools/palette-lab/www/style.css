@@ -1,0 +1,25 @@
+@font-face {
+  font-family: Inter;
+  src: url('/insper-fonts/Inter-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/insper-fonts/Inter-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+body, button, input, textarea, select { font-family: Inter, sans-serif; }
+
+.bslib-page-title { font-weight: 700; }
+.bslib-sidebar-layout > .main { padding: 26px; }
+.palette-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.palette-actions .btn { font-size: 12px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; }
+.swatch { display: inline-block; width: 31px; height: 31px; border: 1px solid #c8d1d5; border-radius: 2px; }
+.card, .bslib-card { border-color: #dbe4e7; box-shadow: none; }
+.card-header { font-weight: 700; }
+.nav-underline { margin-left: 8px; }
