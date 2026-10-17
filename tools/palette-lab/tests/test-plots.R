@@ -1,3 +1,4 @@
+pkgload::load_all("../..", quiet = TRUE)
 source("plots.R")
 
 colors <- c("#E50505", "#3ACC9F", "#730D9F", "#FFCC00")

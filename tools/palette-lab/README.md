@@ -12,8 +12,8 @@ Rscript -e 'shiny::runApp("tools/palette-lab")'
 ```
 
 The app loads the package source, so edits to `insperplot` palettes are available
-without installing the package. It requires `shiny`, `bslib`, `pkgload`, `ggplot2`,
-and the package's dependencies. Choose a package preset, edit its hex colors
+without installing the package. It requires `shiny`, `bslib`, `pkgload`,
+`ggplot2`, `sf`, and the package's dependencies. Choose a package preset, edit its hex colors
 (one per line), or switch the plot canvas between white and dark. Reset restores
 the selected preset. Edits in the app are temporary; they do not change the
 package palettes.
