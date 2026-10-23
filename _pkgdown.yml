@@ -26,7 +26,7 @@ navbar:
   # Navbar colour is set in pkgdown/extra.scss, not here: pkgdown ignores
   # `navbar: bg:` whenever `light-switch` is enabled.
   structure:
-    left: [intro, reference, articles, news]
+    left: [intro, reference, articles, gallery, news]
     right: [search, github, lightswitch]
   components:
     reference:
@@ -41,6 +41,9 @@ navbar:
         href: articles/brand-kit.html
       - text: Color Reference Table
         href: articles/color-reference.html
+    gallery:
+      text: Gallery
+      href: articles/gallery.html
     news:
       text: News
       href: news/index.html

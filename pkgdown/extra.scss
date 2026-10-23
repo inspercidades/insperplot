@@ -214,3 +214,67 @@ dt:target + dd {
     background: transparent;
   }
 }
+
+// Gallery ----
+// Horizontal slider of report charts. Native scrolling with snap points;
+// pkgdown/extra.js wires the arrow buttons.
+
+.gallery-slider {
+  position: relative;
+  margin: 1.5rem 0 3rem;
+}
+
+.gallery-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.75rem;
+
+  a {
+    flex: none;
+    scroll-snap-align: start;
+  }
+
+  img {
+    display: block;
+    height: 480px;
+    width: auto;
+    max-width: none;
+    background: #fff;
+    border: 1px solid var(--bs-border-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $turquesa-link;
+    outline-offset: 4px;
+  }
+}
+
+.gallery-prev,
+.gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba($insper-dark, 0.75);
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+
+  &:hover,
+  &:focus-visible {
+    background: $turquesa-link;
+  }
+}
+
+.gallery-prev { left: 0.5rem; }
+.gallery-next { right: 0.5rem; }
+
+@media (max-width: 576px) {
+  .gallery-track img { height: 340px; }
+}

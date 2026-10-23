@@ -1,0 +1,30 @@
+---
+title: "Gallery"
+---
+
+Reports and studies that use insperplot for their charts. Scroll each row
+sideways or use the arrows; click a chart to open it at full size.
+
+## Relatório de Indicadores QualiÔnibus 2026
+
+Insper Cidades (ONMS) and WRI Brasil, 2026. Benchmarking indicators for bus
+systems in Brazilian cities: demand recovery, dedicated lanes, fleet, comfort,
+user service, fares, and finances.
+
+[Read the report (PDF)](https://mobilidade.insper.edu.br/2026_relatorio_qualionibus.pdf) ·
+[All ONMS publications](https://mobilidade.insper.edu.br/publicacoes)
+
+```{=html}
+<div class="gallery-slider">
+<button type="button" class="gallery-prev" aria-label="Previous chart">&larr;</button>
+<div class="gallery-track" tabindex="0" role="region" aria-label="Charts from the QualiÔnibus 2026 report">
+<a href="../gallery/qualionibus-2026/0_censo_deslocamentos_agrupados.png"><img src="../gallery/qualionibus-2026/0_censo_deslocamentos_agrupados.png" alt="Stacked bar chart of commuting trips by main mode (public transport, private vehicles, active modes) for five city-size groups, 2022 Census." loading="lazy"></a>
+<a href="../gallery/qualionibus-2026/1_demanda_trends.png"><img src="../gallery/qualionibus-2026/1_demanda_trends.png" alt="Small-multiple line charts of daily bus ridership by city from 2017 to 2025, each with a smoothed trend showing the pandemic drop and recovery." loading="lazy"></a>
+<a href="../gallery/qualionibus-2026/3_frota_idade.png"><img src="../gallery/qualionibus-2026/3_frota_idade.png" alt="Dumbbell chart of average bus fleet age by city in 2022 and 2025, grouped by city size." loading="lazy"></a>
+<a href="../gallery/qualionibus-2026/3_frota_classificacao.png"><img src="../gallery/qualionibus-2026/3_frota_classificacao.png" alt="Stacked horizontal bar chart of fleet composition by vehicle class for each city, grouped by city size, 2025." loading="lazy"></a>
+<a href="../gallery/qualionibus-2026/4_checklist_seq.png"><img src="../gallery/qualionibus-2026/4_checklist_seq.png" alt="Heatmap of comfort and information items available at bus stops, stations, and terminals in each city, 2025." loading="lazy"></a>
+<a href="../gallery/qualionibus-2026/6_tarifas.png"><img src="../gallery/qualionibus-2026/6_tarifas.png" alt="Bar chart of the gap between technical and base bus fares by city, in reais and as a percentage, 2025." loading="lazy"></a>
+</div>
+<button type="button" class="gallery-next" aria-label="Next chart">&rarr;</button>
+</div>
+```
