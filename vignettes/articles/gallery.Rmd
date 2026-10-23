@@ -2,12 +2,11 @@
 title: "Gallery"
 ---
 
-Reports and studies that use insperplot for their charts. Scroll each row
-sideways or use the arrows; click a chart to open it at full size.
+Reports and studies that use `insperplot` for their charts.
 
 ## Relatório de Indicadores QualiÔnibus 2026
 
-Insper Cidades (ONMS) and WRI Brasil, 2026. Benchmarking indicators for bus
+The Observatório Nacional de Mobilidade Sustentável (ONMS) and WRI Brasil, 2026. Benchmarking indicators for bus
 systems in Brazilian cities: demand recovery, dedicated lanes, fleet, comfort,
 user service, fares, and finances.
 
