@@ -1,0 +1,43 @@
+name: Gallery submission
+description: Share charts from an Insper-related project made with insperplot.
+title: "[Gallery]: "
+labels: [gallery]
+body:
+  - type: input
+    id: project-title
+    attributes:
+      label: Project title
+    validations:
+      required: true
+  - type: input
+    id: description
+    attributes:
+      label: Short description
+      description: Describe your project in one line.
+    validations:
+      required: true
+  - type: input
+    id: project-link
+    attributes:
+      label: Link to the report or project
+    validations:
+      required: false
+  - type: input
+    id: insper-unit
+    attributes:
+      label: Insper unit or center involved
+      description: The Gallery accepts Insper-related projects only.
+    validations:
+      required: true
+  - type: textarea
+    id: images
+    attributes:
+      label: Charts
+      description: Drag and drop your PNG charts here, ideally a few.
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Confirmation
+      options:
+        - label: These charts were made with insperplot and may be shown on the Gallery site.
+          required: true

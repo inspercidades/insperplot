@@ -104,6 +104,15 @@ If you use **RStudio**, set the graphics backend to AGG: **Tools \>
 Global Options \> General \> Graphics \> Backend \> AGG**. **Positron**
 uses ragg by default, so no change is needed there.
 
+## Gallery
+
+The
+[Gallery](https://inspercidades.github.io/insperplot/articles/gallery.html)
+shows reports and studies built with `insperplot`. Used it in an Insper
+project? [Send us a few
+charts](https://github.com/inspercidades/insperplot/issues/new?template=gallery.yml)
+to join the Gallery, or open a pull request that adds them yourself.
+
 ## Documentation
 
 For detailed documentation and examples, visit the [package
