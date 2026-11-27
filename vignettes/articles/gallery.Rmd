@@ -27,3 +27,7 @@ user service, fares, and finances.
 <button type="button" class="gallery-next" aria-label="Next chart">&rarr;</button>
 </div>
 ```
+
+## Add your project
+
+Used `insperplot` in an Insper project? [Send us a few charts](https://github.com/inspercidades/insperplot/issues/new?template=gallery.yml) to join the Gallery, or open a pull request: add PNGs to `pkgdown/assets/gallery/<slug>/` and copy an existing entry in `vignettes/articles/gallery.Rmd`.
